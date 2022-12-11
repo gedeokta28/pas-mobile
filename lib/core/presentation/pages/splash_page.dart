@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/core/utility/app_settings.dart';
 
 import '../../static/assets.dart';
 import '../../utility/helper.dart';
@@ -40,6 +41,40 @@ class _SplashPageState extends State<SplashPage> {
 
     return Scaffold(
       backgroundColor: primaryColor,
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    APP_DESCRIPTON_TITLE,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Text(
+                    APP_DESCRIPTON_SUBTITLE,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey[200],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -50,10 +85,12 @@ class _SplashPageState extends State<SplashPage> {
                 APP_LOGO,
                 width: 120,
               ),
-              Text(
-                "PAS MOBILE",
-                style: TextStyle(fontSize: 15, color: Colors.white),
-                // style: welcomeTextStyle,
+              const Text(
+                APP_NAME,
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               )
             ],
           ),
