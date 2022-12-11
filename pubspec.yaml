@@ -38,6 +38,7 @@ dependencies:
   intl: ^0.17.0
   shared_preferences: ^2.0.13
   get_it: ^7.2.0
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/icons/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

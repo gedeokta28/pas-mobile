@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/app_settings.dart';
 
@@ -21,9 +22,9 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    // Future.delayed(const Duration(seconds: 2), () async {
-    //   // Navigator.pushReplacementNamed(context, Routing.MAIN);
-    // });
+    Future.delayed(const Duration(seconds: 2), () async {
+      Navigator.pushReplacementNamed(context, MainPage.routeName);
+    });
 
     super.initState();
   }
