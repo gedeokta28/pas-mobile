@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
             selectedLabelStyle: const TextStyle(
                 fontSize: 11.0,
                 fontWeight: FontWeight.normal,
-                color: Colors.red),
+                color: secondaryColor),
             unselectedLabelStyle: const TextStyle(
                 fontSize: 11.0,
                 fontWeight: FontWeight.normal,
@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
                       padding: const EdgeInsets.all(3.0),
                       child: Image.asset(
                         e.icon,
-                        color: Colors.red,
+                        color: secondaryColor,
                         width: 20,
                         height: 20,
                       ),
