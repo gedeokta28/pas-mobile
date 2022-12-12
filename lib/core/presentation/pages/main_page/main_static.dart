@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
+import 'package:pas_mobile/features/home/presentation/home_page.dart';
 
 enum M_BTB {
   home,
@@ -51,12 +52,13 @@ extension M_BTBExtension on M_BTB {
   Widget get content {
     switch (this) {
       case M_BTB.home:
-        return Center(
-          child: const Text(
-            "HOME",
-            style: TextStyle(color: Colors.black),
-          ),
-        );
+        // return Center(
+        //   child: const Text(
+        //     "HOME",
+        //     style: TextStyle(color: Colors.black),
+        //   ),
+        // );
+        return HomePage();
       case M_BTB.brand:
         return Center(
           child: const Text(

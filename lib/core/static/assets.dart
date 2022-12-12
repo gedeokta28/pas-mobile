@@ -4,3 +4,5 @@ const String ACCOUNT_ICON = 'assets/icons/account-icon.png';
 const String INFO_ICON = 'assets/icons/info-icon.png';
 const String ORDER_ICON = 'assets/icons/order-icon.png';
 const String BRAND_ICON = 'assets/icons/brand-icon.png';
+const String LOADING_GIF = 'assets/images/loading.gif';
+const String ASSETS_PLACEHOLDER = 'assets/images/placeholder.png';
