@@ -19,7 +19,7 @@ class DynamicCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      fit: boxFit,
+      fit: BoxFit.cover,
       width: width,
       height: height,
       placeholder: (context, url) => Image.asset(

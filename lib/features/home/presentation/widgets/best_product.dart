@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'card_widget.dart';
 import 'category_selection_title.dart';
 
-class NewsProductList extends StatelessWidget {
-  const NewsProductList({Key? key}) : super(key: key);
+class BestProductList extends StatelessWidget {
+  const BestProductList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class NewsProductList extends StatelessWidget {
       children: [
         CategorySelectionTitle(
           onTap: () {},
-          title: 'Product Terbaru',
+          title: 'Product Terbaik',
         ),
         SizedBox(
           height: 210.0,

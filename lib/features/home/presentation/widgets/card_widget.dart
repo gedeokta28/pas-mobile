@@ -18,8 +18,8 @@ class CardWidget extends StatelessWidget {
           ),
           child: DynamicCachedNetworkImage(
             imageUrl:
-                'https://auto.mahindra.com/-/media/Project/Mahindra/DotCom/Mahindra/LazyLoading/lazy-1_71.gif?extension=webp',
-            height: App(context).appHeight(18),
+                'https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg',
+            height: App(context).appHeight(15),
             width: double.infinity,
             boxFit: BoxFit.cover,
           ),
@@ -30,7 +30,7 @@ class CardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {},
       child: Container(
-        width: App(context).appWidth(50),
+        width: App(context).appWidth(35),
         margin: const EdgeInsets.only(
             left: 12,
             right: 12,

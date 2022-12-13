@@ -25,10 +25,13 @@ class BannerSlider extends StatelessWidget {
                     onTap: () {},
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: const DynamicCachedNetworkImage(
-                        imageUrl:
-                            'https://auto.mahindra.com/-/media/Project/Mahindra/DotCom/Mahindra/LazyLoading/lazy-1_71.gif?extension=webp',
-                        boxFit: BoxFit.fill,
+                      child: DynamicCachedNetworkImage(
+                        imageUrl: index == 0
+                            ? 'https://img.freepik.com/free-vector/modern-sale-banner-with-text-space-area_1017-27331.jpg?w=2000'
+                            : index == 1
+                                ? 'https://cdn5.vectorstock.com/i/1000x1000/52/04/online-shopping-e-commerce-banner-concept-vector-25035204.jpg'
+                                : 'https://static.vecteezy.com/system/resources/previews/004/299/835/original/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-free-vector.jpg',
+                        boxFit: BoxFit.cover,
                       ),
                     ),
                   );
