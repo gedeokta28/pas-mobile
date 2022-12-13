@@ -6,3 +6,4 @@ const String ORDER_ICON = 'assets/icons/order-icon.png';
 const String BRAND_ICON = 'assets/icons/brand-icon.png';
 const String LOADING_GIF = 'assets/images/loading.gif';
 const String ASSETS_PLACEHOLDER = 'assets/images/placeholder.png';
+const String ASSETS_LOGIN = 'assets/images/login_pict.png';

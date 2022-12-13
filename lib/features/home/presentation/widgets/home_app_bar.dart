@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/features/login/presentation/login_page.dart';
 
 import '../../../../core/presentation/widgets/custom_search_bar.dart';
 import '../../../../core/static/dimens.dart';
@@ -35,7 +36,9 @@ class HomeAppBar extends StatelessWidget {
                     size: 30,
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, LoginPage.routeName);
+                },
               ),
             ),
           ),
