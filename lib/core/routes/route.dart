@@ -4,6 +4,7 @@ import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 
+import '../../features/search/presentation/pages/search_page.dart';
 import '../presentation/pages/splash_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -16,6 +17,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const RegisterPage());
     case CategoryPage.routeName:
       return MaterialPageRoute(builder: (_) => const CategoryPage());
+    case SearchPage.routeName:
+      return MaterialPageRoute(builder: (_) => const SearchPage());
     case MainPage.routeName:
       final index = settings.arguments as int?;
       return MaterialPageRoute(

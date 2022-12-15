@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/search/presentation/providers/search_provider.dart';
+
 late Locale myLocale;
 
 late Session sessionHelper;
@@ -17,4 +19,7 @@ Future<void> init() async {
       () async => await SharedPreferences.getInstance());
   locator.registerLazySingleton<GlobalKey<NavigatorState>>(
       () => GlobalKey<NavigatorState>());
+
+//Providers
+  locator.registerFactory<SearchProvider>(() => SearchProvider());
 }

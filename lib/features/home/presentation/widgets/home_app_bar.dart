@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
+import 'package:pas_mobile/features/search/presentation/pages/search_page.dart';
 
 import '../../../../core/presentation/widgets/custom_search_bar.dart';
 import '../../../../core/static/dimens.dart';
@@ -19,11 +20,17 @@ class HomeAppBar extends StatelessWidget {
         centerTitle: false,
         titleSpacing: 0,
         backgroundColor: primaryColor,
-        title: CustomSearchBar(
-          hint: "Search",
-          height: kToolbarHeight - SIZE_MEDIUM,
-          onSubmitted: (value) {},
-          focusNode: FocusNode(),
+        title: GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, SearchPage.routeName);
+          },
+          child: CustomSearchBar(
+            hint: "Search",
+            isFromHome: true,
+            height: kToolbarHeight - SIZE_MEDIUM,
+            onSubmitted: (value) {},
+            focusNode: FocusNode(),
+          ),
         ),
         actions: [
           // ClipRRect(

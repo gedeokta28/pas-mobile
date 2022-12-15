@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/widgets/rounded_container.dart';
 
 class CustomSearchBar extends StatelessWidget {
+  final bool isFromHome;
   final TextEditingController? controller;
   final Function(bool focus)? onFocus;
   final Function(String value)? onChanged;
@@ -14,6 +15,7 @@ class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar(
       {Key? key,
       this.controller,
+      this.isFromHome = false,
       this.onSearch,
       this.enabled = true,
       this.height = 48.0,
@@ -30,9 +32,9 @@ class CustomSearchBar extends StatelessWidget {
       height: height,
       color: Colors.grey[200]!,
       child: Focus(
-        onFocusChange: onFocus,
+        onFocusChange: isFromHome ? null : onFocus,
         child: TextField(
-          enabled: enabled,
+          enabled: isFromHome ? false : enabled,
           focusNode: focusNode,
           onSubmitted: onSubmitted,
           controller: controller,
