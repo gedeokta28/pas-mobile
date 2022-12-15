@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
+import 'package:pas_mobile/features/account/presentation/account_page.dart';
 import 'package:pas_mobile/features/home/presentation/home_page.dart';
 
 enum M_BTB {
@@ -52,13 +53,7 @@ extension M_BTBExtension on M_BTB {
   Widget get content {
     switch (this) {
       case M_BTB.home:
-        // return Center(
-        //   child: const Text(
-        //     "HOME",
-        //     style: TextStyle(color: Colors.black),
-        //   ),
-        // );
-        return HomePage();
+        return const HomePage();
       case M_BTB.brand:
         return Center(
           child: const Text(
@@ -74,12 +69,7 @@ extension M_BTBExtension on M_BTB {
           ),
         );
       case M_BTB.account:
-        return Center(
-          child: const Text(
-            "ACC",
-            style: TextStyle(color: Colors.black),
-          ),
-        );
+        return const AccountPage();
       case M_BTB.info:
         return Center(
           child: const Text(

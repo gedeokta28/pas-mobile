@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_text_field.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
+import '../../../core/utility/injection.dart';
+import '../../../core/utility/session_helper.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -121,7 +124,12 @@ class _LoginFormState extends State<LoginForm> {
             RoundedButton(
               title: "Login",
               color: secondaryColor,
-              event: () {},
+              event: () {
+                final session = locator<Session>();
+                session.setLoggedIn = true;
+                Navigator.pushNamedAndRemoveUntil(
+                    context, MainPage.routeName, (route) => false);
+              },
             ),
             largeVerticalSpacing(),
             Row(

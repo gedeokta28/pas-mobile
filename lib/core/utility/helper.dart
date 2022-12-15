@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 
 import '../static/dimens.dart';
+import 'injection.dart';
 
 logMe(Object? obj) {
   /* 
@@ -27,3 +29,8 @@ Widget mediumHorizontalSpacing() => const SizedBox(width: SIZE_MEDIUM);
 Widget largeVerticalSpacing() => const SizedBox(height: SIZE_LARGE);
 Widget largeHorizontalSpacing() => const SizedBox(width: SIZE_LARGE);
 Widget superLargeVerticalSpacing() => const SizedBox(height: 40);
+
+Future<void> sessionLogOut() async {
+  final session = locator<Session>();
+  await session.clearSession();
+}

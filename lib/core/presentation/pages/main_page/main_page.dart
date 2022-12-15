@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_provider.dart';
+import 'package:pas_mobile/core/utility/injection.dart';
+import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../static/colors.dart';
@@ -38,6 +40,13 @@ class _MainPageState extends State<MainPage> {
             selectedItemColor: BOTTOM_NAVBAR_SELECTED,
             onTap: (value) {
               // check is logged in
+              if (value == 2 && sessionHelper.isLoggedIn == false) {
+                Navigator.pushNamed(context, LoginPage.routeName);
+                return;
+              } else if (value == 3 && sessionHelper.isLoggedIn == false) {
+                Navigator.pushNamed(context, LoginPage.routeName);
+                return;
+              }
               provider.setTappedIndex = value;
             },
             currentIndex: provider.tappedIndex,
