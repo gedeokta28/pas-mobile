@@ -7,7 +7,9 @@ import '../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
+import '../../../core/utility/injection.dart';
 import 'login_form.dart';
+import 'providers/login_provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({
@@ -17,15 +19,16 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: "Login",
-        centerTitle: true,
-        canBack: true,
-        hideShadow: false,
-      ),
-      body: Scaffold(
+    return ChangeNotifierProvider(
+      create: (context) => locator<LoginProvider>(),
+      child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+          title: "Login",
+          centerTitle: true,
+          canBack: true,
+          hideShadow: false,
+        ),
         body: SafeArea(
           child: ListView(
             children: [

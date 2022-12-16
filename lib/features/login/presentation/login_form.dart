@@ -7,9 +7,13 @@ import '../../../core/presentation/widgets/custom_text_field.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/static/dimens.dart';
+import '../../../core/utility/enum.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../../core/utility/session_helper.dart';
+import '../../../core/utility/validation_helper.dart';
+import 'providers/login_provider.dart';
+import 'providers/login_state.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -19,144 +23,109 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _pwController = TextEditingController();
+  void submit() {
+    final provider = context.read<LoginProvider>();
+    provider.doLoginApi().listen((state) async {
+      switch (state.runtimeType) {
+        case LoginFailure:
+          final msg = getErrorMessage((state as LoginFailure).failure);
+          // showShortToast(message: msg);
+          showShortToast(message: "Periksa Email dan Password Anda");
 
-  // void submit() {
-  //   provider.doLoginApi().listen((state) async {
-  //     switch (state.runtimeType) {
-  //       case LoginLoading:
-  //         loader.show();
-  //         break;
-  //       case LoginFailure:
-  //         loader.hide();
-  //         // final msg = getLoginMessageError((state as LoginFailure).statusCode);
-  //         final msg = getErrorMessage((state as LoginFailure).failure);
-
-  //         showShortToast(message: msg);
-  //         break;
-  //       case LoginSuccess:
-  //         final session = locator<Session>();
-  //         final _data = (state as LoginSuccess).data;
-  //         loader.hide();
-
-  //         if (_data.isVerified) {
-  //           session.setToken = _data.token;
-  //           session.setLoggedIn = true;
-  //           Navigator.pushReplacementNamed(
-  //               locator<GlobalKey<NavigatorState>>().currentContext!,
-  //               Routing.MAIN);
-  //           showShortToast(message: appLoc.successLogin);
-  //         } else {
-  //           Navigator.pushNamed(
-  //             locator<GlobalKey<NavigatorState>>().currentContext!,
-  //             Routing.VERIFICATION_PHONE,
-  //             arguments: SmsVerificationPageRouteArguments(
-  //               appBarTitle: appLoc.authenticatePhone,
-  //               buttonTitle: appLoc.btnConfirmation,
-  //               descriptionTextTop: appLoc.msgOnSmsVerificationAfterRegister,
-  //               phoneNumber: convertPhoneNumber(provider.phoneController.text),
-  //               token: _data.token,
-  //               callBack: (_) {
-  //                 session.setToken = _data.token;
-  //                 session.setLoggedIn = true;
-  //                 Navigator.pushReplacementNamed(
-  //                     locator<GlobalKey<NavigatorState>>().currentContext!,
-  //                     Routing.MAIN);
-  //                 showShortToast(message: appLoc.successLogin);
-  //               },
-  //               type: OtpType.register,
-  //             ),
-  //           );
-  //         }
-
-  //         break;
-  //     }
-  //   });
-  // }
+          break;
+        case LoginSuccess:
+          Navigator.pushReplacementNamed(
+              locator<GlobalKey<NavigatorState>>().currentContext!,
+              MainPage.routeName);
+          showShortToast(message: "Login Sukses");
+          break;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: GlobalKey<FormState>(),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: SIZE_MEDIUM,
-        ),
-        child: Column(
-          children: [
-            CustomTextField(
+    return Consumer<LoginProvider>(
+      builder: (context, provider, _) => Form(
+        key: provider.formKey,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: SIZE_MEDIUM,
+          ),
+          child: Column(
+            children: [
+              CustomTextField(
                 title: "Email",
-                controller: _emailController,
+                controller: provider.emailController,
                 inputType: TextInputType.emailAddress,
-                fieldValidator: (val) {
-                  if (val.isEmpty) {
-                    return "Required";
-                  }
-                }),
-            mediumVerticalSpacing(),
-            CustomTextField(
+                fieldValidator: ValidationHelper(
+                  loc: appLoc,
+                  isError: (bool value) => provider.setEmailError = value,
+                  typeField: TypeField.email,
+                ).validate(),
+              ),
+              mediumVerticalSpacing(),
+              CustomTextField(
                 title: "Password",
-                controller: _pwController,
+                controller: provider.passwordController,
                 inputType: TextInputType.visiblePassword,
                 isSecure: true,
-                fieldValidator: (val) {
-                  if (val.isEmpty) {
-                    return "Required";
-                  }
-                }),
-            largeVerticalSpacing(),
-            InkWell(
-              onTap: () {},
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                fieldValidator: ValidationHelper(
+                  loc: appLoc,
+                  isError: (bool value) => provider.setPasswordError = value,
+                  typeField: TypeField.password,
+                ).validate(),
+              ),
+              largeVerticalSpacing(),
+              InkWell(
+                onTap: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text("Lupa Password ?",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            fontSize: FONT_MEDIUM,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.normal)),
+                  ],
+                ),
+              ),
+              largeVerticalSpacing(),
+              RoundedButton(
+                title: "Login",
+                color: secondaryColor,
+                event: () {
+                  if (provider.formKey.currentState!.validate()) submit();
+                },
+              ),
+              largeVerticalSpacing(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("Lupa Password ?",
-                      textAlign: TextAlign.end,
-                      style: const TextStyle(
+                  const Text("Belum punya akun ?",
+                      style: TextStyle(
                           fontSize: FONT_MEDIUM,
-                          color: secondaryColor,
-                          fontWeight: FontWeight.normal)),
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold)),
+                  smallHorizontalSpacing(),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, RegisterPage.routeName);
+                    },
+                    child: const Text("Daftar",
+                        style: TextStyle(
+                            fontSize: FONT_MEDIUM,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.bold)),
+                  ),
                 ],
               ),
-            ),
-            largeVerticalSpacing(),
-            RoundedButton(
-              title: "Login",
-              color: secondaryColor,
-              event: () {
-                final session = locator<Session>();
-                session.setLoggedIn = true;
-                Navigator.pushNamedAndRemoveUntil(
-                    context, MainPage.routeName, (route) => false);
-              },
-            ),
-            largeVerticalSpacing(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Belum punya akun ?",
-                    style: const TextStyle(
-                        fontSize: FONT_MEDIUM,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold)),
-                smallHorizontalSpacing(),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushReplacementNamed(
-                        context, RegisterPage.routeName);
-                  },
-                  child: Text("Daftar",
-                      style: const TextStyle(
-                          fontSize: FONT_MEDIUM,
-                          color: secondaryColor,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ],
-            ),
-            largeVerticalSpacing(),
-          ],
+              largeVerticalSpacing(),
+            ],
+          ),
         ),
       ),
     );
