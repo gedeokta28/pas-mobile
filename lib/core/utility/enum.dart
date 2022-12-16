@@ -5,7 +5,7 @@ enum TypeField {
   phone,
   password,
   confirmationPassword,
-  name,
+  username,
   receiverName,
   deliveryName,
   shippingAddress,
