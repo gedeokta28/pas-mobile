@@ -3,6 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
+import 'package:pas_mobile/features/home/data/datasources/product_data_source.dart';
+import 'package:pas_mobile/features/home/data/repositories/product_repo_impl.dart';
+import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
+import 'package:pas_mobile/features/home/presentation/providers/product_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
 import 'package:pas_mobile/features/register/data/datasources/register_data_source.dart';
 import 'package:pas_mobile/features/register/data/repositories/register_repo_impl.dart';
@@ -43,22 +48,30 @@ Future<void> init() async {
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(
       () => RegisterProvider(doRegister: locator()));
+  locator.registerFactory<ProductProvider>(
+      () => ProductProvider(getProductList: locator()));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
       () => LoginDataSourceImplementation(dio: locator()));
   locator.registerLazySingleton<RegisterDataSource>(
       () => RegisterDataSourceImplementation(dio: locator()));
+  locator.registerLazySingleton<ProductDataSource>(
+      () => ProductDataSourceImplementation(dio: locator()));
 
 //Repository
   locator.registerLazySingleton<LoginRepository>(
       () => LoginRepoImpl(dataSource: locator()));
   locator.registerLazySingleton<RegisterRepository>(
       () => RegisterRepoImpl(dataSource: locator()));
+  locator.registerLazySingleton<ProductRepsitory>(
+      () => ProductRepoImpl(dataSource: locator()));
 
 //Usecase
   locator.registerLazySingleton<DoLogin>(
       () => DoLogin(repository: locator(), session: locator()));
   locator.registerLazySingleton<DoRegister>(
       () => DoRegister(repository: locator(), session: locator()));
+  locator.registerLazySingleton<GetProductList>(
+      () => GetProductList(repository: locator()));
 }

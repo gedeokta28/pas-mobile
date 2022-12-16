@@ -4,11 +4,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:provider/provider.dart';
 
 import 'core/presentation/pages/splash_page.dart';
 import 'core/routes/route.dart';
 import 'core/utility/injection.dart';
 import 'core/utility/session_helper.dart';
+import 'features/home/presentation/providers/product_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,30 +31,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        navigatorKey: locator<GlobalKey<NavigatorState>>(),
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: primaryColor,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => locator<ProductProvider>()),
+      ],
+      child: MaterialApp(
+          navigatorKey: locator<GlobalKey<NavigatorState>>(),
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: primaryColor,
+            ),
           ),
-        ),
-        navigatorObservers: [routeObserver],
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('en', ''),
-          Locale('id', ''),
-        ],
-        // Initialize routes
-        onGenerateRoute: generateRoute,
-        home: const SplashPage(),
-        debugShowCheckedModeBanner: false,
-        builder: FlutterSmartDialog.init());
+          navigatorObservers: [routeObserver],
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('id', ''),
+          ],
+          // Initialize routes
+          onGenerateRoute: generateRoute,
+          home: const SplashPage(),
+          debugShowCheckedModeBanner: false,
+          builder: FlutterSmartDialog.init()),
+    );
   }
 }
 

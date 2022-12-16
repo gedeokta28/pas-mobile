@@ -70,26 +70,30 @@ class HomeAppBar extends StatelessWidget {
                     ),
                   ),
                 )
-              : const SizedBox(),
-          ClipRRect(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                child: Padding(
-                  padding: sessionHelper.isLoggedIn
-                      ? const EdgeInsets.all(5)
-                      : const EdgeInsets.only(
-                          left: 15.0, top: 5, right: 5, bottom: 5),
-                  child: const Icon(
-                    Icons.shopping_cart,
-                    size: 30.0,
-                    color: Colors.white,
-                  ),
+              : const SizedBox(
+                  width: 10.0,
                 ),
-                onTap: () {},
-              ),
-            ),
-          ),
+          sessionHelper.isLoggedIn
+              ? ClipRRect(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      child: Padding(
+                        padding: sessionHelper.isLoggedIn
+                            ? const EdgeInsets.all(5)
+                            : const EdgeInsets.only(
+                                left: 15.0, top: 5, right: 5, bottom: 5),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          size: 30.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                      onTap: () {},
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
         leading: IconButton(
           onPressed: () {

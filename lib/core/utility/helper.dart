@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 
@@ -77,4 +78,10 @@ void showShortToast({required String message, Color? color}) {
       msg: message,
       toastLength: Toast.LENGTH_LONG,
       timeInSecForIosWeb: 1);
+}
+
+String convertPrice(String price) {
+  double d = double.parse(price);
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
+  return currencyFormatter.format(d).toString();
 }

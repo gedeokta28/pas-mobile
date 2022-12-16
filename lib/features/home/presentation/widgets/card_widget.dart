@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
 
 class CardWidget extends StatelessWidget {
-  const CardWidget({
-    Key? key,
-  }) : super(key: key);
+  final Product product;
+
+  const CardWidget({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<Widget> _homeWidget() {
@@ -67,11 +69,11 @@ class CardWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text(
-                          "Nama Kategori",
+                        Text(
+                          product.brand,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 11.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
@@ -81,11 +83,11 @@ class CardWidget extends StatelessWidget {
                         ),
                         SizedBox(
                           height: App(context).appHeight(4),
-                          child: const Text(
-                            "GERINDA BOSCH GWS-060 4 ",
+                          child: Text(
+                            product.stockname,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 12.0,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
@@ -94,16 +96,30 @@ class CardWidget extends StatelessWidget {
                         const SizedBox(
                           height: 5.0,
                         ),
-                        const Align(
+                        Align(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            "Rp. 8090222 ",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              const Text(
+                                'Rp',
+                                maxLines: 1,
+                                style: TextStyle(
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                              Text(
+                                convertPrice(product.hrg1),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black),
+                              ),
+                            ],
                           ),
                         ),
                       ],
