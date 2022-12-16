@@ -10,7 +10,7 @@ import 'core/presentation/pages/splash_page.dart';
 import 'core/routes/route.dart';
 import 'core/utility/injection.dart';
 import 'core/utility/session_helper.dart';
-import 'features/home/presentation/providers/product_provider.dart';
+import 'features/home/presentation/providers/home_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => locator<ProductProvider>()),
+        ChangeNotifierProvider(create: (context) => locator<HomeProvider>()),
       ],
       child: MaterialApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),

@@ -3,11 +3,13 @@ import 'package:page_transition/page_transition.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
+import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/search/presentation/pages/search_page.dart';
 
 import '../../../../core/presentation/widgets/custom_search_bar.dart';
 import '../../../../core/static/dimens.dart';
 import '../../../../core/utility/injection.dart';
+import '../../../cart/presentation/cart_page.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -66,7 +68,10 @@ class HomeAppBar extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, NotificationPage.routeName);
+                      },
                     ),
                   ),
                 )
@@ -89,7 +94,9 @@ class HomeAppBar extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, CartPage.routeName);
+                      },
                     ),
                   ),
                 )

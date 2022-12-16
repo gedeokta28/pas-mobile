@@ -7,8 +7,9 @@ import 'package:pas_mobile/features/home/data/datasources/product_data_source.da
 import 'package:pas_mobile/features/home/data/repositories/product_repo_impl.dart';
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
-import 'package:pas_mobile/features/home/presentation/providers/product_provider.dart';
+import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
+import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
 import 'package:pas_mobile/features/register/data/datasources/register_data_source.dart';
 import 'package:pas_mobile/features/register/data/repositories/register_repo_impl.dart';
 import 'package:pas_mobile/features/register/domain/repositories/register_repository.dart';
@@ -48,8 +49,9 @@ Future<void> init() async {
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(
       () => RegisterProvider(doRegister: locator()));
-  locator.registerFactory<ProductProvider>(
-      () => ProductProvider(getProductList: locator()));
+  locator.registerFactory<HomeProvider>(
+      () => HomeProvider(getProductList: locator()));
+  locator.registerFactory<AppBarProvider>(() => AppBarProvider());
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(

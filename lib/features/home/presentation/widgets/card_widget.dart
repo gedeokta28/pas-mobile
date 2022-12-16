@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
+import 'package:pas_mobile/features/product/presentation/product_page.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
@@ -30,7 +31,10 @@ class CardWidget extends StatelessWidget {
     }
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, ProductDetailPage.routeName,
+            arguments: product);
+      },
       child: Container(
         width: App(context).appWidth(35),
         margin: const EdgeInsets.only(

@@ -3,7 +3,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
-import '../providers/product_provider.dart';
+import '../providers/home_provider.dart';
 import '../providers/product_state.dart';
 import 'card_widget.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ class BestProductList extends StatelessWidget {
           title: 'Product Terbaik',
         ),
         StreamBuilder<ProductState>(
-            stream: context.read<ProductProvider>().fetchProductList(),
+            stream: context.read<HomeProvider>().fetchProductList(),
             builder: (_, snap) {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {

@@ -57,15 +57,21 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.brand:
         return Center(
           child: const Text(
-            "BRAND",
-            style: TextStyle(color: Colors.black),
+            "SOON",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
       case M_BTB.order:
         return Center(
           child: const Text(
-            "ORDER",
-            style: TextStyle(color: Colors.black),
+            "SOON",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
       case M_BTB.account:
@@ -73,8 +79,11 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.info:
         return Center(
           child: const Text(
-            "INFO",
-            style: TextStyle(color: Colors.black),
+            "SOON",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
     }

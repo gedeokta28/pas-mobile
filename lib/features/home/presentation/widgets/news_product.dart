@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/home/presentation/providers/product_provider.dart';
+import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/home/presentation/providers/product_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,13 +23,11 @@ class NewsProductList extends StatelessWidget {
           title: 'Product Terbaru',
         ),
         StreamBuilder<ProductState>(
-            stream: context.read<ProductProvider>().fetchProductList(),
+            stream: context.read<HomeProvider>().fetchProductList(),
             builder: (_, snap) {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {
                   final _product = (snap.data as ProductLoaded).data;
-                  logMe("producttt");
-                  logMe(_product);
                   return SizedBox(
                     height: 210.0,
                     child: ListView.builder(

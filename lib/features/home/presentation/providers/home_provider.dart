@@ -5,7 +5,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 
 import 'product_state.dart';
 
-class ProductProvider extends ChangeNotifier {
+class HomeProvider extends ChangeNotifier {
   // initial
   final GetProductList getProductList;
   static List<Product> _listProduct = [];
@@ -14,7 +14,7 @@ class ProductProvider extends ChangeNotifier {
   List<Product> get listProduct => _listProduct;
 
   // constructor
-  ProductProvider({
+  HomeProvider({
     required this.getProductList,
   });
 
