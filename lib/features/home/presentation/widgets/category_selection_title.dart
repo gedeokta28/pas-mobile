@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 
-import '../../../../core/static/app_config.dart';
-
-class CategorySelectionTitle extends StatelessWidget {
+class ListTitleWidget extends StatelessWidget {
   final String title;
   final bool titleRight;
   final void Function() onTap;
-  const CategorySelectionTitle({
+  const ListTitleWidget({
     Key? key,
     required this.title,
     required this.onTap,

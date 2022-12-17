@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
+import 'dart:math' as math;
 
 class CardSelectionWidget extends StatelessWidget {
-  const CardSelectionWidget({
-    Key? key,
-  }) : super(key: key);
+  final Category category;
+  const CardSelectionWidget({Key? key, required this.category})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {},
       child: Container(
         width: App(context).appWidth(40),
-        margin: const EdgeInsets.only(
-            left: 12,
-            right: 12,
-            top: 15,
-            bottom: 10), // bottom:20 == error police line
+        margin: const EdgeInsets.only(left: 8, top: 10, bottom: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+              .withOpacity(1.0),
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
@@ -30,30 +29,33 @@ class CardSelectionWidget extends StatelessWidget {
           ],
         ),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "Nama KategoriNama Kategori",
+                  category.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                      fontSize: 12.0,
+                  style: const TextStyle(
+                      fontSize: 13.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black),
+                      color: Colors.white),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 50,
-                width: 50,
-                child: DynamicCachedNetworkImage(
-                  imageUrl:
-                      'https://cdn.pixabay.com/photo/2013/07/12/19/30/power-drill-154903__480.png',
-                  boxFit: BoxFit.cover,
+              padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              child: SizedBox(
+                height: App(context).appHeight(4),
+                width: App(context).appHeight(4),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  child: DynamicCachedNetworkImage(
+                    imageUrl: category.image,
+                    boxFit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

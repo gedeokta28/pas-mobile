@@ -19,7 +19,7 @@ class CategoryItem extends StatelessWidget {
         contentPadding: const EdgeInsets.all(0.0),
         leading: CachedNetworkImage(
           height: App(context).appHeight(4),
-          width: App(context).appWidth(6),
+          width: App(context).appWidth(8),
           imageUrl: category.image,
           placeholder: (context, url) => Image.asset(
             LOADING_GIF,

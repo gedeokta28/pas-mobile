@@ -13,6 +13,7 @@ import 'package:provider/provider.dart';
 import '../../../core/static/assets.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/utility/injection.dart';
+import '../../product/presentation/product_detail_page.dart';
 import 'widgets/home_app_bar.dart';
 
 class ProductPage extends StatelessWidget {
@@ -81,7 +82,14 @@ class ProductPage extends StatelessWidget {
                               ),
                               itemCount: _product.length,
                               itemBuilder: (BuildContext ctx, index) {
-                                return CustomCard(product: _product[index]);
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, ProductDetailPage.routeName,
+                                          arguments: _product[index]);
+                                    },
+                                    child:
+                                        CustomCard(product: _product[index]));
                               }),
                         ),
                       ],

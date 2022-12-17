@@ -19,7 +19,7 @@ class NewsProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CategorySelectionTitle(
+        ListTitleWidget(
           onTap: () {
             Navigator.pushNamed(context, ProductPage.routeName);
           },

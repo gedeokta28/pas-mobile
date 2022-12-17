@@ -51,8 +51,8 @@ Future<void> init() async {
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(
       () => RegisterProvider(doRegister: locator()));
-  locator.registerFactory<HomeProvider>(
-      () => HomeProvider(getProductList: locator()));
+  locator.registerFactory<HomeProvider>(() =>
+      HomeProvider(getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(() => AppBarProvider());

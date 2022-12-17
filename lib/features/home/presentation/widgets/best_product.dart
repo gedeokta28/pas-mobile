@@ -18,7 +18,7 @@ class BestProductList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CategorySelectionTitle(
+        ListTitleWidget(
           onTap: () {
             Navigator.pushNamed(context, ProductPage.routeName);
           },
@@ -68,13 +68,6 @@ class BestProductList extends StatelessWidget {
                           },
                         ),
                       ));
-                  // return Center(
-                  //   child: Image.asset(
-                  //     ASSETS_LOADING,
-                  //     height: 100.0,
-                  //     width: 100.0,
-                  //   ),
-                  // );
                 }
               }
               return const SizedBox.shrink();
