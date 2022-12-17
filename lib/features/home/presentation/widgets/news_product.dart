@@ -8,6 +8,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/presentation/widgets/shimmer_card.dart';
 import '../../../../core/static/app_config.dart';
+import '../product_page.dart';
 import 'card_widget.dart';
 import 'category_selection_title.dart';
 
@@ -19,7 +20,9 @@ class NewsProductList extends StatelessWidget {
     return Column(
       children: [
         CategorySelectionTitle(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, ProductPage.routeName);
+          },
           title: 'Product Terbaru',
         ),
         StreamBuilder<ProductState>(
@@ -29,17 +32,20 @@ class NewsProductList extends StatelessWidget {
                 if (snap.data is ProductLoaded) {
                   final _product = (snap.data as ProductLoaded).data;
                   return SizedBox(
-                    height: 210.0,
-                    child: ListView.builder(
-                        physics: const ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _product.length > 6 ? 5 : _product.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CardWidget(
-                            product: _product[index],
-                          );
-                        }),
+                    height: App(context).appHeight(31),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10.0),
+                      child: ListView.builder(
+                          physics: const ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _product.length > 6 ? 5 : _product.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CardWidget(
+                              product: _product[index],
+                            );
+                          }),
+                    ),
                   );
                 } else if (snap.data is ProductLoading) {
                   return SizedBox(

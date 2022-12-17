@@ -6,15 +6,15 @@ import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/search/presentation/pages/search_page.dart';
 
+import '../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../core/presentation/widgets/custom_search_bar.dart';
 import '../../../../core/static/dimens.dart';
 import '../../../../core/utility/injection.dart';
 import '../../../cart/presentation/cart_page.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({
-    Key? key,
-  }) : super(key: key);
+  final bool isFromHome;
+  const HomeAppBar({Key? key, this.isFromHome = true}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -102,21 +102,25 @@ class HomeAppBar extends StatelessWidget {
                 )
               : const SizedBox(),
         ],
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                type: PageTransitionType.leftToRight,
-                child: const CategoryPage(),
-              ),
-            );
-          },
-          icon: const Icon(
-            Icons.category_sharp,
-            color: Colors.white,
-            size: 30.0,
-          ),
-        ));
+        leading: isFromHome
+            ? IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.leftToRight,
+                      child: const CategoryPage(),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.category_sharp,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+              )
+            : const CustomBackButton(
+                iconTint: Colors.white,
+              ));
   }
 }

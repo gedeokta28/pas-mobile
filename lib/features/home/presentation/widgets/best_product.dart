@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
@@ -8,6 +9,7 @@ import '../providers/product_state.dart';
 import 'card_widget.dart';
 import 'package:provider/provider.dart';
 import 'category_selection_title.dart';
+import 'custom_card.dart';
 
 class BestProductList extends StatelessWidget {
   const BestProductList({Key? key}) : super(key: key);
@@ -17,7 +19,9 @@ class BestProductList extends StatelessWidget {
     return Column(
       children: [
         CategorySelectionTitle(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, ProductPage.routeName);
+          },
           title: 'Product Terbaik',
         ),
         StreamBuilder<ProductState>(
@@ -26,9 +30,8 @@ class BestProductList extends StatelessWidget {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {
                   final _product = (snap.data as ProductLoaded).data;
-
                   return SizedBox(
-                    height: 210.0,
+                    height: App(context).appHeight(31),
                     child: ListView.builder(
                         physics: const ClampingScrollPhysics(),
                         shrinkWrap: true,
