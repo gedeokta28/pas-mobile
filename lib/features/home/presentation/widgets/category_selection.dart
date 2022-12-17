@@ -70,19 +70,31 @@ class CategorySelectionList extends StatelessWidget {
                       ));
                 }
               }
-              return const SizedBox.shrink();
+              return SizedBox(
+                  height: App(context).appHeight(12),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 10.0),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Shimmer.fromColors(
+                          direction: ShimmerDirection.ltr,
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              width: App(context).appWidth(35),
+                              color: Colors.grey.shade300,
+                              margin: const EdgeInsets.only(bottom: 10),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ));
             }),
-        // SizedBox(
-        //   height: 90.0,
-        //   child: ListView.builder(
-        //       physics: const ClampingScrollPhysics(),
-        //       shrinkWrap: true,
-        //       scrollDirection: Axis.horizontal,
-        //       itemCount: 15,
-        //       itemBuilder: (BuildContext context, int index) {
-        //         return const CardSelectionWidget();
-        //       }),
-        // ),
       ],
     );
   }

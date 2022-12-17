@@ -70,7 +70,30 @@ class BestProductList extends StatelessWidget {
                       ));
                 }
               }
-              return const SizedBox.shrink();
+              return SizedBox(
+                  height: 160.0,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12.0, top: 10.0),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return Shimmer.fromColors(
+                          direction: ShimmerDirection.ltr,
+                          baseColor: Colors.grey.shade300,
+                          highlightColor: Colors.grey.shade100,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: Container(
+                              width: App(context).appWidth(35),
+                              color: Colors.grey.shade300,
+                              margin: const EdgeInsets.only(bottom: 10),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ));
             }),
       ],
     );
