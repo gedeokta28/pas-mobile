@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
 
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({Key? key}) : super(key: key);
+  final Category category;
+
+  const CategoryItem({Key? key, required this.category}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +18,9 @@ class CategoryItem extends StatelessWidget {
         dense: true,
         contentPadding: const EdgeInsets.all(0.0),
         leading: CachedNetworkImage(
-          height: App(context).appHeight(6),
+          height: App(context).appHeight(4),
           width: App(context).appWidth(6),
-          imageUrl:
-              'https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg',
+          imageUrl: category.image,
           placeholder: (context, url) => Image.asset(
             LOADING_GIF,
             fit: BoxFit.cover,
@@ -34,8 +36,8 @@ class CategoryItem extends StatelessWidget {
         ),
         title: Transform.translate(
           offset: const Offset(-16, 0),
-          child: const Text(
-            "Nama kategory",
+          child: Text(
+            category.name,
             style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,

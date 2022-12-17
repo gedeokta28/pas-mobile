@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 
 import '../../../../core/utility/helper.dart';
 
 abstract class ProductDataSource {
   Future<ProductListResponseModel> getProductList();
+  Future<CategoryListResponseModel> getCategoryList();
 }
 
 class ProductDataSourceImplementation implements ProductDataSource {
@@ -22,6 +24,24 @@ class ProductDataSourceImplementation implements ProductDataSource {
         options: options(headers: null),
       );
       final model = ProductListResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      logMe("errorr");
+      logMe(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CategoryListResponseModel> getCategoryList() async {
+    String url = 'api/categories';
+
+    try {
+      final response = await dio.get(
+        url,
+        options: options(headers: null),
+      );
+      final model = CategoryListResponseModel.fromJson(response.data);
       return model;
     } catch (e) {
       logMe("errorr");

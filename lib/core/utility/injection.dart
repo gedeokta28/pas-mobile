@@ -3,9 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
+import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/home/data/datasources/product_data_source.dart';
 import 'package:pas_mobile/features/home/data/repositories/product_repo_impl.dart';
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
@@ -51,6 +53,8 @@ Future<void> init() async {
       () => RegisterProvider(doRegister: locator()));
   locator.registerFactory<HomeProvider>(
       () => HomeProvider(getProductList: locator()));
+  locator.registerFactory<CategoryProvider>(
+      () => CategoryProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(() => AppBarProvider());
 
 //Datasource
@@ -76,4 +80,6 @@ Future<void> init() async {
       () => DoRegister(repository: locator(), session: locator()));
   locator.registerLazySingleton<GetProductList>(
       () => GetProductList(repository: locator()));
+  locator.registerLazySingleton<GetCategoryList>(
+      () => GetCategoryList(repository: locator()));
 }

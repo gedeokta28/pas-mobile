@@ -36,7 +36,7 @@ class ProductDescription extends StatelessWidget {
                 const Text(
                   'Rp',
                   style: TextStyle(
-                      fontSize: 24.0,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
@@ -51,9 +51,9 @@ class ProductDescription extends StatelessWidget {
               ],
             ),
           ),
-          Divider(),
+          const Divider(),
           smallVerticalSpacing(),
-          Text(
+          const Text(
             'Detail Produk',
             style: TextStyle(
                 fontSize: 14.0,
@@ -62,7 +62,7 @@ class ProductDescription extends StatelessWidget {
           ),
           smallVerticalSpacing(),
           Row(
-            children: [
+            children: const [
               Flexible(
                 child: Text(
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
@@ -73,6 +73,16 @@ class ProductDescription extends StatelessWidget {
               ),
             ],
           ),
+          largeVerticalSpacing(),
+          const Center(
+            child: Text(
+              'SOON',
+              style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+          )
         ],
       ),
     );

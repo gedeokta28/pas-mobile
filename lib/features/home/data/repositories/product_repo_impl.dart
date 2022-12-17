@@ -6,6 +6,7 @@ import 'package:pas_mobile/features/home/data/models/product_list_response_model
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
 
 import '../../../../core/error/failures.dart';
+import '../models/category_list_response_model.dart';
 
 class ProductRepoImpl implements ProductRepsitory {
   final ProductDataSource dataSource;
@@ -16,6 +17,17 @@ class ProductRepoImpl implements ProductRepsitory {
   Future<Either<Failure, ProductListResponseModel>> getProductList() async {
     try {
       final data = await dataSource.getProductList();
+      return Right(data);
+    } on DioError catch (e) {
+      logMe("Failure Login Repo ${e.error}");
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, CategoryListResponseModel>> getCategoryList() async {
+    try {
+      final data = await dataSource.getCategoryList();
       return Right(data);
     } on DioError catch (e) {
       logMe("Failure Login Repo ${e.error}");

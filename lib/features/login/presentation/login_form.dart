@@ -77,21 +77,21 @@ class _LoginFormState extends State<LoginForm> {
                 ).validate(),
               ),
               largeVerticalSpacing(),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text("Lupa Password ?",
-                        textAlign: TextAlign.end,
-                        style: TextStyle(
-                            fontSize: FONT_MEDIUM,
-                            color: secondaryColor,
-                            fontWeight: FontWeight.normal)),
-                  ],
-                ),
-              ),
-              largeVerticalSpacing(),
+              // InkWell(
+              //   onTap: () {},
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: const [
+              //       Text("Lupa Password ?",
+              //           textAlign: TextAlign.end,
+              //           style: TextStyle(
+              //               fontSize: FONT_MEDIUM,
+              //               color: secondaryColor,
+              //               fontWeight: FontWeight.normal)),
+              //     ],
+              //   ),
+              // ),
+              // largeVerticalSpacing(),
               RoundedButton(
                 title: "Login",
                 color: secondaryColor,
