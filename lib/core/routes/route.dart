@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
+import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
@@ -30,6 +31,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const NotificationPage());
     case ProductPage.routeName:
       return MaterialPageRoute(builder: (_) => const ProductPage());
+    case ForgotPasswordPage.routeName:
+      return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
     case ProductDetailPage.routeName:
       final product = settings.arguments as Product;
       return MaterialPageRoute(

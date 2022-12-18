@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 import 'package:provider/provider.dart';
 
@@ -77,21 +78,23 @@ class _LoginFormState extends State<LoginForm> {
                 ).validate(),
               ),
               largeVerticalSpacing(),
-              // InkWell(
-              //   onTap: () {},
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: const [
-              //       Text("Lupa Password ?",
-              //           textAlign: TextAlign.end,
-              //           style: TextStyle(
-              //               fontSize: FONT_MEDIUM,
-              //               color: secondaryColor,
-              //               fontWeight: FontWeight.normal)),
-              //     ],
-              //   ),
-              // ),
-              // largeVerticalSpacing(),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, ForgotPasswordPage.routeName);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Text("Lupa Password ?",
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            fontSize: FONT_MEDIUM,
+                            color: secondaryColor,
+                            fontWeight: FontWeight.normal)),
+                  ],
+                ),
+              ),
+              largeVerticalSpacing(),
               RoundedButton(
                 title: "Login",
                 color: secondaryColor,

@@ -23,7 +23,7 @@ class ProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height) / 103;
+    final double itemHeight = (size.height) / 102;
     final double itemWidth = size.width / 60;
     return ChangeNotifierProvider(
       create: (_) => locator<HomeProvider>(),
