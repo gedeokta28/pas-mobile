@@ -8,3 +8,5 @@ const String LOADING_GIF = 'assets/images/loading.gif';
 const String ASSETS_PLACEHOLDER = 'assets/images/placeholder.png';
 const String ASSETS_LOGIN = 'assets/images/login_pict.png';
 const String ASSETS_LOADING = 'assets/images/loading-circle.gif';
+const String ASSET_ICON_UPDOWN = 'assets/icons/up-down-icon.png';
+const String ASSET_FILTER_ICON = 'assets/icons/filter-icon.png';

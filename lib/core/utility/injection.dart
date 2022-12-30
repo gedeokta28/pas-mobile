@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
+import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
 import 'package:pas_mobile/features/forgot_password/data/datasources/forgot_password_data_source.dart';
 import 'package:pas_mobile/features/forgot_password/data/repositories/forgot_pass_repo_impl.dart';
 import 'package:pas_mobile/features/forgot_password/domain/repositories/forgot_password_repository.dart';
@@ -17,6 +18,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
+import 'package:pas_mobile/features/product/presentation/providers/search_result_provider.dart';
 import 'package:pas_mobile/features/register/data/datasources/register_data_source.dart';
 import 'package:pas_mobile/features/register/data/repositories/register_repo_impl.dart';
 import 'package:pas_mobile/features/register/domain/repositories/register_repository.dart';
@@ -58,10 +60,14 @@ Future<void> init() async {
       () => RegisterProvider(doRegister: locator()));
   locator.registerFactory<HomeProvider>(() =>
       HomeProvider(getProductList: locator(), getCategoryList: locator()));
+  locator.registerFactory<SearchResultProvider>(() => SearchResultProvider(
+      getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
       () => ForgotPasswordProvider(doForgotPassword: locator()));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
+  locator.registerFactory<FilterProvider>(
+      () => FilterProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(() => AppBarProvider());
 
 //Datasource

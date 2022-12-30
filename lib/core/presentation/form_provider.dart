@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 class FormProvider with ChangeNotifier {
   // initial
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _priceMinController = TextEditingController();
+  final TextEditingController _priceMaxController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -30,6 +32,8 @@ class FormProvider with ChangeNotifier {
 
   // getter
   TextEditingController get emailController => _emailController;
+  TextEditingController get priceMinController => _priceMinController;
+  TextEditingController get priceMaxController => _priceMaxController;
   TextEditingController get passwordController => _passwordController;
   TextEditingController get usernameController => _usernameController;
   GlobalKey<FormState> get formKey => _formKey;

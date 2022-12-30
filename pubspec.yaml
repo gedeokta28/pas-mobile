@@ -40,11 +40,13 @@ dependencies:
   get_it: ^7.2.0
   card_swiper: ^2.0.1
   provider: ^6.0.4
+  pattern_formatter: ^2.0.0
   cached_network_image: ^3.2.0
   shimmer: ^2.0.0
   dartz: ^0.10.1
   connectivity_plus: ^2.2.1
   page_transition: ^2.0.9
+  readmore: ^2.2.0
   equatable: ^2.0.3
   dio: ^4.0.4
   dio_logger: ^4.0.8+8

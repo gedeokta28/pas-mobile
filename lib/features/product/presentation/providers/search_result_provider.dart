@@ -3,15 +3,16 @@ import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 
-import '../../domain/usecases/get_category_list.dart';
-import 'category_selection_state.dart';
-import 'product_state.dart';
+import '../../../home/domain/usecases/get_category_list.dart';
+import '../../../home/presentation/providers/category_selection_state.dart';
+import '../../../home/presentation/providers/product_state.dart';
 
-class HomeProvider extends ChangeNotifier {
+class SearchResultProvider extends ChangeNotifier {
   // initial
   final GetCategoryList getCategoryList;
   final GetProductList getProductList;
   static List<Product> _listProduct = [];
+  late bool _productLoaded = false;
   String _selectedValue = "terbaru";
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
@@ -24,6 +25,7 @@ class HomeProvider extends ChangeNotifier {
 
   // getter
   List<Product> get listProduct => _listProduct;
+  bool get productLoaded => _productLoaded;
   String get selectedValue => _selectedValue;
 
   //set
@@ -33,7 +35,8 @@ class HomeProvider extends ChangeNotifier {
   }
 
   // constructor
-  HomeProvider({required this.getProductList, required this.getCategoryList});
+  SearchResultProvider(
+      {required this.getProductList, required this.getCategoryList});
 
   Stream<ProductState> fetchProductList() async* {
     yield ProductLoading();
@@ -45,6 +48,8 @@ class HomeProvider extends ChangeNotifier {
       },
       (data) async* {
         _listProduct = data.data;
+        _productLoaded = true;
+        notifyListeners();
         yield ProductLoaded(data: _listProduct);
       },
     );

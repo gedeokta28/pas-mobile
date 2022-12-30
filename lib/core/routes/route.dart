@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
+import 'package:pas_mobile/features/filter/presentation/filter_page.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
@@ -10,6 +11,8 @@ import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 
+import '../../features/filter/presentation/filter_category_page.dart';
+import '../../features/product/presentation/search_result_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
 import '../presentation/pages/splash_page.dart';
 
@@ -33,6 +36,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ProductPage());
     case ForgotPasswordPage.routeName:
       return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
+    case FilterPage.routeName:
+      return MaterialPageRoute(builder: (_) => const FilterPage());
     case ProductDetailPage.routeName:
       final product = settings.arguments as Product;
       return MaterialPageRoute(
