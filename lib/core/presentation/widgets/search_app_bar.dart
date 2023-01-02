@@ -29,10 +29,6 @@ class SearchAppBar extends StatelessWidget {
             focusNode: search.focusNode,
             onFocus: (focus) => search.setFocus = focus,
             onChanged: (value) {
-              // if (value == "") {
-              //   logMe("emptyyyy");
-              //   search.clearList();
-              // }
               search.setSearch = value;
             },
           );

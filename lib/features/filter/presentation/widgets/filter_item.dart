@@ -17,27 +17,29 @@ class FilterItem extends StatelessWidget {
       child: ListTile(
         dense: true,
         contentPadding: const EdgeInsets.all(0.0),
-        leading: CachedNetworkImage(
-          height: App(context).appHeight(4),
-          width: App(context).appWidth(8),
-          imageUrl: category.image,
-          placeholder: (context, url) => Image.asset(
-            LOADING_GIF,
-            fit: BoxFit.cover,
-          ),
-          errorWidget: (context, url, error) => Image.asset(
-            ASSETS_PLACEHOLDER,
-            fit: BoxFit.cover,
-          ),
-          imageBuilder: (context, imageProvider) => Image(
-            image: imageProvider,
-            fit: BoxFit.cover,
-          ),
-        ),
+        leading: category.photo == null
+            ? Image.asset(ASSETS_PLACEHOLDER)
+            : CachedNetworkImage(
+                height: App(context).appHeight(4),
+                width: App(context).appWidth(8),
+                imageUrl: category.photo,
+                placeholder: (context, url) => Image.asset(
+                  LOADING_GIF,
+                  fit: BoxFit.cover,
+                ),
+                errorWidget: (context, url, error) => Image.asset(
+                  ASSETS_PLACEHOLDER,
+                  fit: BoxFit.cover,
+                ),
+                imageBuilder: (context, imageProvider) => Image(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                ),
+              ),
         title: Transform.translate(
           offset: const Offset(-16, 0),
           child: Text(
-            category.name,
+            category.categoryname,
             style: TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,

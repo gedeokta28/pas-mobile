@@ -39,6 +39,7 @@ class SearchResultProvider extends ChangeNotifier {
       {required this.getProductList, required this.getCategoryList});
 
   Stream<ProductState> fetchProductList() async* {
+    logMe("asdaaa");
     yield ProductLoading();
 
     final result = await getProductList();
@@ -53,6 +54,11 @@ class SearchResultProvider extends ChangeNotifier {
         yield ProductLoaded(data: _listProduct);
       },
     );
+  }
+
+  fetchProductList1() {
+    logMe("asdasdasda ss");
+    fetchProductList().listen((event) {});
   }
 
   Stream<CategorySelectionState> fetchCategoryList() async* {

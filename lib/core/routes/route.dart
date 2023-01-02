@@ -38,6 +38,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
     case FilterPage.routeName:
       return MaterialPageRoute(builder: (_) => const FilterPage());
+    case SearchResultPage.routeName:
+      return MaterialPageRoute(builder: (_) => const SearchResultPage());
     case ProductDetailPage.routeName:
       final product = settings.arguments as Product;
       return MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
@@ -35,7 +36,7 @@ class CardSelectionWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  category.name,
+                  category.categoryname,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -51,12 +52,13 @@ class CardSelectionWidget extends StatelessWidget {
                 height: App(context).appHeight(4),
                 width: App(context).appHeight(4),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                  child: DynamicCachedNetworkImage(
-                    imageUrl: category.image,
-                    boxFit: BoxFit.cover,
-                  ),
-                ),
+                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    child: category.photo != null
+                        ? DynamicCachedNetworkImage(
+                            imageUrl: category.photo,
+                            boxFit: BoxFit.cover,
+                          )
+                        : Image.asset(ASSETS_PLACEHOLDER)),
               ),
             ),
           ],

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
+import '../../../../core/static/assets.dart';
+import '../../data/models/product_list_response_model.dart';
 
 class CardWidget extends StatelessWidget {
   final Product product;
@@ -19,13 +20,19 @@ class CardWidget extends StatelessWidget {
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
-          child: DynamicCachedNetworkImage(
-            imageUrl:
-                'https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg',
-            height: App(context).appHeight(15),
-            width: double.infinity,
-            boxFit: BoxFit.cover,
-          ),
+          child: product.images.isEmpty
+              ? Image.asset(
+                  ASSETS_PLACEHOLDER,
+                  height: App(context).appHeight(15),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
+              : DynamicCachedNetworkImage(
+                  imageUrl: product.images[0].url,
+                  height: App(context).appHeight(15),
+                  width: double.infinity,
+                  boxFit: BoxFit.cover,
+                ),
         ),
       ];
     }
@@ -74,7 +81,7 @@ class CardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          product.brand,
+                          product.categoryname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

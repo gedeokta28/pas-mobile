@@ -49,7 +49,9 @@ class Product {
     required this.stockname,
     required this.barcode,
     required this.brand,
+    required this.brandname,
     required this.categoryid,
+    required this.categoryname,
     required this.hrg1,
     required this.disclist1,
     required this.hrg2,
@@ -65,13 +67,16 @@ class Product {
     required this.berat,
     required this.discountinued,
     required this.photourl,
+    required this.images,
   });
 
   String stockid;
   String stockname;
   String barcode;
   String brand;
+  String brandname;
   String categoryid;
+  String categoryname;
   String hrg1;
   String disclist1;
   String hrg2;
@@ -86,14 +91,17 @@ class Product {
   String unit3;
   String berat;
   String discountinued;
-  dynamic photourl;
+  String? photourl;
+  List<ImageProduct> images;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         stockid: json["stockid"],
         stockname: json["stockname"],
         barcode: json["barcode"],
         brand: json["brand"],
+        brandname: json["brandname"],
         categoryid: json["categoryid"],
+        categoryname: json["categoryname"],
         hrg1: json["hrg1"],
         disclist1: json["disclist1"],
         hrg2: json["hrg2"],
@@ -109,6 +117,8 @@ class Product {
         berat: json["berat"],
         discountinued: json["discountinued"],
         photourl: json["photourl"] ?? '',
+        images: List<ImageProduct>.from(
+            json["images"].map((x) => ImageProduct.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -116,7 +126,9 @@ class Product {
         "stockname": stockname,
         "barcode": barcode,
         "brand": brand,
+        "brandname": brandname,
         "categoryid": categoryid,
+        "categoryname": categoryname,
         "hrg1": hrg1,
         "disclist1": disclist1,
         "hrg2": hrg2,
@@ -132,6 +144,27 @@ class Product {
         "berat": berat,
         "discountinued": discountinued,
         "photourl": photourl ?? '',
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
+      };
+}
+
+class ImageProduct {
+  ImageProduct({
+    required this.id,
+    required this.url,
+  });
+
+  String id;
+  String url;
+
+  factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
+        id: json["id"],
+        url: json["url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "url": url,
       };
 }
 
@@ -146,7 +179,7 @@ class Links {
   String first;
   String last;
   dynamic prev;
-  dynamic next;
+  String next;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         first: json["first"],
@@ -209,23 +242,23 @@ class Meta {
 
 class Link {
   Link({
-    this.url,
+    required this.url,
     required this.label,
     required this.active,
   });
 
-  dynamic url;
+  String? url;
   String label;
   bool active;
 
   factory Link.fromJson(Map<String, dynamic> json) => Link(
-        url: json["url"],
+        url: json["url"] ?? '',
         label: json["label"],
         active: json["active"],
       );
 
   Map<String, dynamic> toJson() => {
-        "url": url,
+        "url": url ?? '',
         "label": label,
         "active": active,
       };

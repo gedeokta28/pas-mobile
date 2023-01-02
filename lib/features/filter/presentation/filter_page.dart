@@ -142,7 +142,8 @@ class FilterPage extends StatelessWidget {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        provider.selectedFilter[index].name,
+                                        provider
+                                            .selectedFilter[index].categoryname,
                                         style: TextStyle(
                                             fontSize: 13,
                                             color: Colors.grey,

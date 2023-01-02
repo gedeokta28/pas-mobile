@@ -36,8 +36,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => locator<HomeProvider>()),
-        ChangeNotifierProvider(
-            create: (context) => locator<SearchResultProvider>()),
         ChangeNotifierProvider(create: (context) => locator<SearchProvider>()),
       ],
       child: MaterialApp(

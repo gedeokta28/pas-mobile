@@ -61,12 +61,13 @@ class FilterCategoryPage extends StatelessWidget {
                                         left: 10.0, right: 10.0),
                                     child: CheckboxListTile(
                                       contentPadding: EdgeInsets.zero,
-                                      title: Text(_category[index].name),
-                                      value: filter
-                                          .isDataExist(_category[index].id),
+                                      title:
+                                          Text(_category[index].categoryname),
+                                      value: filter.isDataExist(
+                                          _category[index].categoryid),
                                       onChanged: (_) {
-                                        if (filter
-                                            .isDataExist(_category[index].id)) {
+                                        if (filter.isDataExist(
+                                            _category[index].categoryid)) {
                                           filter
                                               .removeSelected(_category[index]);
                                         } else {

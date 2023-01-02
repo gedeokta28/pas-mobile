@@ -41,7 +41,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             body: CustomScrollView(
               slivers: [
                 ProductAppBar(
-                  imageUrl: widget.product.photourl,
+                  imageUrl: widget.product.photourl!,
                 ),
                 SliverToBoxAdapter(
                   child: Column(

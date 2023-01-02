@@ -53,7 +53,8 @@ Future<void> init() async {
       () => GlobalKey<NavigatorState>());
 
 //Providers
-  locator.registerFactory<SearchProvider>(() => SearchProvider());
+  locator.registerFactory<SearchProvider>(
+      () => SearchProvider(getProductList: locator()));
   locator
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(

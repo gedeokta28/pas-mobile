@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/static/assets.dart';
 
 import '../../../../core/static/app_config.dart';
 import '../../../../core/utility/helper.dart';
@@ -21,12 +22,16 @@ class CustomCard extends StatelessWidget {
           children: [
             Container(
               height: (size.height) / 8,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        "https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg",
-                      ),
-                      fit: BoxFit.cover)),
+              decoration: BoxDecoration(
+                  image: product.images.isEmpty
+                      ? DecorationImage(
+                          image: AssetImage(ASSETS_PLACEHOLDER),
+                          fit: BoxFit.cover)
+                      : DecorationImage(
+                          image: NetworkImage(
+                            product.images[0].url,
+                          ),
+                          fit: BoxFit.cover)),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -40,7 +45,7 @@ class CustomCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          product.categoryid,
+                          product.categoryname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

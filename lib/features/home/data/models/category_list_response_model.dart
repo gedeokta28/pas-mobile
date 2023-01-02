@@ -12,49 +12,50 @@ String categoryListResponseModelToJson(CategoryListResponseModel data) =>
 
 class CategoryListResponseModel {
   CategoryListResponseModel({
+    required this.data,
     required this.status,
     required this.message,
-    required this.data,
   });
 
+  List<Category> data;
   String status;
   String message;
-  List<Category> data;
 
   factory CategoryListResponseModel.fromJson(Map<String, dynamic> json) =>
       CategoryListResponseModel(
+        data:
+            List<Category>.from(json["data"].map((x) => Category.fromJson(x))),
         status: json["status"],
         message: json["message"],
-        data: List<Category>.from(json["data"].map((x) => Category.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "status": status,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
 
 class Category {
   Category({
-    required this.id,
-    required this.image,
-    required this.name,
+    required this.categoryid,
+    required this.categoryname,
+    required this.photo,
   });
 
-  int id;
-  String image;
-  String name;
+  String categoryid;
+  String categoryname;
+  dynamic photo;
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json["id"],
-        image: json["image"],
-        name: json["name"],
+        categoryid: json["categoryid"],
+        categoryname: json["categoryname"],
+        photo: json["photo"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "image": image,
-        "name": name,
+        "categoryid": categoryid,
+        "categoryname": categoryname,
+        "photo": photo,
       };
 }

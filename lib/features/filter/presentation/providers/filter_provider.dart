@@ -34,12 +34,12 @@ class FilterProvider extends FormProvider {
   }
 
   removeSelected(Category val) {
-    _selectedFilter.removeWhere((item) => item.id == val.id);
+    _selectedFilter.removeWhere((item) => item.categoryid == val.categoryid);
     notifyListeners();
   }
 
-  bool isDataExist(int value) {
-    var data = _selectedFilter.where((row) => (row.id == value));
+  bool isDataExist(String value) {
+    var data = _selectedFilter.where((row) => (row.categoryid == value));
     if (data.isNotEmpty) {
       return true;
     } else {
