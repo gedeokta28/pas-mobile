@@ -11,3 +11,5 @@ enum TypeField {
   shippingAddress,
   shippingAddressDetail,
 }
+
+enum TypeFilter { onlyKeyword, onlyCategory, onlyBrand }

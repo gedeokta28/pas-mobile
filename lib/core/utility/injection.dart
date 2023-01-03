@@ -25,8 +25,9 @@ import 'package:pas_mobile/features/register/domain/repositories/register_reposi
 import 'package:pas_mobile/features/register/domain/usecases/do_register.dart';
 import 'package:pas_mobile/features/register/presentation/providers/register_provider.dart';
 import 'package:pas_mobile/features/search/data/repositories/search_product_repo_impl.dart';
-import 'package:pas_mobile/features/search/data/search_product_datasource.dart';
+import 'package:pas_mobile/features/search/data/datasources/search_product_datasource.dart';
 import 'package:pas_mobile/features/search/domain/repositories/search_product_repositories.dart';
+import 'package:pas_mobile/features/search/domain/usecases/do_filter_product.dart';
 import 'package:pas_mobile/features/search/domain/usecases/do_search_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,8 +58,10 @@ Future<void> init() async {
       () => GlobalKey<NavigatorState>());
 
 //Providers
-  locator.registerFactory<SearchProvider>(() =>
-      SearchProvider(getProductList: locator(), doSearchProduct: locator()));
+  locator.registerFactory<SearchProvider>(() => SearchProvider(
+      getProductList: locator(),
+      doSearchProduct: locator(),
+      doFilterProduct: locator()));
   locator
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(
@@ -112,4 +115,6 @@ Future<void> init() async {
       () => DoForgotPassword(repository: locator()));
   locator.registerLazySingleton<DoSearchProduct>(
       () => DoSearchProduct(repository: locator()));
+  locator.registerLazySingleton<DoFilterProduct>(
+      () => DoFilterProduct(repository: locator()));
 }
