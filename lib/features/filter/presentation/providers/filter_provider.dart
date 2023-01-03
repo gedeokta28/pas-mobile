@@ -10,7 +10,16 @@ class FilterProvider extends FormProvider {
   // initial
   final GetCategoryList getCategoryList;
   List<Category> _selectedFilter = [];
+  List<String> _selectedCategoryFilter = [];
   List<Category> get selectedFilter => _selectedFilter;
+  List<String> get selectedCategoryFilter => _selectedCategoryFilter;
+  int _priceStart = 0;
+  String _mapCategory = '';
+  int _priceEnd = 0;
+
+  int get priceStart => _priceStart;
+  String get mapCategory => _mapCategory;
+  int get priceEnd => _priceEnd;
 
   setSelectedFilter(value) {
     _selectedFilter = value;
@@ -38,6 +47,19 @@ class FilterProvider extends FormProvider {
     notifyListeners();
   }
 
+  convertListCategory() {
+    for (var i = 0; i < _selectedFilter.length; i++) {
+      _selectedCategoryFilter.add(_selectedFilter[i].categoryid);
+    }
+
+    _mapCategory = _selectedCategoryFilter.toString();
+    _mapCategory = _mapCategory.replaceAll('[', '');
+    _mapCategory = _mapCategory.replaceAll(']', '');
+    _mapCategory = _mapCategory.replaceAll(' ', '');
+    logMe(mapCategory);
+    notifyListeners();
+  }
+
   bool isDataExist(String value) {
     var data = _selectedFilter.where((row) => (row.categoryid == value));
     if (data.isNotEmpty) {
@@ -59,13 +81,28 @@ class FilterProvider extends FormProvider {
     int minPrice, maxPrice;
     minPriceTxt = priceMin;
     maxPriceTxt = priceMax;
-    minPrice =
-        int.parse(priceMinController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
-    maxPrice =
-        int.parse(priceMaxController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
-    if (maxPrice < minPrice) {
-      priceMaxController.text = minPriceTxt;
-      priceMinController.text = maxPriceTxt;
+    if (priceMax.isNotEmpty && priceMin.isNotEmpty) {
+      minPrice = int.parse(
+          priceMinController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
+      maxPrice = int.parse(
+          priceMaxController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
+      if (maxPrice < minPrice) {
+        priceMaxController.text = minPriceTxt;
+        priceMinController.text = maxPriceTxt;
+      }
+      _priceStart = minPrice;
+      _priceEnd = maxPrice;
+      notifyListeners();
+    } else {
+      _priceStart = priceMin.isEmpty
+          ? 0
+          : int.parse(
+              priceMinController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
+      _priceEnd = priceMax.isEmpty
+          ? 0
+          : int.parse(
+              priceMaxController.text.replaceAll(RegExp(r'[^\w\s]+'), ''));
+      notifyListeners();
     }
   }
 

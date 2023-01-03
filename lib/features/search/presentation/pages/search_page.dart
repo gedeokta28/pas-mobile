@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
+import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
+import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/presentation/widgets/search_app_bar.dart';
@@ -87,236 +89,249 @@ class _SearchPageState extends State<SearchPage> {
                 ),
               );
             } else {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, FilterPage.routeName);
-                            },
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                      width: 1.0, color: Colors.grey)),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Filter",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black87,
+              if (provider.listProductFilter.isEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                FilterParameter result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          FilterPage(
+                                        keyword: provider.controller.text,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Image.asset(
-                                      ASSET_FILTER_ICON,
-                                      width: 20,
-                                      height: 20,
+                                    ));
+                                FilterParameter filterParameter =
+                                    FilterParameter(
+                                        keyword: provider.controller.text,
+                                        priceEnd: result.priceEnd,
+                                        priceStart: result.priceStart,
+                                        categoryId: result.categoryId);
+                                provider
+                                    .filterCustomProduct(filterParameter)
+                                    .listen((event) {});
+                              },
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(
+                                        width: 1.0, color: Colors.grey)),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Filter",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Image.asset(
+                                        ASSET_FILTER_ICON,
+                                        width: 20,
+                                        height: 20,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 150,
+                              height: 40,
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4.0)),
+                                  ),
+                                  contentPadding: EdgeInsets.only(left: 8.0),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: provider.selectedValue,
+                                    isDense: true,
+                                    icon: Image.asset(
+                                      ASSET_ICON_UPDOWN,
+                                      width: 25,
+                                      height: 25,
                                       fit: BoxFit.cover,
                                     ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 150,
-                            height: 40,
-                            child: InputDecorator(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
-                                ),
-                                contentPadding: EdgeInsets.only(left: 8.0),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  value: provider.selectedValue,
-                                  isDense: true,
-                                  icon: Image.asset(
-                                    ASSET_ICON_UPDOWN,
-                                    width: 25,
-                                    height: 25,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  isExpanded: true,
-                                  items: provider.dropdownItems,
-                                  onChanged: (newValue) {
-                                    provider.setSelectedVal = newValue;
-                                  },
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black87,
+                                    isExpanded: true,
+                                    items: provider.dropdownItems,
+                                    onChanged: (newValue) {
+                                      provider.setSelectedVal = newValue;
+                                    },
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: (itemWidth / itemHeight),
+                      SizedBox(
+                        height: 100,
+                      ),
+                      Center(
+                        child: Text(
+                          "Product Tidak Tersedia",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold,
                           ),
-                          itemCount: provider.listProductFilter.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                                onTap: () {
-                                  provider.unfocus();
-                                  Navigator.pushNamed(
-                                      context, ProductDetailPage.routeName,
-                                      arguments:
-                                          provider.listProductFilter[index]);
-                                },
-                                child: CustomCardFilter(
-                                    product:
-                                        provider.listProductFilter[index]));
-                          }),
-                    ),
-                  ],
-                ),
-              );
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () async {
+                                FilterParameter result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          FilterPage(
+                                        keyword: provider.controller.text,
+                                      ),
+                                    ));
+                                FilterParameter filterParameter =
+                                    FilterParameter(
+                                        keyword: provider.controller.text,
+                                        priceEnd: result.priceEnd,
+                                        priceStart: result.priceStart,
+                                        categoryId: result.categoryId);
+                                provider
+                                    .filterCustomProduct(filterParameter)
+                                    .listen((event) {});
+                              },
+                              child: Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(
+                                        width: 1.0, color: Colors.grey)),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Filter",
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Image.asset(
+                                        ASSET_FILTER_ICON,
+                                        width: 20,
+                                        height: 20,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 150,
+                              height: 40,
+                              child: InputDecorator(
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4.0)),
+                                  ),
+                                  contentPadding: EdgeInsets.only(left: 8.0),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<String>(
+                                    value: provider.selectedValue,
+                                    isDense: true,
+                                    icon: Image.asset(
+                                      ASSET_ICON_UPDOWN,
+                                      width: 25,
+                                      height: 25,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    isExpanded: true,
+                                    items: provider.dropdownItems,
+                                    onChanged: (newValue) {
+                                      provider.setSelectedVal = newValue;
+                                    },
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black87,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: (itemWidth / itemHeight),
+                            ),
+                            itemCount: provider.listProductFilter.length,
+                            itemBuilder: (BuildContext ctx, index) {
+                              return GestureDetector(
+                                  onTap: () {
+                                    provider.unfocus();
+                                    Navigator.pushNamed(context,
+                                        ProductDetailFilterPage.routeName,
+                                        arguments:
+                                            provider.listProductFilter[index]);
+                                  },
+                                  child: CustomCardFilter(
+                                      product:
+                                          provider.listProductFilter[index]));
+                            }),
+                      ),
+                    ],
+                  ),
+                );
+              }
             }
           }
-          // else if (provider.isSearchResult) {
-          // if (provider.isLoading) {
-          //   return Center(
-          //     child: Image.asset(
-          //       ASSETS_LOADING,
-          //       height: 100.0,
-          //       width: 100.0,
-          //     ),
-          //   );
-          //   } else {
-          // return Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Column(
-          //     children: [
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             GestureDetector(
-          //               onTap: () {
-          //                 Navigator.pushNamed(
-          //                     context, FilterPage.routeName);
-          //               },
-          //               child: Container(
-          //                 height: 40,
-          //                 decoration: BoxDecoration(
-          //                     borderRadius: BorderRadius.circular(4),
-          //                     border: Border.all(
-          //                         width: 1.0, color: Colors.grey)),
-          //                 child: Padding(
-          //                   padding: EdgeInsets.symmetric(
-          //                       horizontal: 10, vertical: 5),
-          //                   child: Row(
-          //                     mainAxisAlignment: MainAxisAlignment.center,
-          //                     children: [
-          //                       Text(
-          //                         "Filter",
-          //                         style: TextStyle(
-          //                           fontSize: 13,
-          //                           color: Colors.black87,
-          //                         ),
-          //                       ),
-          //                       SizedBox(
-          //                         width: 5,
-          //                       ),
-          //                       Image.asset(
-          //                         ASSET_FILTER_ICON,
-          //                         width: 20,
-          //                         height: 20,
-          //                         fit: BoxFit.cover,
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //             Container(
-          //               width: 150,
-          //               height: 40,
-          //               child: InputDecorator(
-          //                 decoration: InputDecoration(
-          //                   border: OutlineInputBorder(
-          //                     borderRadius: const BorderRadius.all(
-          //                         Radius.circular(4.0)),
-          //                   ),
-          //                   contentPadding: EdgeInsets.only(left: 8.0),
-          //                 ),
-          //                 child: DropdownButtonHideUnderline(
-          //                   child: DropdownButton<String>(
-          //                     value: provider.selectedValue,
-          //                     isDense: true,
-          //                     icon: Image.asset(
-          //                       ASSET_ICON_UPDOWN,
-          //                       width: 25,
-          //                       height: 25,
-          //                       fit: BoxFit.cover,
-          //                     ),
-          //                     isExpanded: true,
-          //                     items: provider.dropdownItems,
-          //                     onChanged: (newValue) {
-          //                       provider.setSelectedVal = newValue;
-          //                     },
-          //                     style: TextStyle(
-          //                       fontSize: 13,
-          //                       color: Colors.black87,
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //       Expanded(
-          //         child: GridView.builder(
-          //             gridDelegate:
-          //                 SliverGridDelegateWithMaxCrossAxisExtent(
-          //               maxCrossAxisExtent: 200,
-          //               childAspectRatio: (itemWidth / itemHeight),
-          //             ),
-          //             itemCount: provider.listProduct.length,
-          //             itemBuilder: (BuildContext ctx, index) {
-          //               return GestureDetector(
-          //                   onTap: () {
-          //                     provider.unfocus();
-          //                     Navigator.pushNamed(
-          //                         context, ProductDetailPage.routeName,
-          //                         arguments: provider.listProduct[index]);
-          //                   },
-          //                   child: CustomCard(
-          //                       product: provider.listProduct[index]));
-          //             }),
-          //       ),
-          //     ],
-          //   ),
-          // );
-          //   }
-          // }
           return const SizedBox();
         })),
       ),

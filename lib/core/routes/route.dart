@@ -8,8 +8,10 @@ import 'package:pas_mobile/features/home/data/models/product_list_response_model
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
+import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
+import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 
 import '../../features/filter/presentation/filter_category_page.dart';
 import '../../features/product/presentation/search_result_page.dart';
@@ -44,6 +46,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final product = settings.arguments as Product;
       return MaterialPageRoute(
           builder: (_) => ProductDetailPage(product: product));
+    case ProductDetailFilterPage.routeName:
+      final product = settings.arguments as ProductFilter;
+      return MaterialPageRoute(
+          builder: (_) => ProductDetailFilterPage(product: product));
     case MainPage.routeName:
       final index = settings.arguments as int?;
       return MaterialPageRoute(

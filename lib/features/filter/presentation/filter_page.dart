@@ -5,6 +5,7 @@ import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_state.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
+import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_app_bar.dart';
@@ -16,9 +17,9 @@ import '../../../core/static/dimens.dart';
 import '../../../core/utility/injection.dart';
 
 class FilterPage extends StatelessWidget {
-  const FilterPage({
-    Key? key,
-  }) : super(key: key);
+  final String keyword;
+
+  const FilterPage({Key? key, this.keyword = ''}) : super(key: key);
   static const routeName = '/filter';
 
   @override
@@ -174,9 +175,17 @@ class FilterPage extends StatelessWidget {
                   RoundedButton(
                     title: "Terapkan",
                     color: secondaryColor,
-                    event: () {
-                      provider.checkPrice(provider.priceMaxController.text,
+                    event: () async {
+                      await provider.convertListCategory();
+                      await provider.checkPrice(
+                          provider.priceMaxController.text,
                           provider.priceMinController.text);
+                      FilterParameter filterParameter = FilterParameter(
+                          priceStart: provider.priceStart,
+                          categoryId: provider.mapCategory,
+                          priceEnd: provider.priceEnd);
+                      logMe(filterParameter.categoryId);
+                      Navigator.pop(context, filterParameter);
                     },
                   ),
                 ],

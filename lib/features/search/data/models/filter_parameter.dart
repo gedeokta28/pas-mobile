@@ -1,5 +1,6 @@
 class FilterParameter {
-  String? keyword, categoryId, brandId, priceStart, priceEnd;
+  String? keyword, categoryId, brandId;
+  int? priceStart, priceEnd;
   String orderBy;
 
   FilterParameter({

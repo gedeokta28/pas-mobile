@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/enum.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 import 'package:pas_mobile/features/search/data/models/search_product_response_model.dart';
@@ -72,6 +73,11 @@ class SearchProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  updateFilter(String sa) {
+    showShortToast(message: "message");
+    notifyListeners();
+  }
+
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(child: Text("Produk Termahal"), value: "termahal"),
@@ -118,6 +124,31 @@ class SearchProvider with ChangeNotifier {
     yield SearchLoading();
     final result = await doFilterProduct(
         TypeFilter.onlyKeyword, FilterParameter(keyword: keyword));
+    yield* result.fold(
+      (failure) async* {
+        _isLoadingProduct = false;
+        notifyListeners();
+        yield SearchFailure(failure: failure);
+      },
+      (data) async* {
+        _isLoadingProduct = false;
+        _listProductFilter = data;
+        notifyListeners();
+        yield FilterLoaded(data: data);
+      },
+    );
+  }
+
+  Stream<SearchState> filterCustomProduct(
+      FilterParameter filterParameter) async* {
+    unfocus();
+    _isSearch = false;
+    _isSearchResult = true;
+    _isLoadingProduct = true;
+    notifyListeners();
+    yield SearchLoading();
+    final result =
+        await doFilterProduct(TypeFilter.customFilter, filterParameter);
     yield* result.fold(
       (failure) async* {
         _isLoadingProduct = false;
