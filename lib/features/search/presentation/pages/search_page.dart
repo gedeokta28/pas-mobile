@@ -41,7 +41,17 @@ class _SearchPageState extends State<SearchPage> {
             child: Consumer<SearchProvider>(builder: (context, provider, _) {
           if (provider.isSearch) {
             if (provider.isLoadingSearch) {
-              return SizedBox();
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    ASSETS_LOADING,
+                    height: 100.0,
+                    width: 100.0,
+                  ),
+                ],
+              );
             } else {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
