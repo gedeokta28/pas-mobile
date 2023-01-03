@@ -23,13 +23,11 @@ class SearchAppBar extends StatelessWidget {
             hint: "Cari Produk",
             height: kToolbarHeight - SIZE_MEDIUM,
             controller: search.controller,
-            onSubmitted: (value) {
-              search.setSearch = true;
-            },
+            onSubmitted: (value) {},
             focusNode: search.focusNode,
             onFocus: (focus) => search.setFocus = focus,
             onChanged: (value) {
-              search.setSearch = value;
+              search.searchProductList(value).listen((event) {});
             },
           );
         }),

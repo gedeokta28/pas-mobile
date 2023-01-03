@@ -24,6 +24,10 @@ import 'package:pas_mobile/features/register/data/repositories/register_repo_imp
 import 'package:pas_mobile/features/register/domain/repositories/register_repository.dart';
 import 'package:pas_mobile/features/register/domain/usecases/do_register.dart';
 import 'package:pas_mobile/features/register/presentation/providers/register_provider.dart';
+import 'package:pas_mobile/features/search/data/repositories/search_product_repo_impl.dart';
+import 'package:pas_mobile/features/search/data/search_product_datasource.dart';
+import 'package:pas_mobile/features/search/domain/repositories/search_product_repositories.dart';
+import 'package:pas_mobile/features/search/domain/usecases/do_search_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/login/data/datasources/login_data_source.dart';
@@ -53,8 +57,8 @@ Future<void> init() async {
       () => GlobalKey<NavigatorState>());
 
 //Providers
-  locator.registerFactory<SearchProvider>(
-      () => SearchProvider(getProductList: locator()));
+  locator.registerFactory<SearchProvider>(() =>
+      SearchProvider(getProductList: locator(), doSearchProduct: locator()));
   locator
       .registerFactory<LoginProvider>(() => LoginProvider(doLogin: locator()));
   locator.registerFactory<RegisterProvider>(
@@ -80,6 +84,8 @@ Future<void> init() async {
       () => ProductDataSourceImplementation(dio: locator()));
   locator.registerLazySingleton<ForgotPasswordDataSource>(
       () => ForgotPasswordDataSourceImplementation(dio: locator()));
+  locator.registerLazySingleton<SearchProductDataSource>(
+      () => SearchProductDataSourceImplementation(dio: locator()));
 
 //Repository
   locator.registerLazySingleton<LoginRepository>(
@@ -90,6 +96,8 @@ Future<void> init() async {
       () => ProductRepoImpl(dataSource: locator()));
   locator.registerLazySingleton<ForgotPasswordRepository>(
       () => ForgotPasswordRepoImpl(dataSource: locator()));
+  locator.registerLazySingleton<SearchProductRepository>(
+      () => SearchProductRepoImpl(dataSource: locator()));
 
 //Usecase
   locator.registerLazySingleton<DoLogin>(
@@ -102,4 +110,6 @@ Future<void> init() async {
       () => GetCategoryList(repository: locator()));
   locator.registerLazySingleton<DoForgotPassword>(
       () => DoForgotPassword(repository: locator()));
+  locator.registerLazySingleton<DoSearchProduct>(
+      () => DoSearchProduct(repository: locator()));
 }

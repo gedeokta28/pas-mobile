@@ -40,144 +40,149 @@ class _SearchPageState extends State<SearchPage> {
         body: SafeArea(
             child: Consumer<SearchProvider>(builder: (context, provider, _) {
           if (provider.isSearch) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.grey[400],
-                ),
-                itemCount: provider.listProductResult.length,
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                      onTap: () {
-                        provider
-                            .setValueText(provider.listProductResult[index]);
-                        provider.fetchProductList().listen((event) {});
-                      },
-                      child: Text(provider.listProductResult[index])),
-                ),
-              ),
-            );
-          } else if (provider.isSearchResult) {
-            if (provider.isLoading) {
-              return Center(
-                child: Image.asset(
-                  ASSETS_LOADING,
-                  height: 100.0,
-                  width: 100.0,
-                ),
-              );
+            if (provider.isLoadingSearch) {
+              return SizedBox();
             } else {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, FilterPage.routeName);
-                            },
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                      width: 1.0, color: Colors.grey)),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 5),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Filter",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Image.asset(
-                                      ASSET_FILTER_ICON,
-                                      width: 20,
-                                      height: 20,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                            width: 150,
-                            height: 40,
-                            child: InputDecorator(
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
-                                ),
-                                contentPadding: EdgeInsets.only(left: 8.0),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                                  value: provider.selectedValue,
-                                  isDense: true,
-                                  icon: Image.asset(
-                                    ASSET_ICON_UPDOWN,
-                                    width: 25,
-                                    height: 25,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  isExpanded: true,
-                                  items: provider.dropdownItems,
-                                  onChanged: (newValue) {
-                                    provider.setSelectedVal = newValue;
-                                  },
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            childAspectRatio: (itemWidth / itemHeight),
-                          ),
-                          itemCount: provider.listProduct.length,
-                          itemBuilder: (BuildContext ctx, index) {
-                            return GestureDetector(
-                                onTap: () {
-                                  provider.unfocus();
-                                  Navigator.pushNamed(
-                                      context, ProductDetailPage.routeName,
-                                      arguments: provider.listProduct[index]);
-                                },
-                                child: CustomCard(
-                                    product: provider.listProduct[index]));
-                          }),
-                    ),
-                  ],
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.grey[400],
+                  ),
+                  itemCount: provider.listProductSearch.length,
+                  itemBuilder: (context, index) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                        onTap: () {
+                          provider.setValueText(
+                              provider.listProductSearch[index].stockname);
+                        },
+                        child:
+                            Text(provider.listProductSearch[index].stockname)),
+                  ),
                 ),
               );
             }
           }
+          // else if (provider.isSearchResult) {
+          //   if (provider.isLoading) {
+          //     return Center(
+          //       child: Image.asset(
+          //         ASSETS_LOADING,
+          //         height: 100.0,
+          //         width: 100.0,
+          //       ),
+          //     );
+          //   } else {
+          //     return Padding(
+          //       padding: const EdgeInsets.all(8.0),
+          //       child: Column(
+          //         children: [
+          //           Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //               children: [
+          //                 GestureDetector(
+          //                   onTap: () {
+          //                     Navigator.pushNamed(
+          //                         context, FilterPage.routeName);
+          //                   },
+          //                   child: Container(
+          //                     height: 40,
+          //                     decoration: BoxDecoration(
+          //                         borderRadius: BorderRadius.circular(4),
+          //                         border: Border.all(
+          //                             width: 1.0, color: Colors.grey)),
+          //                     child: Padding(
+          //                       padding: EdgeInsets.symmetric(
+          //                           horizontal: 10, vertical: 5),
+          //                       child: Row(
+          //                         mainAxisAlignment: MainAxisAlignment.center,
+          //                         children: [
+          //                           Text(
+          //                             "Filter",
+          //                             style: TextStyle(
+          //                               fontSize: 13,
+          //                               color: Colors.black87,
+          //                             ),
+          //                           ),
+          //                           SizedBox(
+          //                             width: 5,
+          //                           ),
+          //                           Image.asset(
+          //                             ASSET_FILTER_ICON,
+          //                             width: 20,
+          //                             height: 20,
+          //                             fit: BoxFit.cover,
+          //                           ),
+          //                         ],
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 Container(
+          //                   width: 150,
+          //                   height: 40,
+          //                   child: InputDecorator(
+          //                     decoration: InputDecoration(
+          //                       border: OutlineInputBorder(
+          //                         borderRadius: const BorderRadius.all(
+          //                             Radius.circular(4.0)),
+          //                       ),
+          //                       contentPadding: EdgeInsets.only(left: 8.0),
+          //                     ),
+          //                     child: DropdownButtonHideUnderline(
+          //                       child: DropdownButton<String>(
+          //                         value: provider.selectedValue,
+          //                         isDense: true,
+          //                         icon: Image.asset(
+          //                           ASSET_ICON_UPDOWN,
+          //                           width: 25,
+          //                           height: 25,
+          //                           fit: BoxFit.cover,
+          //                         ),
+          //                         isExpanded: true,
+          //                         items: provider.dropdownItems,
+          //                         onChanged: (newValue) {
+          //                           provider.setSelectedVal = newValue;
+          //                         },
+          //                         style: TextStyle(
+          //                           fontSize: 13,
+          //                           color: Colors.black87,
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //           Expanded(
+          //             child: GridView.builder(
+          //                 gridDelegate:
+          //                     SliverGridDelegateWithMaxCrossAxisExtent(
+          //                   maxCrossAxisExtent: 200,
+          //                   childAspectRatio: (itemWidth / itemHeight),
+          //                 ),
+          //                 itemCount: provider.listProduct.length,
+          //                 itemBuilder: (BuildContext ctx, index) {
+          //                   return GestureDetector(
+          //                       onTap: () {
+          //                         provider.unfocus();
+          //                         Navigator.pushNamed(
+          //                             context, ProductDetailPage.routeName,
+          //                             arguments: provider.listProduct[index]);
+          //                       },
+          //                       child: CustomCard(
+          //                           product: provider.listProduct[index]));
+          //                 }),
+          //           ),
+          //         ],
+          //       ),
+          //     );
+          //   }
+          // }
           return const SizedBox();
         })),
       ),
