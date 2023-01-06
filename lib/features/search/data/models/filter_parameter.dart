@@ -4,11 +4,11 @@ class FilterParameter {
   String orderBy;
 
   FilterParameter({
-    this.keyword,
+    this.keyword = '',
     this.categoryId,
     this.brandId,
-    this.priceStart,
-    this.priceEnd,
+    this.priceStart = 0,
+    this.priceEnd = 0,
     this.orderBy = 'desc',
   });
 }

@@ -40,7 +40,9 @@ class CardWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductDetailPage.routeName,
-            arguments: product.stockid);
+            arguments: ProductDetailArguments(
+                productId: product.stockid,
+                categoryId: product.category.categoryid));
       },
       child: Container(
         width: App(context).appWidth(45),
@@ -81,7 +83,7 @@ class CardWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          product.category.categoryname,
+                          product.brand.brandname,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

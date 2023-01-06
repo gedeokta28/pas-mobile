@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/utility/injection.dart';
 import '../../filter/presentation/filter_page.dart';
+import '../../product/presentation/product_detail_page.dart';
 import 'widgets/custom_card_filter.dart';
 import 'widgets/home_app_bar.dart';
 
@@ -267,10 +268,15 @@ class _ProductPageState extends State<ProductPage> {
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
                                 onTap: () {
-                                  // Navigator.pushNamed(context,
-                                  //     ProductDetailFilterPage.routeName,
-                                  //     arguments:
-                                  //         provider.listProductFilter[index]);
+                                  Navigator.pushNamed(
+                                      context, ProductDetailPage.routeName,
+                                      arguments: ProductDetailArguments(
+                                          productId: provider
+                                              .listProductFilter[index].stockid,
+                                          categoryId: provider
+                                              .listProductFilter[index]
+                                              .category
+                                              .categoryid));
                                 },
                                 child: CustomCardFilter(
                                     product:

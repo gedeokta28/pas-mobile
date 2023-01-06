@@ -81,12 +81,11 @@ class ProductFilter {
   String discountinued;
   dynamic photourl;
   dynamic stockdescription;
-  List<dynamic> images;
+  List<ImageProductFilter> images;
   BrandFilterProduct brand;
   CategoryFilterProduct category;
 
-  factory ProductFilter.fromJson(Map<String, dynamic> json) =>
-      ProductFilter(
+  factory ProductFilter.fromJson(Map<String, dynamic> json) => ProductFilter(
         stockid: json["stockid"],
         stockname: json["stockname"],
         barcode: json["barcode"],
@@ -106,7 +105,8 @@ class ProductFilter {
         discountinued: json["discountinued"],
         photourl: json["photourl"],
         stockdescription: json["stockdescription"],
-        images: List<dynamic>.from(json["images"].map((x) => x)),
+        images: List<ImageProductFilter>.from(
+            json["images"].map((x) => ImageProductFilter.fromJson(x))),
         brand: BrandFilterProduct.fromJson(json["brand"]),
         category: CategoryFilterProduct.fromJson(json["category"]),
       );
@@ -131,7 +131,7 @@ class ProductFilter {
         "discountinued": discountinued,
         "photourl": photourl,
         "stockdescription": stockdescription,
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "brand": brand.toJson(),
         "category": category.toJson(),
       };
@@ -184,5 +184,26 @@ class CategoryFilterProduct {
         "categoryid": categoryid,
         "categoryname": categoryname,
         "categoryimage": categoryimage,
+      };
+}
+
+class ImageProductFilter {
+  ImageProductFilter({
+    required this.id,
+    required this.url,
+  });
+
+  String id;
+  String url;
+
+  factory ImageProductFilter.fromJson(Map<String, dynamic> json) =>
+      ImageProductFilter(
+        id: json["id"],
+        url: json["url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "url": url,
       };
 }

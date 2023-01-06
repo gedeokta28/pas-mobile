@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
+import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
+import '../../../../core/static/assets.dart';
 
 class CardRelatedProductWidget extends StatelessWidget {
-  final Product product;
+  final ProductFilter product;
 
   const CardRelatedProductWidget({Key? key, required this.product})
       : super(key: key);
@@ -20,13 +22,19 @@ class CardRelatedProductWidget extends StatelessWidget {
             topLeft: Radius.circular(10),
             topRight: Radius.circular(10),
           ),
-          child: DynamicCachedNetworkImage(
-            imageUrl:
-                'https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg',
-            height: App(context).appHeight(15),
-            width: double.infinity,
-            boxFit: BoxFit.cover,
-          ),
+          child: product.images.isEmpty
+              ? Image.asset(
+                  ASSETS_PLACEHOLDER,
+                  height: App(context).appHeight(15),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
+              : DynamicCachedNetworkImage(
+                  imageUrl: product.images[0].url,
+                  height: App(context).appHeight(15),
+                  width: double.infinity,
+                  boxFit: BoxFit.cover,
+                ),
         ),
       ];
     }
@@ -34,7 +42,9 @@ class CardRelatedProductWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductDetailPage.routeName,
-            arguments: product.stockid);
+            arguments: ProductDetailArguments(
+                productId: product.stockid,
+                categoryId: product.category.categoryid));
       },
       child: Container(
         width: App(context).appWidth(45),
@@ -63,7 +73,7 @@ class CardRelatedProductWidget extends StatelessWidget {
               alignment: AlignmentDirectional.bottomStart,
               children: _homeWidget(),
             ),
-            Padding(
+            Padding(  
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

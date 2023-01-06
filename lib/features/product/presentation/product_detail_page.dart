@@ -16,9 +16,18 @@ import 'providers/product_provider.dart';
 import 'widgets/product_description.dart';
 import 'widgets/product_detail_appbar.dart';
 
+class ProductDetailArguments {
+  final String productId;
+  final String categoryId;
+
+  ProductDetailArguments({required this.productId, required this.categoryId});
+}
+
 class ProductDetailPage extends StatefulWidget {
   final String productId;
-  const ProductDetailPage({Key? key, required this.productId})
+  final String categoryId;
+  const ProductDetailPage(
+      {Key? key, required this.productId, required this.categoryId})
       : super(key: key);
   static const routeName = '/product-detail';
 
@@ -36,7 +45,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget build(BuildContext ctx) {
     return ChangeNotifierProvider(
       create: (_) => locator<ProductProvider>()
-        ..fetchProductDetail(widget.productId).listen((event) {}),
+        ..fetchProductDetail(widget.productId).listen((event) {})
+        ..fetchRelatedProduct(widget.categoryId, widget.productId)
+            .listen((event) {}),
       builder: (context, child) => WillPopScope(
         onWillPop: () async {
           return true;
@@ -60,7 +71,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       child: Column(
                         children: [
                           mediumVerticalSpacing(),
-                          ProductDescription(),
+                          const ProductDescription(),
                           smallVerticalSpacing(),
                         ],
                       ),

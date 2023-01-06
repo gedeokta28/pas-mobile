@@ -316,10 +316,16 @@ class _SearchPageState extends State<SearchPage> {
                               return GestureDetector(
                                   onTap: () {
                                     provider.unfocus();
-                                    // Navigator.pushNamed(context,
-                                    //     ProductDetailFilterPage.routeName,
-                                    //     arguments:
-                                    //         provider.listProductFilter[index]);
+                                    Navigator.pushNamed(
+                                        context, ProductDetailPage.routeName,
+                                        arguments: ProductDetailArguments(
+                                            productId: provider
+                                                .listProductFilter[index]
+                                                .stockid,
+                                            categoryId: provider
+                                                .listProductFilter[index]
+                                                .category
+                                                .categoryid));
                                   },
                                   child: CustomCardFilter(
                                       product:

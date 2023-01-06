@@ -43,9 +43,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SearchResultPage.routeName:
       return MaterialPageRoute(builder: (_) => const SearchResultPage());
     case ProductDetailPage.routeName:
-      final productId = settings.arguments as String;
+      final args = settings.arguments as ProductDetailArguments;
+
       return MaterialPageRoute(
-          builder: (_) => ProductDetailPage(productId: productId));
+          builder: (_) => ProductDetailPage(
+                productId: args.productId,
+                categoryId: args.categoryId,
+              ));
     // case ProductDetailFilterPage.routeName:
     //   final product = settings.arguments as ProductFilter;
     //   return MaterialPageRoute(

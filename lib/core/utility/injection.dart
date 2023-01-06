@@ -72,9 +72,8 @@ Future<void> init() async {
       getProductList: locator(),
       getCategoryList: locator(),
       doFilterProduct: locator()));
-  locator.registerFactory<ProductProvider>(() => ProductProvider(
-        getProductDetail: locator(),
-      ));
+  locator.registerFactory<ProductProvider>(() =>
+      ProductProvider(getProductDetail: locator(), doFilterProduct: locator()));
   locator.registerFactory<SearchResultProvider>(() => SearchResultProvider(
       getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
