@@ -8,7 +8,9 @@ import 'dart:math' as math;
 
 class CardSelectionWidget extends StatelessWidget {
   final Category category;
-  const CardSelectionWidget({Key? key, required this.category})
+  final Color colorBox;
+  const CardSelectionWidget(
+      {Key? key, required this.category, required this.colorBox})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -18,8 +20,7 @@ class CardSelectionWidget extends StatelessWidget {
         width: App(context).appWidth(40),
         margin: const EdgeInsets.only(left: 8, top: 10, bottom: 10),
         decoration: BoxDecoration(
-          color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-              .withOpacity(1.0),
+          color: colorBox,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(

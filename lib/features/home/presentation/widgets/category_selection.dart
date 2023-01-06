@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/home/presentation/providers/category_selection_state.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -35,10 +36,12 @@ class CategorySelectionList extends StatelessWidget {
                           physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: _category.length,
+                          itemCount:
+                              _category.length > 11 ? 10 : _category.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CardSelectionWidget(
                               category: _category[index],
+                              colorBox: colorContainer[index],
                             );
                           }),
                     ),
