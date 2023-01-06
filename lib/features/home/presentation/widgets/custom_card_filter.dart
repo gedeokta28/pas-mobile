@@ -18,21 +18,38 @@ class CustomCardFilter extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: Card(
         elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               height: (size.height) / 8,
               decoration: BoxDecoration(
-                  image: product.images.isEmpty
-                      ? DecorationImage(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10)),
+                  image: product.images.isEmpty && product.photourl == null
+                      ? const DecorationImage(
                           image: AssetImage(ASSETS_PLACEHOLDER),
                           fit: BoxFit.cover)
-                      : DecorationImage(
-                          image: NetworkImage(
-                            product.images[0].url,
-                          ),
-                          fit: BoxFit.cover)),
+                      : product.photourl != null
+                          ? DecorationImage(
+                              image: NetworkImage(
+                                product.photourl,
+                              ),
+                              fit: BoxFit.cover)
+                          : product.images.isNotEmpty &&
+                                  product.photourl == null
+                              ? DecorationImage(
+                                  image: NetworkImage(
+                                    product.images[0].url,
+                                  ),
+                                  fit: BoxFit.cover)
+                              : DecorationImage(
+                                  image: AssetImage(ASSETS_PLACEHOLDER),
+                                  fit: BoxFit.cover)),
             ),
             Padding(
               padding: const EdgeInsets.all(10),

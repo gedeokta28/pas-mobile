@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/features/account/presentation/account_page.dart';
+import 'package:pas_mobile/features/brand/presentation/brand_page.dart';
 import 'package:pas_mobile/features/home/presentation/home_page.dart';
 
 enum M_BTB {
@@ -55,15 +56,7 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.home:
         return const HomePage();
       case M_BTB.brand:
-        return Center(
-          child: const Text(
-            "SOON",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
+        return const BrandPage();
       case M_BTB.order:
         return Center(
           child: const Text(

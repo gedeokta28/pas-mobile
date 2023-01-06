@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
+import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
 import 'package:pas_mobile/features/forgot_password/data/datasources/forgot_password_data_source.dart';
@@ -13,6 +14,7 @@ import 'package:pas_mobile/features/forgot_password/presentation/providers/forgo
 import 'package:pas_mobile/features/home/data/datasources/product_data_source.dart';
 import 'package:pas_mobile/features/home/data/repositories/product_repo_impl.dart';
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_brand_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
@@ -80,6 +82,8 @@ Future<void> init() async {
       () => ForgotPasswordProvider(doForgotPassword: locator()));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
+  locator.registerFactory<BrandProvider>(
+      () => BrandProvider(getBrandList: locator()));
   locator.registerFactory<FilterProvider>(
       () => FilterProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(
@@ -120,6 +124,8 @@ Future<void> init() async {
       () => GetProductDetail(repository: locator()));
   locator.registerLazySingleton<GetCategoryList>(
       () => GetCategoryList(repository: locator()));
+  locator.registerLazySingleton<GetBrandList>(
+      () => GetBrandList(repository: locator()));
   locator.registerLazySingleton<DoForgotPassword>(
       () => DoForgotPassword(repository: locator()));
   locator.registerLazySingleton<DoSearchProduct>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 
 import '../../../home/data/models/detail_product_model.dart';
 import '../../../home/domain/usecases/get_product_detail.dart';
@@ -49,7 +50,13 @@ class AppBarProvider extends ChangeNotifier {
       },
       (data) async* {
         _isLoadingProduct = false;
-        _listImage = data.imagesProductDetail;
+        if (data.imagesProductDetail.isEmpty && data.photourl != null) {
+          _listImage.add(ImageProductDetail(id: "1", url: data.photourl));
+        } else {
+          _listImage = data.imagesProductDetail;
+        }
+        logMe("assss");
+        logMe(_listImage);
         notifyListeners();
         yield ProductDetailLoaded(data: data);
       },

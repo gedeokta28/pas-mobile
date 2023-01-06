@@ -18,24 +18,35 @@ class CardRelatedProductWidget extends StatelessWidget {
     List<Widget> _homeWidget() {
       return [
         ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-          child: product.images.isEmpty
-              ? Image.asset(
-                  ASSETS_PLACEHOLDER,
-                  height: App(context).appHeight(15),
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                )
-              : DynamicCachedNetworkImage(
-                  imageUrl: product.images[0].url,
-                  height: App(context).appHeight(15),
-                  width: double.infinity,
-                  boxFit: BoxFit.cover,
-                ),
-        ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+            child: product.images.isEmpty && product.photourl == null
+                ? Image.asset(
+                    ASSETS_PLACEHOLDER,
+                    height: App(context).appHeight(15),
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  )
+                : product.photourl != null
+                    ? Image.network(
+                        product.photourl,
+                        fit: BoxFit.cover,
+                        height: App(context).appHeight(15),
+                        width: double.infinity,
+                      )
+                    : product.images.isNotEmpty && product.photourl == null
+                        ? Image.network(product.images[0].url,
+                            fit: BoxFit.cover,
+                            height: App(context).appHeight(15),
+                            width: double.infinity)
+                        : Image.asset(
+                            ASSETS_PLACEHOLDER,
+                            height: App(context).appHeight(15),
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ))
       ];
     }
 
@@ -73,7 +84,7 @@ class CardRelatedProductWidget extends StatelessWidget {
               alignment: AlignmentDirectional.bottomStart,
               children: _homeWidget(),
             ),
-            Padding(  
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 7),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

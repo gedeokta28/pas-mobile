@@ -34,7 +34,7 @@ class ProductAppBar extends StatelessWidget {
                                 width: double.infinity,
                                 child: Image.asset(
                                   ASSETS_PLACEHOLDER,
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.cover,
                                 )),
                           ])
                         : Stack(
@@ -45,13 +45,15 @@ class ProductAppBar extends StatelessWidget {
                                       width: double.infinity,
                                       child: Image.asset(
                                         ASSETS_PLACEHOLDER,
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit.cover,
                                       ))
                                   : SizedBox(
                                       height: double.infinity,
                                       width: double.infinity,
-                                      child: DynamicCachedNetworkImage(
-                                          imageUrl: provider.getIndex())),
+                                      child: Image.network(
+                                        provider.getIndex(),
+                                        fit: BoxFit.cover,
+                                      )),
                               provider.listImage.length < 2
                                   ? SizedBox()
                                   : Positioned(
