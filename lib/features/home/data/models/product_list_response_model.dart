@@ -89,7 +89,7 @@ class Product {
   String discountinued;
   dynamic photourl;
   dynamic stockdescription;
-  List<dynamic> images;
+  List<ImageProduct> images;
   BrandProduct brand;
   CategoryProduct category;
 
@@ -113,7 +113,8 @@ class Product {
         discountinued: json["discountinued"],
         photourl: json["photourl"],
         stockdescription: json["stockdescription"],
-        images: List<dynamic>.from(json["images"].map((x) => x)),
+        images: List<ImageProduct>.from(
+            json["images"].map((x) => ImageProduct.fromJson(x))),
         brand: BrandProduct.fromJson(json["brand"]),
         category: CategoryProduct.fromJson(json["category"]),
       );
@@ -138,7 +139,7 @@ class Product {
         "discountinued": discountinued,
         "photourl": photourl,
         "stockdescription": stockdescription,
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "brand": brand.toJson(),
         "category": category.toJson(),
       };
@@ -179,7 +180,8 @@ class CategoryProduct {
   String categoryname;
   dynamic categoryimage;
 
-  factory CategoryProduct.fromJson(Map<String, dynamic> json) => CategoryProduct(
+  factory CategoryProduct.fromJson(Map<String, dynamic> json) =>
+      CategoryProduct(
         categoryid: json["categoryid"],
         categoryname: json["categoryname"],
         categoryimage: json["categoryimage"],
@@ -285,5 +287,25 @@ class Link {
         "url": url ?? '',
         "label": label,
         "active": active,
+      };
+}
+
+class ImageProduct {
+  ImageProduct({
+    required this.id,
+    required this.url,
+  });
+
+  String id;
+  String url;
+
+  factory ImageProduct.fromJson(Map<String, dynamic> json) => ImageProduct(
+        id: json["id"],
+        url: json["url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "url": url,
       };
 }

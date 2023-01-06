@@ -267,10 +267,10 @@ class _ProductPageState extends State<ProductPage> {
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context,
-                                      ProductDetailFilterPage.routeName,
-                                      arguments:
-                                          provider.listProductFilter[index]);
+                                  // Navigator.pushNamed(context,
+                                  //     ProductDetailFilterPage.routeName,
+                                  //     arguments:
+                                  //         provider.listProductFilter[index]);
                                 },
                                 child: CustomCardFilter(
                                     product:

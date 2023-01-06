@@ -3,9 +3,12 @@ import 'package:pas_mobile/core/utility/global_function.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
+import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
+import 'package:pas_mobile/features/product/presentation/providers/product_detail_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/rounded_button.dart';
+import '../../../core/static/assets.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
@@ -14,8 +17,9 @@ import 'widgets/product_description.dart';
 import 'widgets/product_detail_appbar.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final Product product;
-  const ProductDetailPage({Key? key, required this.product}) : super(key: key);
+  final String productId;
+  const ProductDetailPage({Key? key, required this.productId})
+      : super(key: key);
   static const routeName = '/product-detail';
 
   @override
@@ -29,30 +33,42 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext ctx) {
     return ChangeNotifierProvider(
-      create: (_) => locator<ProductProvider>(),
+      create: (_) => locator<ProductProvider>()
+        ..fetchProductDetail(widget.productId).listen((event) {}),
       builder: (context, child) => WillPopScope(
         onWillPop: () async {
           return true;
         },
         child: Scaffold(
             backgroundColor: Colors.white,
-            body: CustomScrollView(
-              slivers: [
-                ProductAppBar(
-                  imageUrl: widget.product.photourl!,
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      ProductDescription(product: widget.product),
-                      smallVerticalSpacing(),
-                    ],
+            body: Consumer<ProductProvider>(builder: (context, provider, _) {
+              if (provider.isLoadingProduct) {
+                return Center(
+                  child: Image.asset(
+                    ASSETS_LOADING,
+                    height: 100.0,
+                    width: 100.0,
                   ),
-                ),
-              ],
-            ),
+                );
+              } else {
+                return CustomScrollView(
+                  slivers: [
+                    ProductAppBar(productId: widget.productId),
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          mediumVerticalSpacing(),
+                          ProductDescription(),
+                          smallVerticalSpacing(),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+            }),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Material(

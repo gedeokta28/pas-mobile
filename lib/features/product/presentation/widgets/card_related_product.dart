@@ -34,7 +34,7 @@ class CardRelatedProductWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductDetailPage.routeName,
-            arguments: product);
+            arguments: product.stockid);
       },
       child: Container(
         width: App(context).appWidth(45),

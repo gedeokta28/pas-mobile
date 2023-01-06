@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/home/data/models/detail_product_model.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart';
+
+import 'product_detail_state.dart';
 
 class ProductProvider extends ChangeNotifier {
   // initial
 
+  List<ImageProductDetail> _listImage = [];
+  late ProductDetail _productDetail;
   int _indexImage = 0;
+  bool _isLoadingProduct = true;
 
-  final List<String> _listImage = [
-    "https://www.klopmart.com/uploads/article/5-cara-memilih-gerinda-yang-baik_MjAyMTAzMjYwODU4NDAx.jpg",
-    "https://mesintrade.com/wp-content/uploads/2021/01/Mesin-2Bgerinda-2Bmodern-2Bm-3320.jpg",
-    "https://www.bhinneka.com/_next/image?url=https%3A%2F%2Fstatic.bmdstatic.com%2Fpk%2Fproduct%2Fmedium%2F5d4a261eca1ad.jpg&w=1080&q=75",
-  ];
-
-  List<String> get listImage => _listImage;
+  List<ImageProductDetail> get listImage => _listImage;
   int get indexImage => _indexImage;
+  bool get isLoadingProduct => _isLoadingProduct;
+  ProductDetail get productDetail => _productDetail;
 
   set setIndexImage(value) {
     _indexImage = value;
+    notifyListeners();
   }
 
   setProductImage() {
@@ -23,11 +28,38 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getIndex() {
-    String element = _listImage.elementAt(_indexImage);
-    return element;
+  // String getIndex() {
+  //   String element = _listImage.elementAt(_indexImage).url;
+  //   logMe("elementelementelement");
+  //   logMe(element);
+  //   return element;
+  // }
+
+  Stream<ProductDetailState> fetchProductDetail(String productId) async* {
+    _isLoadingProduct = true;
+    notifyListeners();
+    yield ProductDetailLoading();
+    final result = await getProductDetail(productId);
+    yield* result.fold(
+      (failure) async* {
+        _isLoadingProduct = false;
+        notifyListeners();
+        yield ProductDetailFailure(failure: failure);
+      },
+      (data) async* {
+        _productDetail = data;
+        _listImage = data.imagesProductDetail;
+        _isLoadingProduct = false;
+        logMe("_listImage_listImage_listImage");
+        logMe(_indexImage);
+        notifyListeners();
+        yield ProductDetailLoaded(data: data);
+      },
+    );
   }
 
   // constructor
-  ProductProvider();
+  final GetProductDetail getProductDetail;
+
+  ProductProvider({required this.getProductDetail});
 }

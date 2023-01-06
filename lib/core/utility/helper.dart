@@ -85,3 +85,16 @@ String convertPrice(String price) {
   final currencyFormatter = NumberFormat('#,##0', 'ID');
   return currencyFormatter.format(d).toString();
 }
+
+String convertWeight(String weight) {
+  String weightTxt = weight.replaceAll('.00', '');
+  int weightTotal = int.parse(weightTxt);
+  if (weightTotal > 999) {
+    double result = weightTotal / 1000;
+    String showWeight = 'Berat : ${result.toStringAsFixed(1)} kg';
+    return showWeight;
+  } else {
+    String showWeight = 'Berat : $weightTotal g';
+    return showWeight;
+  }
+}
