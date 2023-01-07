@@ -19,9 +19,13 @@ class BrandItem extends StatelessWidget {
       padding: const EdgeInsets.only(top: 10),
       child: Card(
         elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Container(
           height: (size.height) / 5,
           decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               image: brand.photo.isEmpty
                   ? DecorationImage(
                       image: AssetImage(ASSETS_PLACEHOLDER), fit: BoxFit.cover)

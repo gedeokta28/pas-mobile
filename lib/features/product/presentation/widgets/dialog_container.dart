@@ -13,7 +13,7 @@ class DialogContainer extends StatelessWidget {
       this.customPadding = const EdgeInsets.all(0)})
       : super(key: key);
 
-  static const double _radius = 10.0;
+  static const double _radius = 29.0;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class DialogContainer extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            margin: withMargin ? const EdgeInsets.all(15.0) : null,
+            margin: withMargin ? const EdgeInsets.all(16.0) : null,
             padding: withPadding
                 ? customPadding ?? const EdgeInsets.all(26.0)
                 : null,

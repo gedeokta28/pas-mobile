@@ -33,7 +33,7 @@ class ProductAppBar extends StatelessWidget {
                                 height: double.infinity,
                                 width: double.infinity,
                                 child: Image.asset(
-                                  ASSETS_PLACEHOLDER,
+                                  LOADING_GIF,
                                   fit: BoxFit.cover,
                                 )),
                           ])

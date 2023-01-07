@@ -10,6 +10,7 @@ import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
 import '../../../../core/utility/helper.dart';
+import 'dialog_price.dart';
 
 class ProductDescription extends StatelessWidget {
   const ProductDescription({Key? key}) : super(key: key);
@@ -39,21 +40,55 @@ class ProductDescription extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Rp',
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  Row(
+                    children: [
+                      const Text(
+                        'Rp',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      Text(
+                        convertPrice(provider.productDetail.hrg1),
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                    ],
                   ),
-                  Text(
-                    convertPrice(provider.productDetail.hrg1),
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                  GestureDetector(
+                    onTap: () async {
+                      await DialogPrice.displayDialogOKCallBack(
+                          context, "Harga Grosir", provider.productDetail);
+                    },
+                    child: Container(
+                      height: 25,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border:
+                              Border.all(width: 1.0, color: secondaryColor)),
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Lihat Harga Grosir",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: secondaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -128,7 +163,7 @@ class ProductDescription extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(
-                  convertWeight('1235'),
+                  convertWeight(provider.productDetail.berat),
                   style: TextStyle(fontSize: 14.0, color: Colors.black),
                 ),
               ],
@@ -136,13 +171,15 @@ class ProductDescription extends StatelessWidget {
             smallVerticalSpacing(),
             const Divider(),
             smallVerticalSpacing(),
-            const Text(
-              'Related Produk',
-              style: TextStyle(
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
+            provider.productRelated.isEmpty
+                ? const SizedBox()
+                : const Text(
+                    'Related Produk',
+                    style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
             RelatedProductList(),
             SizedBox(height: 100),
           ],
