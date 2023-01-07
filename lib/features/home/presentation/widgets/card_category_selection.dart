@@ -6,6 +6,9 @@ import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
 import 'dart:math' as math;
 
+import '../../../../core/utility/enum.dart';
+import '../product_page.dart';
+
 class CardSelectionWidget extends StatelessWidget {
   final Category category;
   final Color colorBox;
@@ -15,7 +18,13 @@ class CardSelectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, ProductPage.routeName,
+            arguments: ProductPageArguments(
+                productPageParams: ProductPageParams.fromCategory,
+                categoryName: category.categoryname,
+                categoryId: category.categoryid));
+      },
       child: Container(
         width: App(context).appWidth(40),
         margin: const EdgeInsets.only(left: 8, top: 10, bottom: 10),

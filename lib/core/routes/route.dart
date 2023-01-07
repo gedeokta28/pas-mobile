@@ -35,7 +35,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case NotificationPage.routeName:
       return MaterialPageRoute(builder: (_) => const NotificationPage());
     case ProductPage.routeName:
-      return MaterialPageRoute(builder: (_) => const ProductPage());
+      if (settings.arguments != null) {
+        final args = settings.arguments as ProductPageArguments;
+        return MaterialPageRoute(
+            builder: (_) => ProductPage(
+                  categoryId: args.categoryId,
+                  brandId: args.brandId,
+                  productPageParams: args.productPageParams,
+                  brandName: args.brandName,
+                  categoryName: args.categoryName,
+                ));
+      } else {
+        return MaterialPageRoute(builder: (_) => ProductPage());
+      }
+
     case ForgotPasswordPage.routeName:
       return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
     case FilterPage.routeName:

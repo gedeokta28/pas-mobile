@@ -6,13 +6,42 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/static/assets.dart';
 import '../../../../core/utility/injection.dart';
+import '../../../core/utility/enum.dart';
 import '../../filter/presentation/filter_page.dart';
 import '../../product/presentation/product_detail_page.dart';
 import 'widgets/custom_card_filter.dart';
 import 'widgets/home_app_bar.dart';
 
+class ProductPageArguments {
+  final String categoryId;
+  final String categoryName;
+  final String brandId;
+  final String brandName;
+  final ProductPageParams productPageParams;
+
+  ProductPageArguments(
+      {this.categoryId = '',
+      this.brandId = '',
+      this.categoryName = '',
+      this.brandName = '',
+      this.productPageParams = ProductPageParams.fromHome});
+}
+
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  final String categoryId;
+  final String categoryName;
+  final String brandId;
+  final String brandName;
+  final ProductPageParams productPageParams;
+
+  const ProductPage(
+      {Key? key,
+      this.categoryId = '',
+      this.brandId = '',
+      this.categoryName = '',
+      this.brandName = '',
+      this.productPageParams = ProductPageParams.fromHome})
+      : super(key: key);
   static const routeName = '/product';
 
   @override
@@ -24,11 +53,15 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height) / 102;
-    final double itemWidth = size.width / 60;
+    final double itemWidth = size.width / 61;
     return ChangeNotifierProvider(
       create: (_) => locator<HomeProvider>()
         ..filterCustomProduct(FilterParameter(
-                keyword: '', priceEnd: 0, priceStart: 0, categoryId: ''))
+                keyword: '',
+                priceEnd: 0,
+                priceStart: 0,
+                brandId: widget.brandId,
+                categoryId: widget.categoryId))
             .listen((event) {}),
       builder: (context, child) => Scaffold(
         appBar: PreferredSize(
@@ -165,6 +198,29 @@ class _ProductPageState extends State<ProductPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    widget.productPageParams != ProductPageParams.fromBrand &&
+                            widget.productPageParams !=
+                                ProductPageParams.fromCategory
+                        ? SizedBox()
+                        : Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  widget.productPageParams ==
+                                          ProductPageParams.fromBrand
+                                      ? "Brand : '${widget.brandName}'"
+                                      : "Kategori : '${widget.categoryName}'",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -262,6 +318,7 @@ class _ProductPageState extends State<ProductPage> {
                           gridDelegate:
                               SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 200,
+                            crossAxisSpacing: 8,
                             childAspectRatio: (itemWidth / itemHeight),
                           ),
                           itemCount: provider.listProductFilter.length,

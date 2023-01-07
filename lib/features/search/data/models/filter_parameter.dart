@@ -5,8 +5,8 @@ class FilterParameter {
 
   FilterParameter({
     this.keyword = '',
-    this.categoryId,
-    this.brandId,
+    this.categoryId = '',
+    this.brandId = '',
     this.priceStart = 0,
     this.priceEnd = 0,
     this.orderBy = 'desc',

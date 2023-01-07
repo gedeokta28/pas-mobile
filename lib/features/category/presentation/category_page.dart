@@ -9,8 +9,10 @@ import '../../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/dimens.dart';
+import '../../../core/utility/enum.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
+import '../../home/presentation/product_page.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({
@@ -46,7 +48,20 @@ class CategoryPage extends StatelessWidget {
                           padding: const EdgeInsets.all(SIZE_MEDIUM),
                           itemCount: _category.length,
                           itemBuilder: ((context, index) {
-                            return CategoryItem(category: _category[index]);
+                            return GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(
+                                      context, ProductPage.routeName,
+                                      arguments: ProductPageArguments(
+                                          productPageParams:
+                                              ProductPageParams.fromCategory,
+                                              categoryName: _category[index].categoryname,
+                                          categoryId:
+                                              _category[index].categoryid));
+                                },
+                                child:
+                                    CategoryItem(category: _category[index]));
                           }),
                         );
                       } else if (snap.data is CategoryLoading) {
