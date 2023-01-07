@@ -42,7 +42,7 @@ class SearchProductDataSourceImplementation implements SearchProductDataSource {
           'api/search/item/products?order=${filterParameter.orderBy}&q=${filterParameter.keyword}';
     } else if (typeFilter == TypeFilter.customFilter) {
       url =
-          'api/search/item/products?order=${filterParameter.orderBy}&q=${filterParameter.keyword}&pricestart=${filterParameter.priceStart}&priceend=${filterParameter.priceEnd}&categoryid=${filterParameter.categoryId}&brandid=${filterParameter.brandId}';
+          'api/search/item/products?limit=${filterParameter.limit}&order=${filterParameter.orderBy}&q=${filterParameter.keyword}&pricestart=${filterParameter.priceStart}&priceend=${filterParameter.priceEnd}&categoryid=${filterParameter.categoryId}&brandid=${filterParameter.brandId}';
     } else {
       url =
           'api/search/item/products?order=${filterParameter.orderBy}&q=${filterParameter.keyword}';

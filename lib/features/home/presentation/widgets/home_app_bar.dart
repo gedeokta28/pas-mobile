@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
@@ -113,11 +114,12 @@ class HomeAppBar extends StatelessWidget {
                     ),
                   );
                 },
-                icon: const Icon(
-                  Icons.category_sharp,
-                  color: Colors.white,
-                  size: 30.0,
-                ),
+                // icon: const Icon(
+                //   Icons.category_sharp,
+                //   color: Colors.white,
+                //   size: 30.0,
+                // ),
+                icon: Image.asset(CATEGORY_ICON),
               )
             : const CustomBackButton(
                 iconTint: Colors.white,

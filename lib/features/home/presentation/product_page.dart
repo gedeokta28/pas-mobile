@@ -57,11 +57,7 @@ class _ProductPageState extends State<ProductPage> {
     return ChangeNotifierProvider(
       create: (_) => locator<HomeProvider>()
         ..filterCustomProduct(FilterParameter(
-                keyword: '',
-                priceEnd: 0,
-                priceStart: 0,
-                brandId: widget.brandId,
-                categoryId: widget.categoryId))
+                brandId: widget.brandId, categoryId: widget.categoryId))
             .listen((event) {}),
       builder: (context, child) => Scaffold(
         appBar: PreferredSize(
@@ -321,6 +317,7 @@ class _ProductPageState extends State<ProductPage> {
                             crossAxisSpacing: 8,
                             childAspectRatio: (itemWidth / itemHeight),
                           ),
+                          controller: provider.scrollController,
                           itemCount: provider.listProductFilter.length,
                           itemBuilder: (BuildContext ctx, index) {
                             return GestureDetector(
@@ -340,6 +337,15 @@ class _ProductPageState extends State<ProductPage> {
                                         provider.listProductFilter[index]));
                           }),
                     ),
+                    provider.isLoadingMoreData
+                        ? Center(
+                            child: Image.asset(
+                              ASSETS_LOADING,
+                              height: 30.0,
+                              width: 100.0,
+                            ),
+                          )
+                        : SizedBox()
                   ],
                 ),
               );
