@@ -98,3 +98,42 @@ String convertWeight(String weight) {
     return showWeight;
   }
 }
+
+String convertStrUnit(
+    {required int hrg,
+    required String satuan1,
+    required String satuan2,
+    required String satuan3,
+    required String qty1,
+    required String qty2,
+    required String qty3}) {
+  String result;
+  double qty1Final = double.parse(qty1);
+  double qty2Final = double.parse(qty2);
+  double qty3Final = double.parse(qty3);
+  double minQty1 = 0;
+  double minQty2 = 0;
+  int minQty1Int = 0, maxQty1Int = 0;
+  int minQty2Int = 0, maxQty2Int = 0;
+
+  //1
+  minQty1 = ((qty1Final - qty1Final) + 1);
+  minQty1Int = minQty1.toInt();
+  maxQty1Int = qty1Final.toInt();
+  //2
+  minQty2 = ((qty2Final - qty1Final) + 1);
+  minQty2Int = minQty2.toInt();
+  maxQty2Int = qty2Final.toInt();
+  //3
+  qty3Final = maxQty2Int + 1;
+
+  if (hrg == 1) {
+    result = "$minQty1Int - $maxQty1Int $satuan1";
+  } else if (hrg == 2) {
+    result = "$minQty2Int - $maxQty2Int $satuan2";
+  } else {
+    result = "${qty3Final.toInt()}+ $satuan3";
+  }
+
+  return result;
+}

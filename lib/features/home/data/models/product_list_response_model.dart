@@ -205,7 +205,7 @@ class Links {
   String first;
   String last;
   dynamic prev;
-  String next;
+  dynamic next;
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         first: json["first"],

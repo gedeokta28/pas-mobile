@@ -44,7 +44,8 @@ class HomeProvider extends ChangeNotifier {
                 categoryId: _filterParameterSelected.categoryId,
                 keyword: _filterParameterSelected.keyword,
                 priceEnd: _filterParameterSelected.priceEnd,
-                priceStart: _filterParameterSelected.priceStart);
+                priceStart: _filterParameterSelected.priceStart,
+                priceBy: _filterParameterSelected.priceBy);
             filterCustomProductLoadMore(filterParameter).listen((event) {});
           }
         }
@@ -55,8 +56,8 @@ class HomeProvider extends ChangeNotifier {
   String _selectedValue = "terbaru";
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(child: Text("Produk Termahal"), value: "termahal"),
-      const DropdownMenuItem(child: Text("Produk Termurah"), value: "termurah"),
+      const DropdownMenuItem(child: Text("Produk Termahal"), value: "desc"),
+      const DropdownMenuItem(child: Text("Produk Termurah"), value: "asc"),
       const DropdownMenuItem(child: Text("Produk Terbaru"), value: "terbaru"),
     ];
     return menuItems;

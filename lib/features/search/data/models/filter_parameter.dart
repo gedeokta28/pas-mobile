@@ -1,7 +1,7 @@
 class FilterParameter {
   String? keyword, categoryId, brandId;
   int? priceStart, priceEnd, limit;
-  String orderBy;
+  String orderBy, priceBy;
 
   FilterParameter({
     this.keyword = '',
@@ -11,5 +11,6 @@ class FilterParameter {
     this.limit = 10,
     this.priceEnd = 0,
     this.orderBy = 'desc',
+    this.priceBy = '',
   });
 }

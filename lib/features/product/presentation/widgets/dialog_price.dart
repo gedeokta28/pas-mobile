@@ -45,7 +45,14 @@ class DialogPrice {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              productDetail.unit1,
+                              convertStrUnit(
+                                  hrg: 1,
+                                  satuan1: productDetail.unit1,
+                                  satuan2: productDetail.unit2,
+                                  satuan3: productDetail.unit3,
+                                  qty1: productDetail.qty1,
+                                  qty2: productDetail.qty2,
+                                  qty3: productDetail.qty3),
                               style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
@@ -62,7 +69,7 @@ class DialogPrice {
                                       color: Colors.white),
                                 ),
                                 Text(
-                                  convertPrice(productDetail.hrg3),
+                                  convertPrice(productDetail.hrg1),
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
@@ -86,7 +93,14 @@ class DialogPrice {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              productDetail.unit2,
+                              convertStrUnit(
+                                  hrg: 2,
+                                  satuan1: productDetail.unit1,
+                                  satuan2: productDetail.unit2,
+                                  satuan3: productDetail.unit3,
+                                  qty1: productDetail.qty1,
+                                  qty2: productDetail.qty2,
+                                  qty3: productDetail.qty3),
                               style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
@@ -103,7 +117,7 @@ class DialogPrice {
                                       color: Colors.black),
                                 ),
                                 Text(
-                                  convertPrice(productDetail.hrg3),
+                                  convertPrice(productDetail.hrg2),
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
@@ -127,7 +141,14 @@ class DialogPrice {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              productDetail.unit3,
+                              convertStrUnit(
+                                  hrg: 3,
+                                  satuan1: productDetail.unit1,
+                                  satuan2: productDetail.unit2,
+                                  satuan3: productDetail.unit3,
+                                  qty1: productDetail.qty1,
+                                  qty2: productDetail.qty2,
+                                  qty3: productDetail.qty3),
                               style: TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,

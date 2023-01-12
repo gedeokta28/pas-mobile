@@ -297,6 +297,22 @@ class _ProductPageState extends State<ProductPage> {
                                   items: provider.dropdownItems,
                                   onChanged: (newValue) {
                                     provider.setSelectedVal = newValue;
+                                    FilterParameter filterParameter = FilterParameter(
+                                        keyword: '',
+                                        priceEnd: provider
+                                            .filterParameterSelected.priceEnd,
+                                        priceStart: provider
+                                            .filterParameterSelected.priceStart,
+                                        categoryId: provider
+                                            .filterParameterSelected.categoryId,
+                                        brandId: provider
+                                            .filterParameterSelected.brandId,
+                                        priceBy: newValue == 'terbaru'
+                                            ? ''
+                                            : newValue ?? 'asc');
+                                    provider
+                                        .filterCustomProduct(filterParameter)
+                                        .listen((event) {});
                                   },
                                   style: TextStyle(
                                     fontSize: 13,

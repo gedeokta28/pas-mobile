@@ -21,6 +21,7 @@ class SearchProvider with ChangeNotifier {
 
   // initial
   final TextEditingController _controller = TextEditingController();
+  late FilterParameter _filterParameterSelected = FilterParameter();
   final FocusNode _focusNode = FocusNode();
   late List<ProductSearch> _listProductSearch = [];
   late List<ProductFilter> _listProductFilter = [];
@@ -34,6 +35,7 @@ class SearchProvider with ChangeNotifier {
   // getter
   TextEditingController get controller => _controller;
   String get selectedValue => _selectedValue;
+  FilterParameter get filterParameterSelected => _filterParameterSelected;
   FocusNode get focusNode => _focusNode;
   bool get isFocus => _isFocus;
   bool get isLoadingSearch => _isLoadingSearch;
@@ -80,8 +82,8 @@ class SearchProvider with ChangeNotifier {
 
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(child: Text("Produk Termahal"), value: "termahal"),
-      const DropdownMenuItem(child: Text("Produk Termurah"), value: "termurah"),
+      const DropdownMenuItem(child: Text("Produk Termahal"), value: "desc"),
+      const DropdownMenuItem(child: Text("Produk Termurah"), value: "asc"),
       const DropdownMenuItem(child: Text("Produk Terbaru"), value: "terbaru"),
     ];
     return menuItems;
@@ -142,6 +144,7 @@ class SearchProvider with ChangeNotifier {
   Stream<SearchState> filterCustomProduct(
       FilterParameter filterParameter) async* {
     unfocus();
+    _filterParameterSelected = filterParameter;
     _isSearch = false;
     _isSearchResult = true;
     _isLoadingProduct = true;
