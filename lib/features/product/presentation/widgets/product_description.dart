@@ -10,6 +10,8 @@ import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
 import '../../../../core/utility/helper.dart';
+import '../../../../core/utility/injection.dart';
+import '../../../login/presentation/login_page.dart';
 import 'dialog_price.dart';
 
 class ProductDescription extends StatelessWidget {
@@ -63,8 +65,12 @@ class ProductDescription extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      await DialogPrice.displayDialogOKCallBack(
-                          context, "Harga Grosir", provider.productDetail);
+                      if (sessionHelper.isLoggedIn == false) {
+                        Navigator.pushNamed(context, LoginPage.routeName);
+                      } else {
+                        await DialogPrice.displayDialogOKCallBack(
+                            context, "Harga Grosir", provider.productDetail);
+                      }
                     },
                     child: Container(
                       height: 25,

@@ -100,7 +100,7 @@ class CardRelatedProductWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              fontSize: 12.0,
+                              fontSize: 11.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
                         ),
@@ -114,7 +114,7 @@ class CardRelatedProductWidget extends StatelessWidget {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                fontSize: 13.0,
+                                fontSize: 14.0,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                           ),
