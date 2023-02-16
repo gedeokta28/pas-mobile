@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/widgets/address_card.dart';
 
 import '../../../core/static/app_config.dart';
@@ -130,17 +131,25 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                         style: TextStyle(fontSize: 13, color: Colors.black87),
                       ),
                     ),
-                    SizedBox(
-                      width: App(context).appWidth(50),
-                      child: Text(
-                        "gedeokta28@gmail.com",
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 13, color: Colors.black),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, ChangeEmailPage.routeName);
+                      },
+                      child: SizedBox(
+                        width: App(context).appWidth(50),
+                        child: Text(
+                          "gedeokta28@gmail.com",
+                          maxLines: 1,
+                          style: TextStyle(fontSize: 13, color: Colors.black),
+                        ),
                       ),
                     ),
                     IconButton(
                         iconSize: 15,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, ChangeEmailPage.routeName);
+                        },
                         icon: Icon(Icons.arrow_forward_ios_rounded))
                   ],
                 ),

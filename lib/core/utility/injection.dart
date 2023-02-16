@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
-import 'package:pas_mobile/features/account/presentation/providers/profile_change_provider.dart';
+import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
@@ -81,7 +81,8 @@ Future<void> init() async {
       getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
       () => ForgotPasswordProvider(doForgotPassword: locator()));
-  locator.registerFactory<ProfileChangeProvider>(() => ProfileChangeProvider());
+  locator.registerFactory<ManagementAccountProvider>(
+      () => ManagementAccountProvider());
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
   locator.registerFactory<BrandProvider>(

@@ -106,7 +106,7 @@ class _CustomClearTextFieldState extends State<CustomClearTextField> {
             ? Text(
                 widget.title ?? "",
                 style: const TextStyle(
-                    fontSize: FONT_MEDIUM,
+                    fontSize: FONT_GENERAL,
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               )

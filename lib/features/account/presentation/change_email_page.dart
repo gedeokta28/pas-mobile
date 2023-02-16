@@ -21,11 +21,11 @@ import '../../forgot_password/presentation/providers/forgot_password_provider.da
 import '../../home/presentation/product_page.dart';
 import '../../home/presentation/providers/home_provider.dart';
 
-class ChangeUsernamePage extends StatelessWidget {
-  const ChangeUsernamePage({
+class ChangeEmailPage extends StatelessWidget {
+  const ChangeEmailPage({
     Key? key,
   }) : super(key: key);
-  static const routeName = '/change-username';
+  static const routeName = '/change-email';
 
   void submit() {}
 
@@ -36,7 +36,7 @@ class ChangeUsernamePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: const CustomAppBar(
-          title: "Ubah Username",
+          title: "Ubah Email",
           centerTitle: true,
           canBack: true,
           hideShadow: false,
@@ -52,14 +52,13 @@ class ChangeUsernamePage extends StatelessWidget {
                 children: [
                   largeVerticalSpacing(),
                   CustomClearTextField(
-                    title: "Username",
-                    controller: provider.usernameController,
-                    inputType: TextInputType.text,
+                    title: "Email",
+                    controller: provider.emailController,
+                    inputType: TextInputType.emailAddress,
                     fieldValidator: ValidationHelper(
                       loc: appLoc,
-                      isError: (bool value) =>
-                          provider.setUsernameError = value,
-                      typeField: TypeField.username,
+                      isError: (bool value) => provider.setEmailError = value,
+                      typeField: TypeField.email,
                     ).validate(),
                   ),
                   mediumVerticalSpacing(),
