@@ -102,7 +102,7 @@ class ProductFilter {
         qty3: json["qty3"],
         unit3: json["unit3"],
         berat: json["berat"],
-        discountinued: json["discountinued"],
+        discountinued: json["discountinued"] ?? '',
         photourl: json["photourl"],
         stockdescription: json["stockdescription"],
         images: List<ImageProductFilter>.from(
@@ -129,7 +129,7 @@ class ProductFilter {
         "unit3": unit3,
         "berat": berat,
         "discountinued": discountinued,
-        "photourl": photourl,
+        "photourl": photourl ?? '',
         "stockdescription": stockdescription,
         "images": List<dynamic>.from(images.map((x) => x.toJson())),
         "brand": brand.toJson(),
