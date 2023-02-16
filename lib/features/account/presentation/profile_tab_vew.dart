@@ -5,6 +5,7 @@ import 'package:pas_mobile/features/account/presentation/widgets/address_card.da
 
 import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
+import 'change_username_page.dart';
 
 class ProfileAccountTab extends StatefulWidget {
   const ProfileAccountTab({Key? key, required this.parentController})
@@ -93,17 +94,26 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                         style: TextStyle(fontSize: 13, color: Colors.black87),
                       ),
                     ),
-                    SizedBox(
-                      width: App(context).appWidth(50),
-                      child: Text(
-                        "gede oktagede oktagede okta",
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 13, color: Colors.black),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ChangeUsernamePage.routeName);
+                      },
+                      child: SizedBox(
+                        width: App(context).appWidth(50),
+                        child: Text(
+                          "gede oktagede oktagede okta",
+                          maxLines: 1,
+                          style: TextStyle(fontSize: 13, color: Colors.black),
+                        ),
                       ),
                     ),
                     IconButton(
                         iconSize: 15,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, ChangeUsernamePage.routeName);
+                        },
                         icon: Icon(Icons.arrow_forward_ios_rounded))
                   ],
                 ),
