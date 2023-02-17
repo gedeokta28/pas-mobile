@@ -7,6 +7,9 @@ class FormProvider with ChangeNotifier {
   final TextEditingController _priceMaxController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordNewController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,6 +39,9 @@ class FormProvider with ChangeNotifier {
   TextEditingController get priceMaxController => _priceMaxController;
   TextEditingController get passwordController => _passwordController;
   TextEditingController get usernameController => _usernameController;
+  TextEditingController get passwordNewController => _passwordNewController;
+  TextEditingController get passwordConfirmationController =>
+      _passwordConfirmationController;
   GlobalKey<FormState> get formKey => _formKey;
 
   bool get emailError => _emailError;
