@@ -3,6 +3,7 @@ import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
+import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
 import 'package:pas_mobile/features/account/presentation/widgets/address_card.dart';
 
 import '../../../core/static/app_config.dart';
@@ -203,7 +204,10 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                   ),
                   IconButton(
                       iconSize: 15,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, ChangePersonalInfoPage.routeName);
+                      },
                       icon: Image.asset(EDIT_ICON))
                 ],
               ),

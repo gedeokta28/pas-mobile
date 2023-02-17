@@ -10,6 +10,12 @@ class FormProvider with ChangeNotifier {
   final TextEditingController _passwordNewController = TextEditingController();
   final TextEditingController _passwordConfirmationController =
       TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _streetNameController = TextEditingController();
+  final TextEditingController _postCodeController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -42,6 +48,13 @@ class FormProvider with ChangeNotifier {
   TextEditingController get passwordNewController => _passwordNewController;
   TextEditingController get passwordConfirmationController =>
       _passwordConfirmationController;
+  TextEditingController get firstNameController => _firstNameController;
+  TextEditingController get lastNameController => _lastNameController;
+  TextEditingController get phoneNumberController => _phoneNumberController;
+  TextEditingController get companyNameController => _companyNameController;
+  TextEditingController get streetNameController => _streetNameController;
+  TextEditingController get postCodeController => _postCodeController;
+
   GlobalKey<FormState> get formKey => _formKey;
 
   bool get emailError => _emailError;

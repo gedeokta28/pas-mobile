@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
+import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_username_page.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
@@ -33,6 +34,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ChangeEmailPage());
     case ChangePasswordPage.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordPage());
+    case ChangePersonalInfoPage.routeName:
+      return MaterialPageRoute(builder: (_) => const ChangePersonalInfoPage());
     case RegisterPage.routeName:
       return MaterialPageRoute(builder: (_) => const RegisterPage());
     case CategoryPage.routeName:
