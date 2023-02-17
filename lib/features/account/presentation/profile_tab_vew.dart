@@ -4,6 +4,7 @@ import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
+import 'package:pas_mobile/features/account/presentation/create_address_page.dart';
 import 'package:pas_mobile/features/account/presentation/widgets/address_card.dart';
 
 import '../../../core/static/app_config.dart';
@@ -211,16 +212,22 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                       icon: Image.asset(EDIT_ICON))
                 ],
               ),
-              SizedBox(
-                height: App(context).appHeight(6),
-                width: App(context).appWidth(45),
-                child: const Center(
-                  child: Text(
-                    "Tambah Alamat (+)",
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: secondaryColor),
+              InkWell(
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, CreateAddressPage.routeName);
+                },
+                child: SizedBox(
+                  height: App(context).appHeight(6),
+                  width: App(context).appWidth(45),
+                  child: const Center(
+                    child: Text(
+                      "Tambah Alamat (+)",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: secondaryColor),
+                    ),
                   ),
                 ),
               ),

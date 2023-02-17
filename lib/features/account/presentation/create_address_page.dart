@@ -16,11 +16,11 @@ import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../../core/utility/validation_helper.dart';
 
-class ChangePersonalInfoPage extends StatelessWidget {
-  const ChangePersonalInfoPage({
+class CreateAddressPage extends StatelessWidget {
+  const CreateAddressPage({
     Key? key,
   }) : super(key: key);
-  static const routeName = '/change-personal-info';
+  static const routeName = '/create-address';
 
   void submit() {
     logMe("Simpannn");
@@ -35,7 +35,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: const CustomAppBar(
-          title: "Ubah Info Pribadi",
+          title: "Tambah Alamat",
           centerTitle: true,
           canBack: true,
           hideShadow: false,
@@ -50,37 +50,14 @@ class ChangePersonalInfoPage extends StatelessWidget {
                   children: [
                     mediumVerticalSpacing(),
                     CustomTextField(
-                      title: "*Nama Depan",
-                      controller: provider.firstNameController,
+                      title: "*Nama Lengkap",
+                      controller: provider.nameController,
                       inputType: TextInputType.text,
                       fieldValidator: ValidationHelper(
                         loc: appLoc,
                         isError: (bool value) =>
                             provider.setUsernameError = value,
                         typeField: TypeField.username,
-                      ).validate(),
-                    ),
-                    mediumVerticalSpacing(),
-                    CustomTextField(
-                      title: "*Nama Belakang",
-                      controller: provider.lastNameController,
-                      inputType: TextInputType.text,
-                      fieldValidator: ValidationHelper(
-                        loc: appLoc,
-                        isError: (bool value) =>
-                            provider.setUsernameError = value,
-                        typeField: TypeField.username,
-                      ).validate(),
-                    ),
-                    mediumVerticalSpacing(),
-                    CustomTextField(
-                      title: "*Email",
-                      controller: provider.emailController,
-                      inputType: TextInputType.emailAddress,
-                      fieldValidator: ValidationHelper(
-                        loc: appLoc,
-                        isError: (bool value) => provider.setEmailError = value,
-                        typeField: TypeField.email,
                       ).validate(),
                     ),
                     mediumVerticalSpacing(),
@@ -93,18 +70,6 @@ class ChangePersonalInfoPage extends StatelessWidget {
                         isError: (bool value) =>
                             provider.setUsernameError = value,
                         typeField: TypeField.phone,
-                      ).validate(),
-                    ),
-                    mediumVerticalSpacing(),
-                    CustomTextField(
-                      title: "Nama Perusahaan",
-                      controller: provider.companyNameController,
-                      inputType: TextInputType.text,
-                      fieldValidator: ValidationHelper(
-                        loc: appLoc,
-                        isError: (bool value) =>
-                            provider.setUsernameError = value,
-                        typeField: TypeField.username,
                       ).validate(),
                     ),
                     mediumVerticalSpacing(),
@@ -240,9 +205,9 @@ class ChangePersonalInfoPage extends StatelessWidget {
                     ),
                     mediumVerticalSpacing(),
                     CustomTextField(
-                      title: "*Kode Post",
-                      controller: provider.postCodeController,
-                      inputType: TextInputType.number,
+                      title: "*Detail Alamat",
+                      controller: provider.detailAddressController,
+                      inputType: TextInputType.text,
                       fieldValidator: ValidationHelper(
                         loc: appLoc,
                         isError: (bool value) =>
@@ -252,7 +217,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                     ),
                     mediumVerticalSpacing(),
                     RoundedButton(
-                      title: "Simpan",
+                      title: "Tambah",
                       color: secondaryColor,
                       event: () {
                         provider.fetchProvinceList().listen((event) {});
