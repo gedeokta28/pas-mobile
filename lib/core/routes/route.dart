@@ -5,6 +5,7 @@ import 'package:pas_mobile/features/account/presentation/change_password_page.da
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_username_page.dart';
 import 'package:pas_mobile/features/account/presentation/create_address_page.dart';
+import 'package:pas_mobile/features/account/presentation/update_address_page.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_page.dart';
@@ -39,6 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ChangePersonalInfoPage());
     case CreateAddressPage.routeName:
       return MaterialPageRoute(builder: (_) => const CreateAddressPage());
+    case UpdateAddressPage.routeName:
+      return MaterialPageRoute(builder: (_) => const UpdateAddressPage());
     case RegisterPage.routeName:
       return MaterialPageRoute(builder: (_) => const RegisterPage());
     case CategoryPage.routeName:

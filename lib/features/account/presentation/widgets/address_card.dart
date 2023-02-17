@@ -3,6 +3,7 @@ import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 
 import '../../../../core/static/assets.dart';
+import '../update_address_page.dart';
 
 class AddressCard extends StatelessWidget {
   const AddressCard({Key? key}) : super(key: key);
@@ -66,7 +67,10 @@ class AddressCard extends StatelessWidget {
                       ),
                       IconButton(
                           iconSize: 15,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, UpdateAddressPage.routeName);
+                          },
                           icon: Image.asset(EDIT_ICON))
                     ],
                   ),
