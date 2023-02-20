@@ -10,6 +10,7 @@ import 'package:pas_mobile/core/domain/usecases/get_regencies_list.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
+import 'package:pas_mobile/features/cart/presentation/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
 import 'package:pas_mobile/features/forgot_password/data/datasources/forgot_password_data_source.dart';
@@ -97,6 +98,7 @@ Future<void> init() async {
       () => FilterProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(
       () => AppBarProvider(getProductDetail: locator()));
+  locator.registerFactory<CartProvider>(() => CartProvider());
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
