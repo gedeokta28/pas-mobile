@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/data/models/provinces_model.dart';
-import 'package:pas_mobile/core/data/models/regencies_model.dart';
+import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
+import 'package:pas_mobile/features/account/data/models/profile_model.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
-
+import 'package:pas_mobile/features/account/presentation/providers/update_profile_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../core/presentation/widgets/custom_simple_dialog.dart';
 import '../../../core/presentation/widgets/custom_text_field.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/colors.dart';
@@ -16,21 +18,28 @@ import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../../core/utility/validation_helper.dart';
 
+class ChangePersonalInfoPageArguments {
+  final Profile profile;
+
+  ChangePersonalInfoPageArguments({
+    required this.profile,
+  });
+}
+
 class ChangePersonalInfoPage extends StatelessWidget {
+  final Profile profile;
   const ChangePersonalInfoPage({
+    required this.profile,
     Key? key,
   }) : super(key: key);
   static const routeName = '/change-personal-info';
-
-  void submit() {
-    logMe("Simpannn");
-  }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => locator<ManagementAccountProvider>()
-        ..fetchProvinceList().listen((event) {}),
+        ..setProfileData(profile)
+        ..fetchProvinceListUpdate(profile.province).listen((event) {}),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -100,12 +109,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                       title: "Nama Perusahaan",
                       controller: provider.companyNameController,
                       inputType: TextInputType.text,
-                      fieldValidator: ValidationHelper(
-                        loc: appLoc,
-                        isError: (bool value) =>
-                            provider.setUsernameError = value,
-                        typeField: TypeField.username,
-                      ).validate(),
+                      fieldValidator: null,
                     ),
                     mediumVerticalSpacing(),
                     Column(
@@ -145,7 +149,6 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                       provider
                                           .fetchRegenciesList()
                                           .listen((event) {});
-                                      logMe(provider.selectedProvince);
                                     },
                                     items: provider.provinceList
                                         .map((Province province) {
@@ -169,62 +172,16 @@ class ChangePersonalInfoPage extends StatelessWidget {
                       ],
                     ),
                     mediumVerticalSpacing(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          "*Kota / Kabupaten",
-                          style: const TextStyle(
-                              fontSize: FONT_GENERAL,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4.0),
-                        Container(
-                            decoration: BoxDecoration(
-                              color: SHADOW,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(6)),
-                            ),
-                            child: ButtonTheme(
-                              alignedDropdown: true,
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<RegenciesModel>(
-                                    icon: const Icon(
-                                      Icons.keyboard_arrow_down,
-                                      color: primaryColor,
-                                      size: 25,
-                                    ),
-                                    hint: Text(
-                                      "Pilih Kota / Kabupaten",
-                                      style:
-                                          const TextStyle(color: Colors.grey),
-                                    ),
-                                    value: provider.selectedRegencies,
-                                    onChanged: (RegenciesModel? item) {
-                                      provider.setSelectedRegencies = item;
-                                      logMe(provider.selectedRegencies);
-                                    },
-                                    items: provider.regenciesList
-                                        .map((RegenciesModel regenciesModel) {
-                                      return DropdownMenuItem<RegenciesModel>(
-                                          value: regenciesModel,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text(
-                                                regenciesModel.name,
-                                                style: const TextStyle(
-                                                    color: Colors.black),
-                                              ),
-                                            ],
-                                          ));
-                                    }).toList()),
-                              ),
-                            )),
-                      ],
+                    CustomTextField(
+                      title: "*Kota/Kabupaten",
+                      controller: provider.regenciesController,
+                      inputType: TextInputType.text,
+                      fieldValidator: ValidationHelper(
+                        loc: appLoc,
+                        isError: (bool value) =>
+                            provider.setUsernameError = value,
+                        typeField: TypeField.username,
+                      ).validate(),
                     ),
                     mediumVerticalSpacing(),
                     CustomTextField(
@@ -255,8 +212,46 @@ class ChangePersonalInfoPage extends StatelessWidget {
                       title: "Simpan",
                       color: secondaryColor,
                       event: () {
-                        provider.fetchProvinceList().listen((event) {});
-                        // if (provider.formKey.currentState!.validate()) submit();
+                        if (provider.formKey.currentState!.validate()) {
+                          logMe("asdadasda");
+                          logMe(provider.firstNameController.text);
+                          Map<String, String> body = {
+                            'firstname': provider.firstNameController.text,
+                            'lastname': provider.lastNameController.text,
+                            'email': provider.emailController.text,
+                            'phone': provider.phoneNumberController.text,
+                            'companyname': provider.companyNameController.text,
+                            'province': provider.selectedProvince!.name,
+                            'city': provider.regenciesController.text,
+                            'address': provider.streetNameController.text,
+                            'postcode': provider.postCodeController.text,
+                          };
+
+                          provider.updateProfile(body).listen((event) {
+                            if (event is UpdateProfileSuccess) {
+                              showShortToast(message: event.data.message);
+
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                MainPage.routeName,
+                                (route) => false,
+                                arguments: 3, // navbar index
+                              );
+                            } else if (event is UpdateProfileFailure) {
+                              final msg = getErrorMessage(event.failure);
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return CustomSimpleDialog(
+                                        text: msg,
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        });
+                                  });
+                            }
+                          });
+                        }
                       },
                     ),
                     SizedBox(height: App(context).appHeight(45))

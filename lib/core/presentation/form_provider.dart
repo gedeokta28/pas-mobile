@@ -5,6 +5,7 @@ class FormProvider with ChangeNotifier {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _priceMinController = TextEditingController();
   final TextEditingController _priceMaxController = TextEditingController();
+  final TextEditingController _regenciesController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordNewController = TextEditingController();
@@ -46,6 +47,7 @@ class FormProvider with ChangeNotifier {
   TextEditingController get emailController => _emailController;
   TextEditingController get nameController => _nameController;
   TextEditingController get priceMinController => _priceMinController;
+  TextEditingController get regenciesController => _regenciesController;
   TextEditingController get priceMaxController => _priceMaxController;
   TextEditingController get passwordController => _passwordController;
   TextEditingController get usernameController => _usernameController;

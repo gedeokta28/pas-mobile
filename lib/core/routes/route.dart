@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
+import 'package:pas_mobile/features/account/data/models/profile_model.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
@@ -31,13 +32,25 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginPage.routeName:
       return MaterialPageRoute(builder: (_) => const LoginPage());
     case ChangeUsernamePage.routeName:
-      return MaterialPageRoute(builder: (_) => const ChangeUsernamePage());
+      final args = settings.arguments as Profile;
+      return MaterialPageRoute(
+          builder: (_) => ChangeUsernamePage(
+                profile: args,
+              ));
     case ChangeEmailPage.routeName:
-      return MaterialPageRoute(builder: (_) => const ChangeEmailPage());
+      final args = settings.arguments as Profile;
+      return MaterialPageRoute(
+          builder: (_) => ChangeEmailPage(
+                profile: args,
+              ));
     case ChangePasswordPage.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordPage());
     case ChangePersonalInfoPage.routeName:
-      return MaterialPageRoute(builder: (_) => const ChangePersonalInfoPage());
+      final args = settings.arguments as ChangePersonalInfoPageArguments;
+      return MaterialPageRoute(
+          builder: (_) => ChangePersonalInfoPage(
+                profile: args.profile,
+              ));
     case CreateAddressPage.routeName:
       return MaterialPageRoute(builder: (_) => const CreateAddressPage());
     case UpdateAddressPage.routeName:

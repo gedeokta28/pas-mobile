@@ -8,6 +8,10 @@ import 'package:pas_mobile/core/domain/repositories/region_repository.dart';
 import 'package:pas_mobile/core/domain/usecases/get_provinces_list.dart';
 import 'package:pas_mobile/core/domain/usecases/get_regencies_list.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
+import 'package:pas_mobile/features/account/data/datasources/profile_datasource.dart';
+import 'package:pas_mobile/features/account/data/repositories/profile_repository_impl.dart';
+import 'package:pas_mobile/features/account/domain/repositories/profile_repository.dart';
+import 'package:pas_mobile/features/account/domain/usecases/do_update_profile.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_provider.dart';
@@ -42,6 +46,7 @@ import 'package:pas_mobile/features/search/domain/usecases/do_filter_product.dar
 import 'package:pas_mobile/features/search/domain/usecases/do_search_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/account/domain/usecases/get_profile.dart';
 import '../../features/login/data/datasources/login_data_source.dart';
 import '../../features/login/domain/repositories/login_repository.dart';
 import '../../features/login/domain/usecases/do_login.dart';
@@ -89,7 +94,10 @@ Future<void> init() async {
       () => ForgotPasswordProvider(doForgotPassword: locator()));
   locator.registerFactory<ManagementAccountProvider>(() =>
       ManagementAccountProvider(
-          getProvincesList: locator(), getRegenciesList: locator()));
+          getProvincesList: locator(),
+          getRegenciesList: locator(),
+          doUpdateProfile: locator(),
+          getProfile: locator()));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
   locator.registerFactory<BrandProvider>(
@@ -113,6 +121,8 @@ Future<void> init() async {
       () => ForgotPasswordDataSourceImplementation(dio: locator()));
   locator.registerLazySingleton<SearchProductDataSource>(
       () => SearchProductDataSourceImplementation(dio: locator()));
+  locator.registerLazySingleton<ProfileDataSource>(
+      () => ProfileDataSourceImpl(dio: locator()));
 
 //Repository
   locator.registerLazySingleton<LoginRepository>(
@@ -127,6 +137,8 @@ Future<void> init() async {
       () => ForgotPasswordRepoImpl(dataSource: locator()));
   locator.registerLazySingleton<SearchProductRepository>(
       () => SearchProductRepoImpl(dataSource: locator()));
+  locator.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(
+      remoteDataSource: locator(), networkInfo: locator()));
 
 //Usecase
   locator.registerLazySingleton<DoLogin>(
@@ -151,4 +163,7 @@ Future<void> init() async {
       () => DoSearchProduct(repository: locator()));
   locator.registerLazySingleton<DoFilterProduct>(
       () => DoFilterProduct(repository: locator()));
+  locator.registerLazySingleton<GetProfile>(() => GetProfile(locator()));
+  locator.registerLazySingleton<DoUpdateProfile>(
+      () => DoUpdateProfile(repository: locator()));
 }

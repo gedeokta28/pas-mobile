@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/splash_page.dart';
 import 'package:pas_mobile/core/static/assets.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/account/presentation/profile_tab_vew.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/banner_slider.dart';
 
@@ -9,6 +10,7 @@ import '../../../core/presentation/widgets/custom_dialog_logout.dart';
 import '../../../core/static/app_config.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/utility/helper.dart';
+import '../../../core/utility/injection.dart';
 import 'order_tab_vew.dart';
 
 class AccountPage extends StatefulWidget {
@@ -38,7 +40,7 @@ class _AccountPageState extends State<AccountPage>
       appBar: const CustomAppBar(
         title: "Kelola Akun",
         centerTitle: true,
-        canBack: true,
+        canBack: false,
         hideShadow: false,
       ),
       body: Stack(
@@ -116,6 +118,8 @@ class _AccountPageState extends State<AccountPage>
             left: 0,
             child: InkWell(
               onTap: () {
+                final session = locator<Session>();
+                logMe("Tokennn : ${session.sessionToken}");
                 showDialog(
                   context: context,
                   builder: (_) => CustomLogoutDialog(

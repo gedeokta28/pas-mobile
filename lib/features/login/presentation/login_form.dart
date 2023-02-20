@@ -11,7 +11,6 @@ import '../../../core/static/dimens.dart';
 import '../../../core/utility/enum.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
-import '../../../core/utility/session_helper.dart';
 import '../../../core/utility/validation_helper.dart';
 import 'providers/login_provider.dart';
 import 'providers/login_state.dart';
