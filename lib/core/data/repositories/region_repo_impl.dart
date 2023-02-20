@@ -14,7 +14,7 @@ class RegionRepoImpl implements RegionRepository {
   RegionRepoImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, List<ProvincesModel>>> getProvincesList() async {
+  Future<Either<Failure, List<Province>>> getProvincesList() async {
     try {
       final data = await dataSource.getProvincesList();
       return Right(data);

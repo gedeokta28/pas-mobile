@@ -2,31 +2,49 @@
 //
 //     final provincesModel = provincesModelFromJson(jsonString);
 
+import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<ProvincesModel> provincesModelFromJson(String str) =>
-    List<ProvincesModel>.from(
-        json.decode(str).map((x) => ProvincesModel.fromJson(x)));
+ProvincesModel provincesModelFromJson(String str) => ProvincesModel.fromJson(json.decode(str));
 
-String provincesModelToJson(List<ProvincesModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String provincesModelToJson(ProvincesModel data) => json.encode(data.toJson());
 
 class ProvincesModel {
-  ProvincesModel({
-    required this.id,
-    required this.name,
-  });
+    ProvincesModel({
+        required this.status,
+        required this.data,
+    });
 
-  String id;
-  String name;
+    String status;
+    List<Province> data;
 
-  factory ProvincesModel.fromJson(Map<String, dynamic> json) => ProvincesModel(
+    factory ProvincesModel.fromJson(Map<String, dynamic> json) => ProvincesModel(
+        status: json["status"],
+        data: List<Province>.from(json["data"].map((x) => Province.fromJson(x))),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "status": status,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    };
+}
+
+class Province {
+    Province({
+        required this.id,
+        required this.name,
+    });
+
+    String id;
+    String name;
+
+    factory Province.fromJson(Map<String, dynamic> json) => Province(
         id: json["id"],
         name: json["name"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-      };
+    };
 }

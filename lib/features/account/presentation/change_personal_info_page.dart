@@ -128,7 +128,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                             child: ButtonTheme(
                               alignedDropdown: true,
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButton<ProvincesModel>(
+                                child: DropdownButton<Province>(
                                     icon: const Icon(
                                       Icons.keyboard_arrow_down,
                                       color: primaryColor,
@@ -140,7 +140,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                           const TextStyle(color: Colors.grey),
                                     ),
                                     value: provider.selectedProvince,
-                                    onChanged: (ProvincesModel? item) {
+                                    onChanged: (Province? item) {
                                       provider.setSelectedProvince = item;
                                       provider
                                           .fetchRegenciesList()
@@ -148,16 +148,16 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                       logMe(provider.selectedProvince);
                                     },
                                     items: provider.provinceList
-                                        .map((ProvincesModel provincesModel) {
-                                      return DropdownMenuItem<ProvincesModel>(
-                                          value: provincesModel,
+                                        .map((Province province) {
+                                      return DropdownMenuItem<Province>(
+                                          value: province,
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
                                               Text(
-                                                provincesModel.name,
+                                                province.name,
                                                 style: const TextStyle(
                                                     color: Colors.black),
                                               ),

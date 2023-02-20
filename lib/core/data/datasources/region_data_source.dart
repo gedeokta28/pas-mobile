@@ -7,7 +7,7 @@ import '../models/provinces_model.dart';
 import '../models/regencies_model.dart';
 
 abstract class RegionDataSource {
-  Future<List<ProvincesModel>> getProvincesList();
+  Future<List<Province>> getProvincesList();
   Future<List<RegenciesModel>> getRegenciesList(String provinceId);
 }
 
@@ -17,17 +17,16 @@ class RegionDataSourceImplementation implements RegionDataSource {
   RegionDataSourceImplementation({required this.dio});
 
   @override
-  Future<List<ProvincesModel>> getProvincesList() async {
-    String url =
-        'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';
+  Future<List<Province>> getProvincesList() async {
+    String url = 'api/regions/id/provinces';
 
     try {
       final response = await dio.get(
         url,
         options: options(headers: null),
       );
-      final model = provincesModelFromJson(jsonEncode(response.data));
-      return model;
+      final model = ProvincesModel.fromJson(response.data);
+      return model.data;
     } catch (e) {
       logMe("errorr");
       logMe(e);

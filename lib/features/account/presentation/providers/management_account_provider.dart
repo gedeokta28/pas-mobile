@@ -11,15 +11,15 @@ class ManagementAccountProvider extends FormProvider {
   // initial
   final GetProvincesList getProvincesList;
   final GetRegenciesList getRegenciesList;
-  late List<ProvincesModel> _provinceList = [];
+  late List<Province> _provinceList = [];
   late List<RegenciesModel> _regenciesList = [];
-  ProvincesModel? _selectedProvince;
+  Province? _selectedProvince;
   RegenciesModel? _selectedRegencies;
 
   //get
-  List<ProvincesModel> get provinceList => _provinceList;
+  List<Province> get provinceList => _provinceList;
   List<RegenciesModel> get regenciesList => _regenciesList;
-  ProvincesModel? get selectedProvince => _selectedProvince;
+  Province? get selectedProvince => _selectedProvince;
   RegenciesModel? get selectedRegencies => _selectedRegencies;
 
   //setter

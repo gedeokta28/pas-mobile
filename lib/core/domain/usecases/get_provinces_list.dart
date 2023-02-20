@@ -5,7 +5,7 @@ import '../../data/models/provinces_model.dart';
 import '../repositories/region_repository.dart';
 
 abstract class GetProvincesListUseCase<Type> {
-  Future<Either<Failure, List<ProvincesModel>>> call();
+  Future<Either<Failure, List<Province>>> call();
 }
 
 class GetProvincesList implements GetProvincesListUseCase<String> {
@@ -14,7 +14,7 @@ class GetProvincesList implements GetProvincesListUseCase<String> {
   GetProvincesList({required this.repository});
 
   @override
-  Future<Either<Failure, List<ProvincesModel>>> call() async {
+  Future<Either<Failure, List<Province>>> call() async {
     final result = await repository.getProvincesList();
     return result.fold((l) => Left(l), (r) {
       return Right(r);

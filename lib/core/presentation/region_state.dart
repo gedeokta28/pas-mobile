@@ -13,7 +13,7 @@ class RegionLoading extends RegionState {}
 
 class RegionProvinceLoaded extends RegionState {
   // final RegionList data;
-  final List<ProvincesModel> data;
+  final List<Province> data;
 
   RegionProvinceLoaded({required this.data});
 
