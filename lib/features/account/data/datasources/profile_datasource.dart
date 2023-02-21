@@ -2,14 +2,21 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/utility/extensions.dart';
+import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 import 'package:pas_mobile/features/account/data/models/update_profile_response_model.dart';
 
 import '../../../../core/error/exception.dart';
+import '../models/create_address_response_model.dart';
 import '../models/profile_model.dart';
 
 abstract class ProfileDataSource {
   Future<Profile> getProfile();
   Future<UpdateProfileResponse> doUpdateProfile(Map<String, String> data);
+  Future<CreateAddressResponseModel> doUpdateAddress(
+      Map<String, String> data, String addressId);
+  Future<CreateAddressResponseModel> doCreateAddress(FormData formData);
+  Future<CreateAddressResponseModel> doDeleteAddress(String addressId);
+  Future<List<ShippingAddress>> getAddressList();
 }
 
 class ProfileDataSourceImpl implements ProfileDataSource {
@@ -43,6 +50,73 @@ class ProfileDataSourceImpl implements ProfileDataSource {
         data: data,
       );
       final model = UpdateProfileResponse.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CreateAddressResponseModel> doUpdateAddress(
+      Map<String, String> data, String addressId) async {
+    String url = 'api/me/address/$addressId';
+
+    dio.withToken();
+    try {
+      final response = await dio.put(
+        url,
+        data: data,
+      );
+      final model = CreateAddressResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CreateAddressResponseModel> doCreateAddress(FormData formData) async {
+    String url = 'api/me/address';
+
+    dio.withToken();
+    try {
+      final response = await dio.post(
+        url,
+        data: formData,
+      );
+      final model = CreateAddressResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<ShippingAddress>> getAddressList() async {
+    String url = 'api/me/address';
+
+    dio.withToken();
+    try {
+      final response = await dio.get(
+        url,
+      );
+      final model = GetAddressResponseModel.fromJson(response.data);
+      return model.data;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CreateAddressResponseModel> doDeleteAddress(String addressId) async {
+    String url = 'api/me/address/$addressId';
+
+    dio.withToken();
+    try {
+      final response = await dio.delete(
+        url,
+      );
+      final model = CreateAddressResponseModel.fromJson(response.data);
       return model;
     } catch (e) {
       rethrow;

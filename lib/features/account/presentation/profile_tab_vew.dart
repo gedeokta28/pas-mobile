@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
 import 'package:pas_mobile/features/account/presentation/create_address_page.dart';
 import 'package:pas_mobile/features/account/presentation/providers/profile_state.dart';
+import 'package:pas_mobile/features/account/presentation/providers/shipping_address_provider.dart';
 import 'package:pas_mobile/features/account/presentation/update_address_page.dart';
 import 'package:pas_mobile/features/account/presentation/widgets/address_card.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,7 @@ import '../../../../core/utility/injection.dart' as di;
 import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
 import 'change_username_page.dart';
+import 'providers/get_address_list_state.dart';
 import 'providers/management_account_provider.dart';
 
 class ProfileAccountTab extends StatefulWidget {
@@ -97,7 +100,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Akun Detail",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -106,7 +109,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                   ),
                                   Text(
                                     "ID #${_data.customerid}",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black54),
@@ -140,7 +143,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                         child: Text(
                                           _data.username,
                                           maxLines: 1,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               color: Colors.black),
                                         ),
@@ -153,7 +156,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                               ChangeUsernamePage.routeName,
                                               arguments: _data);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                             Icons.arrow_forward_ios_rounded))
                                   ],
                                 ),
@@ -184,7 +187,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                         child: Text(
                                           _data.email,
                                           maxLines: 1,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 13,
                                               color: Colors.black),
                                         ),
@@ -224,7 +227,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                       },
                                       child: SizedBox(
                                         width: App(context).appWidth(50),
-                                        child: Text(
+                                        child: const Text(
                                           "********",
                                           style: TextStyle(
                                               fontSize: 13,
@@ -238,7 +241,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                           Navigator.pushNamed(context,
                                               ChangePasswordPage.routeName);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                             Icons.arrow_forward_ios_rounded))
                                   ],
                                 ),
@@ -248,7 +251,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Info Pribadi",
                                     style: TextStyle(
                                         fontSize: 14,
@@ -287,18 +290,62 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                 ),
                               ),
                               smallVerticalSpacing(),
-                              ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: 5,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                        onTap: () {
-                                          Navigator.pushNamed(context,
-                                              UpdateAddressPage.routeName);
-                                        },
-                                        child: AddressCard());
+                              ChangeNotifierProvider(
+                                  create: (context) =>
+                                      di.locator<ShippingAddressProvider>(),
+                                  builder: (context, _) {
+                                    return StreamBuilder<GetAddressListState>(
+                                        stream: context
+                                            .read<ShippingAddressProvider>()
+                                            .fetchAddressList(),
+                                        builder: (context, state) {
+                                          switch (state.data.runtimeType) {
+                                            case GetAddressListLoading:
+                                              return Center(
+                                                child: Image.asset(
+                                                  ASSETS_LOADING,
+                                                  height: 100.0,
+                                                  width: 100.0,
+                                                ),
+                                              );
+                                            case GetAddressListFailure:
+                                              final failure =
+                                                  (state.data as ProfileFailure)
+                                                      .failure;
+                                              final msg =
+                                                  getErrorMessage(failure);
+                                              showShortToast(message: msg);
+                                              return const SizedBox.shrink();
+                                            case GetAddressListSuccess:
+                                              final _data = (state.data
+                                                      as GetAddressListSuccess)
+                                                  .data;
+
+                                              return ListView.builder(
+                                                  padding: EdgeInsets.zero,
+                                                  shrinkWrap: true,
+                                                  itemCount: _data.length,
+                                                  physics:
+                                                      const NeverScrollableScrollPhysics(),
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return GestureDetector(
+                                                        onTap: () {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              UpdateAddressPage
+                                                                  .routeName,
+                                                              arguments:
+                                                                  _data[index]);
+                                                        },
+                                                        child: AddressCard(
+                                                          shippingAddress:
+                                                              _data[index],
+                                                        ));
+                                                  });
+                                          }
+                                          return const SizedBox.shrink();
+                                        });
                                   }),
                               largeVerticalSpacing()
                             ],

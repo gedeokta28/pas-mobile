@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 import 'package:provider/provider.dart';
@@ -101,29 +102,39 @@ class _LoginFormState extends State<LoginForm> {
                   if (provider.formKey.currentState!.validate()) submit();
                 },
               ),
-              largeVerticalSpacing(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text("Belum punya akun ?",
-                      style: TextStyle(
-                          fontSize: FONT_MEDIUM,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold)),
-                  smallHorizontalSpacing(),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, RegisterPage.routeName);
-                    },
-                    child: const Text("Daftar",
+              Container(
+                height: App(context).appHeight(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text("Belum punya akun ?",
                         style: TextStyle(
                             fontSize: FONT_MEDIUM,
-                            color: secondaryColor,
+                            color: Colors.black,
                             fontWeight: FontWeight.bold)),
-                  ),
-                ],
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, RegisterPage.routeName);
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        height: App(context).appHeight(10),
+                        child: const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 10, right: 15),
+                            child: Text("Daftar",
+                                style: TextStyle(
+                                    fontSize: FONT_MEDIUM,
+                                    color: secondaryColor,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               largeVerticalSpacing(),
             ],

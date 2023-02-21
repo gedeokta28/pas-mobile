@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
+import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 import 'package:pas_mobile/features/account/data/models/profile_model.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
@@ -54,7 +55,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CreateAddressPage.routeName:
       return MaterialPageRoute(builder: (_) => const CreateAddressPage());
     case UpdateAddressPage.routeName:
-      return MaterialPageRoute(builder: (_) => const UpdateAddressPage());
+      final args = settings.arguments as ShippingAddress;
+      return MaterialPageRoute(
+          builder: (_) => UpdateAddressPage(
+                shippingAddress: args,
+              ));
     case RegisterPage.routeName:
       return MaterialPageRoute(builder: (_) => const RegisterPage());
     case CategoryPage.routeName:

@@ -24,6 +24,7 @@ class ManagementAccountProvider extends FormProvider {
   Province? _selectedProvince;
   RegenciesModel? _selectedRegencies;
   Profile? _profile;
+  late bool _isProvinceValidate = true;
 
   //get
   Profile? get profile => _profile;
@@ -31,10 +32,16 @@ class ManagementAccountProvider extends FormProvider {
   List<RegenciesModel> get regenciesList => _regenciesList;
   Province? get selectedProvince => _selectedProvince;
   RegenciesModel? get selectedRegencies => _selectedRegencies;
+  bool get isProvinceValidate => _isProvinceValidate;
 
   //setter
   set setSelectedProvince(val) {
     _selectedProvince = val;
+    notifyListeners();
+  }
+
+  set setProvinceValidate(val) {
+    _isProvinceValidate = val;
     notifyListeners();
   }
 
@@ -68,17 +75,14 @@ class ManagementAccountProvider extends FormProvider {
       (data) async* {
         logMe("Provinceee");
         _provinceList = data;
-        _selectedProvince = _provinceList[0];
 
-        logMe("000000 ");
-        logMe(_profile!.province);
         notifyListeners();
         yield RegionProvinceLoaded(data: data);
       },
     );
   }
 
-  Stream<RegionState> fetchProvinceListUpdate(String provinceUpdate) async* {
+  Stream<RegionState> fetchProvinceListUpdate(String? provinceUpdate) async* {
     yield RegionLoading();
 
     final result = await getProvincesList();
@@ -90,9 +94,12 @@ class ManagementAccountProvider extends FormProvider {
       (data) async* {
         logMe("Provinceee");
         _provinceList = data;
-        int index =
-            _provinceList.indexWhere((item) => item.name == provinceUpdate);
-        _selectedProvince = _provinceList[index];
+        if (provinceUpdate != null) {
+          int index =
+              _provinceList.indexWhere((item) => item.name == provinceUpdate);
+          _selectedProvince = _provinceList[index];
+        }
+
         notifyListeners();
         yield RegionProvinceLoaded(data: data);
       },

@@ -11,7 +11,11 @@ import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/account/data/datasources/profile_datasource.dart';
 import 'package:pas_mobile/features/account/data/repositories/profile_repository_impl.dart';
 import 'package:pas_mobile/features/account/domain/repositories/profile_repository.dart';
+import 'package:pas_mobile/features/account/domain/usecases/do_create_address.dart';
+import 'package:pas_mobile/features/account/domain/usecases/do_delete_address.dart';
+import 'package:pas_mobile/features/account/domain/usecases/do_update_address.dart';
 import 'package:pas_mobile/features/account/domain/usecases/do_update_profile.dart';
+import 'package:pas_mobile/features/account/domain/usecases/get_address_list.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
 import 'package:pas_mobile/features/cart/presentation/cart_provider.dart';
@@ -47,6 +51,7 @@ import 'package:pas_mobile/features/search/domain/usecases/do_search_product.dar
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/account/domain/usecases/get_profile.dart';
+import '../../features/account/presentation/providers/shipping_address_provider.dart';
 import '../../features/login/data/datasources/login_data_source.dart';
 import '../../features/login/domain/repositories/login_repository.dart';
 import '../../features/login/domain/usecases/do_login.dart';
@@ -98,6 +103,14 @@ Future<void> init() async {
           getRegenciesList: locator(),
           doUpdateProfile: locator(),
           getProfile: locator()));
+  locator
+      .registerFactory<ShippingAddressProvider>(() => ShippingAddressProvider(
+            getProvincesList: locator(),
+            doCreateAdress: locator(),
+            doDeleteAddress: locator(),
+            getAddressList: locator(),
+            doUpdateAddress: locator(),
+          ));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
   locator.registerFactory<BrandProvider>(
@@ -166,4 +179,12 @@ Future<void> init() async {
   locator.registerLazySingleton<GetProfile>(() => GetProfile(locator()));
   locator.registerLazySingleton<DoUpdateProfile>(
       () => DoUpdateProfile(repository: locator()));
+  locator.registerLazySingleton<DoCreateAddress>(
+      () => DoCreateAddress(repository: locator()));
+  locator.registerLazySingleton<GetAddressList>(
+      () => GetAddressList(repository: locator()));
+  locator.registerLazySingleton<DoDeleteAddress>(
+      () => DoDeleteAddress(repository: locator()));
+  locator.registerLazySingleton<DoUpdateAddress>(
+      () => DoUpdateAddress(repository: locator()));
 }

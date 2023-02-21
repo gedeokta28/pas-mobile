@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 
 import '../../../../core/static/assets.dart';
 import '../update_address_page.dart';
 
 class AddressCard extends StatelessWidget {
-  const AddressCard({Key? key}) : super(key: key);
+  final ShippingAddress shippingAddress;
+  const AddressCard({Key? key, required this.shippingAddress})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +39,7 @@ class AddressCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Alamat 1",
+                            shippingAddress.id,
                             style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
@@ -46,21 +49,21 @@ class AddressCard extends StatelessWidget {
                             height: 5.0,
                           ),
                           Text(
-                            "I Gede Okta Budi Mardaasda",
+                            shippingAddress.fullname,
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
                           SizedBox(
                             height: 5.0,
                           ),
                           Text(
-                            "0283293293892",
+                            shippingAddress.phone,
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           ),
                           SizedBox(
                             height: 5.0,
                           ),
                           Text(
-                            "Jl. sadas asdasdA asdas 9090 sadas",
+                            shippingAddress.streetAddress,
                             style: TextStyle(fontSize: 13, color: Colors.black),
                           )
                         ],
@@ -69,7 +72,8 @@ class AddressCard extends StatelessWidget {
                           iconSize: 15,
                           onPressed: () {
                             Navigator.pushNamed(
-                                context, UpdateAddressPage.routeName);
+                                context, UpdateAddressPage.routeName,
+                                arguments: shippingAddress);
                           },
                           icon: Image.asset(EDIT_ICON))
                     ],

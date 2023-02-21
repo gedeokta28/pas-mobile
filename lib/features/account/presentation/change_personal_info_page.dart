@@ -146,9 +146,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                     value: provider.selectedProvince,
                                     onChanged: (Province? item) {
                                       provider.setSelectedProvince = item;
-                                      provider
-                                          .fetchRegenciesList()
-                                          .listen((event) {});
+                                      provider.setProvinceValidate = true;
                                     },
                                     items: provider.provinceList
                                         .map((Province province) {
@@ -171,6 +169,20 @@ class ChangePersonalInfoPage extends StatelessWidget {
                             )),
                       ],
                     ),
+                    provider.isProvinceValidate
+                        ? const SizedBox()
+                        : const SizedBox(
+                            height: 20,
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 15, top: 5.0),
+                              child: Text(
+                                'Pilih Provinsi',
+                                style: TextStyle(
+                                    color: ERROR_RED_COLOR_TEXT, fontSize: 13),
+                              ),
+                            ),
+                          ),
                     mediumVerticalSpacing(),
                     CustomTextField(
                       title: "*Kota/Kabupaten",
@@ -212,45 +224,51 @@ class ChangePersonalInfoPage extends StatelessWidget {
                       title: "Simpan",
                       color: secondaryColor,
                       event: () {
-                        if (provider.formKey.currentState!.validate()) {
-                          logMe("asdadasda");
-                          logMe(provider.firstNameController.text);
-                          Map<String, String> body = {
-                            'firstname': provider.firstNameController.text,
-                            'lastname': provider.lastNameController.text,
-                            'email': provider.emailController.text,
-                            'phone': provider.phoneNumberController.text,
-                            'companyname': provider.companyNameController.text,
-                            'province': provider.selectedProvince!.name,
-                            'city': provider.regenciesController.text,
-                            'address': provider.streetNameController.text,
-                            'postcode': provider.postCodeController.text,
-                          };
+                        if (provider.selectedProvince == null) {
+                          provider.setProvinceValidate = false;
+                          if (provider.formKey.currentState!.validate()) {}
+                        } else {
+                          if (provider.formKey.currentState!.validate()) {
+                            logMe("asdadasda");
+                            logMe(provider.firstNameController.text);
+                            Map<String, String> body = {
+                              'firstname': provider.firstNameController.text,
+                              'lastname': provider.lastNameController.text,
+                              'email': provider.emailController.text,
+                              'phone': provider.phoneNumberController.text,
+                              'companyname':
+                                  provider.companyNameController.text,
+                              'province': provider.selectedProvince!.name,
+                              'city': provider.regenciesController.text,
+                              'address': provider.streetNameController.text,
+                              'postcode': provider.postCodeController.text,
+                            };
 
-                          provider.updateProfile(body).listen((event) {
-                            if (event is UpdateProfileSuccess) {
-                              showShortToast(message: event.data.message);
+                            provider.updateProfile(body).listen((event) {
+                              if (event is UpdateProfileSuccess) {
+                                showShortToast(message: event.data.message);
 
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                MainPage.routeName,
-                                (route) => false,
-                                arguments: 3, // navbar index
-                              );
-                            } else if (event is UpdateProfileFailure) {
-                              final msg = getErrorMessage(event.failure);
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomSimpleDialog(
-                                        text: msg,
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        });
-                                  });
-                            }
-                          });
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  MainPage.routeName,
+                                  (route) => false,
+                                  arguments: 3, // navbar index
+                                );
+                              } else if (event is UpdateProfileFailure) {
+                                final msg = getErrorMessage(event.failure);
+                                showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return CustomSimpleDialog(
+                                          text: msg,
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          });
+                                    });
+                              }
+                            });
+                          }
                         }
                       },
                     ),

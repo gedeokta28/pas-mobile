@@ -5,13 +5,17 @@ class RoundedButton extends StatelessWidget {
   final String title;
   final Function event;
   final Color color;
+  final Color textColor;
   final double radius;
+  final double sizeButton;
   final double textSize;
   const RoundedButton({
     Key? key,
     required this.title,
     required this.event,
     this.color = primaryColor,
+    this.sizeButton = 50.0,
+    this.textColor = Colors.white,
     this.textSize = 15.0,
     this.radius = 5.0,
   }) : super(key: key);
@@ -24,7 +28,7 @@ class RoundedButton extends StatelessWidget {
         primary: color,
         textStyle: TextStyle(
             fontSize: 17.0, color: Colors.white, fontWeight: FontWeight.bold),
-        minimumSize: const Size.fromHeight(50.0),
+        minimumSize: Size.fromHeight(sizeButton),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),
         ),
@@ -32,7 +36,7 @@ class RoundedButton extends StatelessWidget {
       onPressed: () => event(),
       child: Text(
         title,
-        style: TextStyle(fontSize: textSize),
+        style: TextStyle(color: textColor, fontSize: textSize),
       ),
     );
   }
