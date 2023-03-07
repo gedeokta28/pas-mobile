@@ -8,6 +8,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/presentation/widgets/shimmer_card.dart';
 import '../../../../core/static/app_config.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
 import '../product_page.dart';
 import 'card_widget.dart';
 import 'category_selection_title.dart';
@@ -21,7 +22,13 @@ class NewsProductList extends StatelessWidget {
       children: [
         ListTitleWidget(
           onTap: () {
-            Navigator.pushNamed(context, ProductPage.routeName);
+            Navigator.pushNamed(context, ProductPage.routeName).then((_) {
+              final provider = Provider.of<CartProvider>(
+                context,
+                listen: false,
+              );
+              provider.countTotalCartItem();
+            });
           },
           title: 'Product Terbaru',
         ),

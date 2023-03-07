@@ -6,7 +6,7 @@ import 'package:pas_mobile/core/static/dimens.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:provider/provider.dart';
 
-import '../cart_provider.dart';
+import '../providers/cart_provider.dart';
 
 class CartItem extends StatelessWidget {
   int index;
@@ -24,16 +24,22 @@ class CartItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Image(
-                height: 80,
-                width: 80,
-                image: NetworkImage(provider.cart[index].image!),
-              ),
+              provider.cart[index].image!.isNotEmpty
+                  ? Image(
+                      height: 80,
+                      width: 80,
+                      image: NetworkImage(provider.cart[index].image!),
+                    )
+                  : const Image(
+                      height: 80,
+                      width: 80,
+                      image: AssetImage(ASSETS_PLACEHOLDER),
+                    ),
               smallHorizontalSpacing(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: App(context).appWidth(60),
                     child: Text(
                       '${provider.cart[index].productName!}',
@@ -132,4 +138,3 @@ class PlusMinusButtons extends StatelessWidget {
     );
   }
 }
-

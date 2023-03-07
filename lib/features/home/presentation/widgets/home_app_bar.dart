@@ -1,11 +1,13 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
-import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/search/presentation/pages/search_page.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../core/presentation/widgets/custom_search_bar.dart';
@@ -80,25 +82,85 @@ class HomeAppBar extends StatelessWidget {
                   width: 10.0,
                 ),
           sessionHelper.isLoggedIn
-              ? ClipRRect(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      child: Padding(
-                        padding: sessionHelper.isLoggedIn
-                            ? const EdgeInsets.all(5)
-                            : const EdgeInsets.only(
-                                left: 15.0, top: 5, right: 5, bottom: 5),
-                        child: const Icon(
-                          Icons.shopping_cart,
-                          size: 30.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, CartPage.routeName);
-                      },
-                    ),
+              ? AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Stack(
+                    children: [
+                      Consumer<CartProvider>(
+                          builder: (context, provider, _) =>
+                              LayoutBuilder(builder: (_, constraints) {
+                                return Center(
+                                  child: ClipRRect(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        child: Padding(
+                                          padding: sessionHelper.isLoggedIn
+                                              ? const EdgeInsets.all(5)
+                                              : const EdgeInsets.only(
+                                                  left: 15.0,
+                                                  top: 5,
+                                                  right: 5,
+                                                  bottom: 5),
+                                          child: const Icon(
+                                            Icons.shopping_cart,
+                                            size: 30.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                                  context, CartPage.routeName)
+                                              .then((_) {
+                                            provider.countTotalCartItem();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              })),
+                      Consumer<CartProvider>(
+                        builder: (context, provider, _) =>
+                            LayoutBuilder(builder: (_, constraints) {
+                          if (provider.isLoadCart) {
+                            return const SizedBox.shrink();
+                          } else {
+                            final size = (constraints.maxWidth / 2) - 8.0;
+                            if (provider.totalCartItem == 0) {
+                              return const SizedBox.shrink();
+                            }
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, CartPage.routeName)
+                                    .then((_) {
+                                  provider.countTotalCartItem();
+                                });
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                    margin: const EdgeInsets.all(7.0),
+                                    padding: const EdgeInsets.all(2.0),
+                                    width: size,
+                                    height: size,
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: ERROR_RED_COLOR,
+                                    ),
+                                    child: AutoSizeText(
+                                      provider.totalCartItem.toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      minFontSize: 8.0,
+                                    )),
+                              ),
+                            );
+                          }
+                        }),
+                      )
+                    ],
                   ),
                 )
               : const SizedBox(),

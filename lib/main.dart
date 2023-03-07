@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'core/presentation/pages/splash_page.dart';
@@ -37,6 +38,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => locator<HomeProvider>()),
         ChangeNotifierProvider(create: (context) => locator<SearchProvider>()),
+        ChangeNotifierProvider(
+            create: (context) => locator<CartProvider>()..countTotalCartItem()),
       ],
       child: MaterialApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),

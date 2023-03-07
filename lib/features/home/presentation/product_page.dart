@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/utility/injection.dart';
 import '../../../core/utility/enum.dart';
+import '../../cart/presentation/providers/cart_provider.dart';
 import '../../filter/presentation/filter_page.dart';
 import '../../product/presentation/product_detail_page.dart';
 import 'widgets/custom_card_filter.dart';
@@ -60,7 +61,7 @@ class _ProductPageState extends State<ProductPage> {
                 brandId: widget.brandId, categoryId: widget.categoryId))
             .listen((event) {}),
       builder: (context, child) => Scaffold(
-        appBar: PreferredSize(
+        appBar: const PreferredSize(
           preferredSize: Size(double.infinity, kToolbarHeight),
           child: HomeAppBar(
             isFromHome: false,
@@ -339,14 +340,22 @@ class _ProductPageState extends State<ProductPage> {
                             return GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(
-                                      context, ProductDetailPage.routeName,
-                                      arguments: ProductDetailArguments(
-                                          productId: provider
-                                              .listProductFilter[index].stockid,
-                                          categoryId: provider
-                                              .listProductFilter[index]
-                                              .category
-                                              .categoryid));
+                                          context, ProductDetailPage.routeName,
+                                          arguments: ProductDetailArguments(
+                                              productId: provider
+                                                  .listProductFilter[index]
+                                                  .stockid,
+                                              categoryId: provider
+                                                  .listProductFilter[index]
+                                                  .category
+                                                  .categoryid))
+                                      .then((_) {
+                                    final provider = Provider.of<CartProvider>(
+                                      context,
+                                      listen: false,
+                                    );
+                                    provider.countTotalCartItem();
+                                  });
                                 },
                                 child: CustomCardFilter(
                                     product:

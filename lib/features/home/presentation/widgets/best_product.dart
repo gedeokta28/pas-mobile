@@ -4,6 +4,7 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
+import '../../../cart/presentation/providers/cart_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/product_state.dart';
 import 'card_widget.dart';
@@ -20,7 +21,13 @@ class BestProductList extends StatelessWidget {
       children: [
         ListTitleWidget(
           onTap: () {
-            Navigator.pushNamed(context, ProductPage.routeName);
+            Navigator.pushNamed(context, ProductPage.routeName).then((_) {
+              final provider = Provider.of<CartProvider>(
+                context,
+                listen: false,
+              );
+              provider.countTotalCartItem();
+            });
           },
           title: 'Product Terbaik',
         ),

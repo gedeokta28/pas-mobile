@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
@@ -20,10 +22,17 @@ class CardSelectionWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, ProductPage.routeName,
-            arguments: ProductPageArguments(
-                productPageParams: ProductPageParams.fromCategory,
-                categoryName: category.categoryname,
-                categoryId: category.categoryid));
+                arguments: ProductPageArguments(
+                    productPageParams: ProductPageParams.fromCategory,
+                    categoryName: category.categoryname,
+                    categoryId: category.categoryid))
+            .then((_) {
+          final provider = Provider.of<CartProvider>(
+            context,
+            listen: false,
+          );
+          provider.countTotalCartItem();
+        });
       },
       child: Container(
         width: App(context).appWidth(40),

@@ -18,7 +18,12 @@ import 'package:pas_mobile/features/account/domain/usecases/do_update_profile.da
 import 'package:pas_mobile/features/account/domain/usecases/get_address_list.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
-import 'package:pas_mobile/features/cart/presentation/cart_provider.dart';
+import 'package:pas_mobile/features/cart/data/datasources/cart_datasource.dart';
+import 'package:pas_mobile/features/cart/data/repositories/cart_repository_impl.dart';
+import 'package:pas_mobile/features/cart/domain/repositories/cart_repository.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/do_add_to_cart.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/get_cart.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
 import 'package:pas_mobile/features/forgot_password/data/datasources/forgot_password_data_source.dart';
@@ -118,8 +123,9 @@ Future<void> init() async {
   locator.registerFactory<FilterProvider>(
       () => FilterProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(
-      () => AppBarProvider(getProductDetail: locator()));
-  locator.registerFactory<CartProvider>(() => CartProvider());
+      () => AppBarProvider(getProductDetail: locator(), getCart: locator()));
+  locator.registerFactory<CartProvider>(
+      () => CartProvider(doAddToCart: locator(), getCart: locator()));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
@@ -136,6 +142,8 @@ Future<void> init() async {
       () => SearchProductDataSourceImplementation(dio: locator()));
   locator.registerLazySingleton<ProfileDataSource>(
       () => ProfileDataSourceImpl(dio: locator()));
+  locator.registerLazySingleton<CartDataSource>(
+      () => CartDataSourceImpl(dio: locator()));
 
 //Repository
   locator.registerLazySingleton<LoginRepository>(
@@ -152,6 +160,8 @@ Future<void> init() async {
       () => SearchProductRepoImpl(dataSource: locator()));
   locator.registerLazySingleton<ProfileRepository>(() => ProfileRepositoryImpl(
       remoteDataSource: locator(), networkInfo: locator()));
+  locator.registerLazySingleton<CartRepository>(() =>
+      CartRepositoryImpl(remoteDataSource: locator(), networkInfo: locator()));
 
 //Usecase
   locator.registerLazySingleton<DoLogin>(
@@ -187,4 +197,7 @@ Future<void> init() async {
       () => DoDeleteAddress(repository: locator()));
   locator.registerLazySingleton<DoUpdateAddress>(
       () => DoUpdateAddress(repository: locator()));
+  locator.registerLazySingleton<DoAddToCart>(
+      () => DoAddToCart(repository: locator()));
+  locator.registerLazySingleton<GetCart>(() => GetCart(repository: locator()));
 }
