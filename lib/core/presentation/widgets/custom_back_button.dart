@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomBackButton extends StatelessWidget {
+  final Function? onTapBack;
   final Color? iconTint;
   const CustomBackButton({
     Key? key,
+    this.onTapBack,
     this.iconTint = Colors.black,
   }) : super(key: key);
 
@@ -11,7 +13,11 @@ class CustomBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () {
-        Navigator.pop(context);
+        if (onTapBack != null) {
+          onTapBack!();
+        } else {
+          Navigator.pop(context);
+        }
       },
       icon: Icon(
         Icons.arrow_back_ios_new,

@@ -1,33 +1,50 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/cart/data/models/cart_list_model.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/delete_cart.dart';
 import 'package:pas_mobile/features/cart/domain/usecases/do_add_to_cart.dart';
 import 'package:pas_mobile/features/cart/domain/usecases/get_cart.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/update_cart.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_item_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/utility/helper.dart';
-import '../../../../core/utility/injection.dart';
-import '../../../../core/utility/session_helper.dart';
 import '../../data/cart_model.dart';
+import '../../data/models/cart_updated_model.dart';
 
 class CartProvider with ChangeNotifier {
   //initial
   final DoAddToCart doAddToCart;
+  final DoUpdateCart doUpdateCart;
+  final DoDeleteCart doDeleteCart;
   final GetCart getCart;
   List<ItemCart> _cartList = [];
+  final List<CartListUpdated> _cartItemUpdated = [];
   bool _isLoadCart = true;
   int _totalCartItem = 0;
 
   //get
   List<ItemCart> get cartList => _cartList;
+  List<CartListUpdated> get cartItemUpdated => _cartItemUpdated;
   bool get isLoadCart => _isLoadCart;
   int get totalCartItem => _totalCartItem;
 
   //setter
   set setCartList(val) {
     _cartList = val;
+    notifyListeners();
+  }
+
+  set setCartItemUpdated(CartListUpdated model) {
+    var contain = _cartItemUpdated.where((element) => element.id == model.id);
+    if (contain.isEmpty) {
+      _cartItemUpdated.add(model);
+    } else {
+      int index = _cartItemUpdated.indexWhere((item) => item.id == model.id);
+      _cartItemUpdated.removeAt(index);
+      _cartItemUpdated.add(model);
+    }
     notifyListeners();
   }
 
@@ -41,15 +58,43 @@ class CartProvider with ChangeNotifier {
   List<Cart> cart = [];
 
   // constructor
-  CartProvider({
-    required this.doAddToCart,
-    required this.getCart,
-  });
+  CartProvider(
+      {required this.doAddToCart,
+      required this.getCart,
+      required this.doUpdateCart,
+      required this.doDeleteCart});
 
   Stream<AddToCartState> addProductToCart(FormData formData) async* {
     yield AddToCartLoading();
 
     final updateResult = await doAddToCart.execute(formData);
+    yield* updateResult.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield AddToCartFailure(failure: failure);
+    }, (result) async* {
+      yield AddToCartSuccess(data: result);
+    });
+  }
+
+  Stream<AddToCartState> deleteProductCart(String itemId) async* {
+    yield AddToCartLoading();
+
+    final updateResult = await doDeleteCart.execute(itemId);
+    yield* updateResult.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield AddToCartFailure(failure: failure);
+    }, (result) async* {
+      yield AddToCartSuccess(data: result);
+    });
+  }
+
+  Stream<AddToCartState> updateProductCart(
+      {required String itemId, required String qty}) async* {
+    yield AddToCartLoading();
+    Map<String, String> body = {
+      'qty': qty,
+    };
+    final updateResult = await doUpdateCart.call(body, itemId);
     yield* updateResult.fold((failure) async* {
       logMe("failure.message ${failure.message}");
       yield AddToCartFailure(failure: failure);
@@ -135,35 +180,6 @@ class CartProvider with ChangeNotifier {
         notifyListeners();
       }
     });
-    // cart.add(
-    //   Cart(
-    //       id: 1,
-    //       productId: "121",
-    //       productName: "Water Tank Leak Detector Wp3310 Wipro",
-    //       initialPrice: 4000,
-    //       productPrice: 4000,
-    //       quantity: ValueNotifier(1),
-    //       unitTag: "unitTag",
-    //       image:
-    //           "https://mediabalitech.com/mediabalitech.com/admin-pas/public/app/product/images/I3rTDrCLNkpCBRzpQjfPIJ3XTzP7AhXHhZsXuY3i.jpg"),
-    // );
-    // addTotalPrice(4000);
-    // addCounter();
-    // cart.add(
-    //   Cart(
-    //       id: 2,
-    //       productId: "123",
-    //       productName:
-    //           "Water Tank Leak Detector Wp3310 WiproDetector Wp3310 WiproDetector Wp3310 Wipro",
-    //       initialPrice: 2000,
-    //       productPrice: 2000,
-    //       quantity: ValueNotifier(1),
-    //       unitTag: "unitTag",
-    //       image:
-    //           "https://mediabalitech.com/mediabalitech.com/admin-pas/public/app/product/images/I3rTDrCLNkpCBRzpQjfPIJ3XTzP7AhXHhZsXuY3i.jpg"),
-    // );
-    // addTotalPrice(2000);
-    // addCounter();
   }
 
   void _setPrefsItems() async {
@@ -201,6 +217,8 @@ class CartProvider with ChangeNotifier {
   void addQuantity(String id) {
     final index = cart.indexWhere((element) => element.id == id);
     cart[index].quantity!.value = cart[index].quantity!.value + 1;
+    setCartItemUpdated =
+        CartListUpdated(id: id, quantity: cart[index].quantity!.value);
     _setPrefsItems();
     notifyListeners();
   }
@@ -213,6 +231,8 @@ class CartProvider with ChangeNotifier {
     } else {
       cart[index].quantity!.value = currentQuantity - 1;
     }
+    setCartItemUpdated =
+        CartListUpdated(id: id, quantity: cart[index].quantity!.value);
     _setPrefsItems();
     notifyListeners();
   }

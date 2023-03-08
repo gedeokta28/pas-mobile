@@ -46,4 +46,35 @@ class CartRepositoryImpl implements CartRepository {
       return const Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, CartResponseModel>> updateCart(
+      Map<String, String> data, String cartId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.updateCart(data, cartId);
+        return Right(result);
+      } on DioError catch (e) {
+        logMe(e);
+        return const Left(ServerFailure());
+      }
+    } else {
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, CartResponseModel>> deleteCart(String cartId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.deleteCart(cartId);
+        return Right(result);
+      } on DioError catch (e) {
+        logMe(e);
+        return const Left(ServerFailure());
+      }
+    } else {
+      return const Left(ServerFailure());
+    }
+  }
 }

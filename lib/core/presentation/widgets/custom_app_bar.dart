@@ -18,10 +18,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double toolbarHeight;
   final Widget? flexibleSpace;
   final Widget? titleWidget;
+  final Function? onTapBack;
 
   const CustomAppBar(
       {Key? key,
       this.title,
+      this.onTapBack,
       this.canBack = false,
       this.centerTitle = true,
       this.hideShadow = true,
@@ -48,6 +50,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : canBack
               ? CustomBackButton(
+                  onTapBack: onTapBack,
                   iconTint: buttonBackColor,
                 )
               : null,

@@ -4,8 +4,10 @@ import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/static/dimens.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/presentation/widgets/custom_dialog_confirm.dart';
 import '../providers/cart_provider.dart';
 
 class CartItem extends StatelessWidget {
@@ -82,8 +84,25 @@ class CartItem extends StatelessWidget {
               ),
               IconButton(
                   onPressed: () {
-                    provider.removeItem(provider.cart[index].id!);
-                    provider.removeCounter();
+                    showDialog(
+                      context: context,
+                      builder: (_) => CustomConfirmDialog(
+                        positiveAction: () async {
+                          showLoading();
+                          provider
+                              .deleteProductCart(provider.cart[index].id!)
+                              .listen((event) {
+                            if (event is AddToCartSuccess) {
+                              provider.removeItem(provider.cart[index].id!);
+                              provider.removeCounter();
+                              dismissLoading();
+                              Navigator.pop(context);
+                            }
+                          });
+                        },
+                        title: "Hapus Produk Ini Dari Keranjang ?",
+                      ),
+                    );
                   },
                   icon: Icon(
                     Icons.delete,

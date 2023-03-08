@@ -21,8 +21,10 @@ import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.
 import 'package:pas_mobile/features/cart/data/datasources/cart_datasource.dart';
 import 'package:pas_mobile/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:pas_mobile/features/cart/domain/repositories/cart_repository.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/delete_cart.dart';
 import 'package:pas_mobile/features/cart/domain/usecases/do_add_to_cart.dart';
 import 'package:pas_mobile/features/cart/domain/usecases/get_cart.dart';
+import 'package:pas_mobile/features/cart/domain/usecases/update_cart.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_provider.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
@@ -124,8 +126,11 @@ Future<void> init() async {
       () => FilterProvider(getCategoryList: locator()));
   locator.registerFactory<AppBarProvider>(
       () => AppBarProvider(getProductDetail: locator(), getCart: locator()));
-  locator.registerFactory<CartProvider>(
-      () => CartProvider(doAddToCart: locator(), getCart: locator()));
+  locator.registerFactory<CartProvider>(() => CartProvider(
+      doDeleteCart: locator(),
+      doAddToCart: locator(),
+      getCart: locator(),
+      doUpdateCart: locator()));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
@@ -199,5 +204,9 @@ Future<void> init() async {
       () => DoUpdateAddress(repository: locator()));
   locator.registerLazySingleton<DoAddToCart>(
       () => DoAddToCart(repository: locator()));
+  locator.registerLazySingleton<DoUpdateCart>(
+      () => DoUpdateCart(repository: locator()));
   locator.registerLazySingleton<GetCart>(() => GetCart(repository: locator()));
+  locator.registerLazySingleton<DoDeleteCart>(
+      () => DoDeleteCart(repository: locator()));
 }

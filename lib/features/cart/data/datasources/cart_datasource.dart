@@ -8,6 +8,8 @@ import 'package:pas_mobile/features/cart/data/models/cart_response_model.dart';
 
 abstract class CartDataSource {
   Future<CartResponseModel> addToCart(FormData formData);
+  Future<CartResponseModel> updateCart(Map<String, String> data, String cartId);
+  Future<CartResponseModel> deleteCart(String cartId);
   Future<List<ItemCart>> getCart();
 }
 
@@ -44,6 +46,42 @@ class CartDataSourceImpl implements CartDataSource {
       );
       final model = CartListResponseModel.fromJson(response.data);
       return model.data;
+    } catch (e) {
+      logMe(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CartResponseModel> updateCart(
+      Map<String, String> data, String cartId) async {
+    String path = 'api/carts/$cartId';
+    dio.withToken();
+
+    try {
+      final response = await dio.put(
+        path,
+        data: data,
+      );
+      final model = CartResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      logMe(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CartResponseModel> deleteCart(String cartId) async {
+    String path = 'api/carts/$cartId';
+    dio.withToken();
+
+    try {
+      final response = await dio.delete(
+        path,
+      );
+      final model = CartResponseModel.fromJson(response.data);
+      return model;
     } catch (e) {
       logMe(e);
       rethrow;

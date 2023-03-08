@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/widgets/cart_item.dart';
 import 'package:provider/provider.dart';
 
@@ -25,12 +26,41 @@ class CartPage extends StatelessWidget {
       create: (context) => locator<CartProvider>()..createItem(),
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: CustomAppBar(
-            title: "Keranjang",
-            centerTitle: true,
-            canBack: true,
-            hideShadow: false,
-          ),
+          appBar: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Consumer<CartProvider>(
+                  builder: (BuildContext context, provider, widget) {
+                return CustomAppBar(
+                  onTapBack: () {
+                    if (provider.cartItemUpdated.isEmpty) {
+                      Navigator.pop(context);
+                    } else {
+                      showLoading();
+                      for (var i = 0;
+                          i < provider.cartItemUpdated.length;
+                          i++) {
+                        provider
+                            .updateProductCart(
+                                itemId: provider.cartItemUpdated[i].id!,
+                                qty: provider.cartItemUpdated[i].quantity!
+                                    .toString())
+                            .listen((event) {
+                          if (event is AddToCartSuccess) {
+                            if (i == (provider.cartItemUpdated.length - 1)) {
+                              dismissLoading();
+                              Navigator.pop(context);
+                            }
+                          }
+                        });
+                      }
+                    }
+                  },
+                  title: "Keranjang",
+                  centerTitle: true,
+                  canBack: true,
+                  hideShadow: false,
+                );
+              })),
           body: Consumer<CartProvider>(
               builder: (BuildContext context, provider, widget) {
             if (provider.isLoadCart) {
@@ -45,7 +75,7 @@ class CartPage extends StatelessWidget {
               if (provider.cart.isEmpty) {
                 return const Center(
                     child: Text(
-                  'Your Cart is Empty',
+                  'Keranjang Anda Kosong',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ));
               }
@@ -90,7 +120,7 @@ class CartPage extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5.0),
                           color: Colors.white,
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: Colors.grey,
                               offset: Offset(0.0, 1.0), //(x,y)
@@ -138,13 +168,23 @@ class CartPage extends StatelessWidget {
               );
             } else {
               return InkWell(
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Payment Successful'),
-                      duration: Duration(seconds: 2),
-                    ),
-                  );
+                onTap: () async {
+                  // logMe(provider.cartItemUpdated[0].quantity);
+                  // showLoading();
+                  // for (var i = 0; i < provider.cartItemUpdated.length; i++) {
+                  //   provider
+                  //       .updateProductCart(
+                  //           itemId: provider.cartItemUpdated[i].id!,
+                  //           qty: provider.cartItemUpdated[i].quantity!
+                  //               .toString())
+                  //       .listen((event) {
+                  //     if (event is AddToCartSuccess) {
+                  //       if (i == (provider.cartItemUpdated.length - 1)) {
+                  //         dismissLoading();
+                  //       }
+                  //     }
+                  //   });
+                  // }
                 },
                 child: Container(
                   color: secondaryColor,
