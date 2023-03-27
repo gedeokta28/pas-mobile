@@ -134,10 +134,11 @@ class ProductAppBar extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushNamed(context, CartPage.routeName)
                           .then((_) {
-                        final provider = Provider.of<CartProvider>(
-                          context,
-                          listen: false,
-                        );
+                        // final provider = Provider.of<CartProvider>(
+                        //   context,
+                        //   listen: false,
+                        // );
+                        // provider.countTotalCartItem();
                         provider.countTotalCartItem();
                       });
                     },
@@ -150,10 +151,11 @@ class ProductAppBar extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(context, CartPage.routeName)
                                 .then((_) {
-                              final provider = Provider.of<CartProvider>(
-                                context,
-                                listen: false,
-                              );
+                              // final provider = Provider.of<CartProvider>(
+                              //   context,
+                              //   listen: false,
+                              // );
+                              // provider.countTotalCartItem();
                               provider.countTotalCartItem();
                             });
                           },

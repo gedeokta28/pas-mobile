@@ -61,7 +61,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           create: (_) => locator<ProductProvider>()
             ..fetchProductDetail(widget.productId).listen((event) {})
             ..fetchRelatedProduct(widget.categoryId, widget.productId)
-                .listen((event) {}),
+                .listen((event) {})
+            ..fetchProductVariant(widget.productId).listen((event) {}),
         ),
         ChangeNotifierProvider(
           create: (_) => _appBarProvider
@@ -110,11 +111,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     title: "Masukkan Keranjang",
                     color: primaryColor,
                     event: () async {
+                      final _providerProduct = Provider.of<ProductProvider>(
+                        context,
+                        listen: false,
+                      );
                       showLoading();
                       checkUserSession().then((value) {
                         if (value) {
                           FormData formData = FormData.fromMap({
-                            'stockid': widget.productId,
+                            'stockid': _providerProduct.productId,
                             'qty': 1,
                           });
                           provider.addProductToCart(formData).listen((event) {

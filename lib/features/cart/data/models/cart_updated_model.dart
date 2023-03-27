@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 class CartListUpdated {
   late final String? id;

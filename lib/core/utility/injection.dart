@@ -40,6 +40,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_brand_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_product_variant.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
@@ -98,8 +99,10 @@ Future<void> init() async {
       getProductList: locator(),
       getCategoryList: locator(),
       doFilterProduct: locator()));
-  locator.registerFactory<ProductProvider>(() =>
-      ProductProvider(getProductDetail: locator(), doFilterProduct: locator()));
+  locator.registerFactory<ProductProvider>(() => ProductProvider(
+      getProductDetail: locator(),
+      doFilterProduct: locator(),
+      getProductVariant: locator()));
   locator.registerFactory<SearchResultProvider>(() => SearchResultProvider(
       getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
@@ -209,4 +212,6 @@ Future<void> init() async {
   locator.registerLazySingleton<GetCart>(() => GetCart(repository: locator()));
   locator.registerLazySingleton<DoDeleteCart>(
       () => DoDeleteCart(repository: locator()));
+  locator.registerLazySingleton<GetProductVariant>(
+      () => GetProductVariant(repository: locator()));
 }

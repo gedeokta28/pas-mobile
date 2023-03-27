@@ -6,6 +6,7 @@ import 'package:pas_mobile/features/product/presentation/widgets/related_product
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 
+import '../../../../core/presentation/widgets/rounded_container.dart';
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
@@ -30,7 +31,7 @@ class ProductDescription extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    provider.productDetail.stockname,
+                    provider.productName,
                     style: const TextStyle(
                         fontSize: 18.0, fontWeight: FontWeight.normal),
                     maxLines: 2,
@@ -54,7 +55,7 @@ class ProductDescription extends StatelessWidget {
                             color: Colors.black),
                       ),
                       Text(
-                        convertPrice(provider.productDetail.hrg1),
+                        convertPrice(provider.productPrice),
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 22.0,
@@ -68,8 +69,15 @@ class ProductDescription extends StatelessWidget {
                       if (sessionHelper.isLoggedIn == false) {
                         Navigator.pushNamed(context, LoginPage.routeName);
                       } else {
-                        await DialogPrice.displayDialogOKCallBack(
-                            context, "Harga Grosir", provider.productDetail);
+                        if (provider.isProductVariantSelected) {
+                          await DialogPriceVariant.displayDialogOKCallBack(
+                              context,
+                              "Harga Grosir",
+                              provider.prodouctVariant);
+                        } else {
+                          await DialogPrice.displayDialogOKCallBack(
+                              context, "Harga Grosir", provider.productDetail);
+                        }
                       }
                     },
                     child: Container(
@@ -101,6 +109,160 @@ class ProductDescription extends StatelessWidget {
             ),
             const Divider(),
             smallVerticalSpacing(),
+            if (!provider.isLoadingVariant)
+              const Text(
+                'Size',
+                style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+            smallVerticalSpacing(),
+            if (!provider.isLoadingVariant)
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  !provider.expandVariant
+                      ? Expanded(
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            physics:
+                                const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio:
+                                  MediaQuery.of(context).size.width /
+                                      (MediaQuery.of(context).size.height / 6),
+                            ),
+                            itemCount: provider.productVariantList.size.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  if (index == provider.variantSelected) {
+                                    provider.setVariantSelected = null;
+                                    provider.setProductSelected(
+                                        productDetail: provider.productDetail);
+                                  } else {
+                                    provider.setVariantSelected = index;
+                                    provider.setProductSelected(
+                                        productVariantSelected: provider
+                                            .productVariantList.size[index]);
+                                  }
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 5, bottom: 8.0),
+                                  child: RoundedContainer(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            provider.productVariantList
+                                                .size[index].stockname,
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color:
+                                                    provider.variantSelected ==
+                                                            index
+                                                        ? Colors.white
+                                                        : Colors.black87,
+                                                fontWeight: FontWeight.bold),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    color: provider.variantSelected == index
+                                        ? secondaryColor
+                                        : SHADOW,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Expanded(
+                          child: GridView.builder(
+                            padding: EdgeInsets.zero,
+                            physics:
+                                const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio:
+                                  MediaQuery.of(context).size.width /
+                                      (MediaQuery.of(context).size.height / 6),
+                            ),
+                            itemCount: provider.productVariantList.size.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  provider.setVariantSelected = index;
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 5, bottom: 8.0),
+                                  child: RoundedContainer(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            "Ukuran 1 Ukuran 1 Ukuran 1",
+                                            style: TextStyle(
+                                                fontSize: 11,
+                                                color:
+                                                    provider.variantSelected ==
+                                                            index
+                                                        ? Colors.white
+                                                        : Colors.black87,
+                                                fontWeight: FontWeight.bold),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    color: provider.variantSelected == index
+                                        ? secondaryColor
+                                        : SHADOW,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                  provider.productVariantList.size.length > 2
+                      ? IconButton(
+                          onPressed: () {
+                            if (provider.expandVariant) {
+                              provider.setExpandVariant = false;
+                            } else {
+                              provider.setExpandVariant = true;
+                            }
+                          },
+                          icon: Icon(
+                            provider.expandVariant
+                                ? Icons.keyboard_arrow_up_rounded
+                                : Icons.keyboard_arrow_down_rounded,
+                            color: Colors.black87,
+                            size: 27,
+                          ),
+                        )
+                      : Container()
+                ],
+              ),
+            smallVerticalSpacing(),
+            const Divider(),
+            smallVerticalSpacing(),
             const Text(
               'Detail Produk',
               style: TextStyle(
@@ -109,7 +271,7 @@ class ProductDescription extends StatelessWidget {
                   color: Colors.black),
             ),
             smallVerticalSpacing(),
-            ReadMoreText(provider.productDetail.stockdescription,
+            ReadMoreText(provider.productDescription,
                 trimLines: 4,
                 style:
                     TextStyle(fontSize: 13.0, color: Colors.black, height: 1.5),
@@ -169,7 +331,7 @@ class ProductDescription extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(
-                  convertWeight(provider.productDetail.berat),
+                  convertWeight(provider.productWeight),
                   style: TextStyle(fontSize: 14.0, color: Colors.black),
                 ),
               ],

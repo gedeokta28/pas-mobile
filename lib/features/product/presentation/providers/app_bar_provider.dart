@@ -93,6 +93,17 @@ class AppBarProvider extends ChangeNotifier {
     });
   }
 
+  void countTotalCartItem() async {
+    countCartItem().listen((event) {
+      if (event is CartItemSuccess) {
+        _totalCartItem = event.data.length;
+        logMe(_totalCartItem);
+        logMe('_totalCartItem');
+        notifyListeners();
+      }
+    });
+  }
+
   // constructor
   AppBarProvider({required this.getProductDetail, required this.getCart});
 }

@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:pas_mobile/features/home/data/models/detail_product_model.dart';
+import 'package:pas_mobile/features/home/data/models/variant_product_response_model.dart';
 import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 import 'package:pas_mobile/features/search/data/models/search_product_response_model.dart';
 
@@ -19,6 +20,16 @@ class ProductDetailLoaded extends ProductDetailState {
   final ProductDetail data;
 
   ProductDetailLoaded({required this.data});
+
+  @override
+  List<Object?> get props => [data];
+}
+
+class ProductVariantLoaded extends ProductDetailState {
+  // final ProductDetailList data;
+  final VariantList data;
+
+  ProductVariantLoaded({required this.data});
 
   @override
   List<Object?> get props => [data];

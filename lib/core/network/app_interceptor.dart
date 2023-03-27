@@ -38,15 +38,15 @@ class AppInterceptor extends Interceptor {
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     final _statusCode = err.response?.statusCode;
 
-    // if (_statusCode == HttpStatus.unauthorized) {
-    //   await sessionLogOut().then(
-    //     (_) => Navigator.pushNamedAndRemoveUntil(
-    //       locator<GlobalKey<NavigatorState>>().currentContext!,
-    //       SplashPage.routeName,
-    //       (route) => false,
-    //     ),
-    //   );
-    // }
+    if (_statusCode == HttpStatus.unauthorized) {
+      await sessionLogOut().then(
+        (_) => Navigator.pushNamedAndRemoveUntil(
+          locator<GlobalKey<NavigatorState>>().currentContext!,
+          SplashPage.routeName,
+          (route) => false,
+        ),
+      );
+    }
     return super.onError(err, handler);
   }
 }

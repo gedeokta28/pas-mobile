@@ -147,7 +147,7 @@ class CartProvider with ChangeNotifier {
         _isLoadCart = false;
         _totalCartItem = event.data.length;
         logMe(_totalCartItem);
-        logMe('_totalCartItem');
+        logMe('_totalCartItem carttt');
         notifyListeners();
       }
     });
@@ -239,6 +239,14 @@ class CartProvider with ChangeNotifier {
 
   void removeItem(String id) {
     final index = cart.indexWhere((element) => element.id == id);
+    var contain =
+        _cartItemUpdated.where((element) => element.id == cart[index].id);
+    if (contain.isNotEmpty) {
+      int indexRemoved =
+          _cartItemUpdated.indexWhere((item) => item.id == cart[index].id);
+      _cartItemUpdated.removeAt(indexRemoved);
+    }
+
     cart.removeAt(index);
     _setPrefsItems();
     notifyListeners();

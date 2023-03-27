@@ -9,6 +9,7 @@ import '../../../../core/error/failures.dart';
 import '../models/brand_list_response_model.dart';
 import '../models/category_list_response_model.dart';
 import '../models/detail_product_model.dart';
+import '../models/variant_product_response_model.dart';
 
 class ProductRepoImpl implements ProductRepsitory {
   final ProductDataSource dataSource;
@@ -53,6 +54,18 @@ class ProductRepoImpl implements ProductRepsitory {
       String productId) async {
     try {
       final data = await dataSource.getProductDetail(productId);
+      return Right(data);
+    } on DioError catch (e) {
+      logMe("Failure Login Repo ${e.error}");
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, VariantList>> getProductVariant(
+      String productId) async {
+    try {
+      final data = await dataSource.getProductVariant(productId);
       return Right(data);
     } on DioError catch (e) {
       logMe("Failure Login Repo ${e.error}");
