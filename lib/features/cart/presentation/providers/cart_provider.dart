@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/utility/helper.dart';
 import '../../data/cart_model.dart';
 import '../../data/models/cart_updated_model.dart';
+import '../../data/models/price_grosir_model.dart';
 
 class CartProvider with ChangeNotifier {
   //initial
@@ -162,33 +163,105 @@ class CartProvider with ChangeNotifier {
       if (event is CartItemSuccess) {
         for (var i = 0; i < event.data.length; i++) {
           var arr = event.data[i].stock.hrg1.split('.');
+          List<PriceGrosirCart> _priceGrosirCart = [];
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: convertMinUnitInt(
+                hrg: 1,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            maxUnit: convertMaxUnitInt(
+                hrg: 1,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            price: convertPrice(event.data[i].stock.hrg1),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: convertMinUnitInt(
+                hrg: 2,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            maxUnit: convertMaxUnitInt(
+                hrg: 2,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            price: convertPrice(event.data[i].stock.hrg2),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: convertMinUnitInt(
+                hrg: 3,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            maxUnit: convertMaxUnitInt(
+                hrg: 3,
+                satuan1: event.data[i].stock.unit1,
+                satuan2: event.data[i].stock.unit2,
+                satuan3: event.data[i].stock.unit3,
+                qty1: event.data[i].stock.qty1,
+                qty2: event.data[i].stock.qty2,
+                qty3: event.data[i].stock.qty3),
+            price: convertPrice(event.data[i].stock.hrg3),
+          ));
           cart.add(
             Cart(
                 id: event.data[i].id,
                 productId: event.data[i].stock.stockid,
                 productName: event.data[i].stock.stockname,
                 initialPrice: int.tryParse(arr[0]),
-                productPrice: int.tryParse(arr[0]),
+                productPrice: ValueNotifier(int.parse(arr[0])),
                 quantity: ValueNotifier(event.data[i].qty),
                 unitTag: "unitTag",
-                image: event.data[i].stock.photourl ?? ''),
+                image: event.data[i].stock.photourl ?? '',
+                priceGrosirCart: _priceGrosirCart),
           );
           addTotalPrice(double.parse(event.data[i].stock.hrg1));
           addCounter();
+
+          // logMe(_priceGrosirCart[0].toMap());
+          // logMe(_priceGrosirCart[1].toMap());
+          // logMe(_priceGrosirCart[2].toMap());
         }
+        // logMe("asdasasda");
+
+        // logMe(cart[0].priceGrosirCart![0].toMap());
+        // logMe(cart[0].priceGrosirCart![1].toMap());
+        // logMe(cart[0].priceGrosirCart![2].toMap());
+
+        // logMe(cart[1].priceGrosirCart![0].toMap());
+        // logMe(cart[1].priceGrosirCart![1].toMap());
+        // logMe(cart[1].priceGrosirCart![2].toMap());
         _isLoadCart = false;
         notifyListeners();
       }
     });
   }
 
-  void _setPrefsItems() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('cart_items', _counter);
-    prefs.setInt('item_quantity', _quantity);
-    prefs.setDouble('total_price', _totalPrice);
-    notifyListeners();
-  }
+  // void _setPrefsItems() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setInt('cart_items', _counter);
+  //   prefs.setInt('item_quantity', _quantity);
+  //   prefs.setDouble('total_price', _totalPrice);
+  //   notifyListeners();
+  // }
 
   void _getPrefsItems() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -199,13 +272,13 @@ class CartProvider with ChangeNotifier {
 
   void addCounter() {
     _counter++;
-    _setPrefsItems();
+    // _setPrefsItems();
     notifyListeners();
   }
 
   void removeCounter() {
     _counter--;
-    _setPrefsItems();
+    // _setPrefsItems();
     notifyListeners();
   }
 
@@ -217,9 +290,27 @@ class CartProvider with ChangeNotifier {
   void addQuantity(String id) {
     final index = cart.indexWhere((element) => element.id == id);
     cart[index].quantity!.value = cart[index].quantity!.value + 1;
+    int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
-    _setPrefsItems();
+    // _setPrefsItems();
+
+    if (cart[index].quantity!.value >= minUnit1 &&
+        cart[index].quantity!.value <= maxUnit1) {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![0].price!);
+    } else if (cart[index].quantity!.value >= minUnit2 &&
+        cart[index].quantity!.value <= maxUnit2) {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![1].price!);
+    } else {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![2].price!);
+    }
+
     notifyListeners();
   }
 
@@ -233,7 +324,24 @@ class CartProvider with ChangeNotifier {
     }
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
-    _setPrefsItems();
+    // _setPrefsItems();
+    int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+
+    if (cart[index].quantity!.value >= minUnit1 &&
+        cart[index].quantity!.value <= maxUnit1) {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![0].price!);
+    } else if (cart[index].quantity!.value >= minUnit2 &&
+        cart[index].quantity!.value <= maxUnit2) {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![1].price!);
+    } else {
+      cart[index].productPrice!.value =
+          int.parse(cart[index].priceGrosirCart![2].price!);
+    }
     notifyListeners();
   }
 
@@ -248,7 +356,7 @@ class CartProvider with ChangeNotifier {
     }
 
     cart.removeAt(index);
-    _setPrefsItems();
+    // _setPrefsItems();
     notifyListeners();
   }
 
@@ -259,13 +367,13 @@ class CartProvider with ChangeNotifier {
 
   void addTotalPrice(double productPrice) {
     _totalPrice = _totalPrice + productPrice;
-    _setPrefsItems();
+    // _setPrefsItems();
     notifyListeners();
   }
 
   void removeTotalPrice(double productPrice) {
     _totalPrice = _totalPrice - productPrice;
-    _setPrefsItems();
+    // _setPrefsItems();
     notifyListeners();
   }
 

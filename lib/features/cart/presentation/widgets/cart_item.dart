@@ -57,7 +57,7 @@ class CartItem extends StatelessWidget {
                   Container(
                     width: App(context).appWidth(60),
                     child: Text(
-                      'Rp. ${provider.cart[index].productPrice!}',
+                      'Rp. ${convertPrice(provider.cart[index].productPrice!.value.toString())}',
                       maxLines: 1,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
@@ -69,13 +69,15 @@ class CartItem extends StatelessWidget {
                         return PlusMinusButtons(
                           addQuantity: () {
                             provider.addQuantity(provider.cart[index].id!);
-                            provider.addTotalPrice(double.parse(
-                                provider.cart[index].productPrice.toString()));
+                            provider.addTotalPrice(double.parse(provider
+                                .cart[index].productPrice!.value
+                                .toString()));
                           },
                           deleteQuantity: () {
                             provider.deleteQuantity(provider.cart[index].id!);
-                            provider.removeTotalPrice(double.parse(
-                                provider.cart[index].productPrice.toString()));
+                            provider.removeTotalPrice(double.parse(provider
+                                .cart[index].productPrice!.value
+                                .toString()));
                           },
                           text: val.toString(),
                         );

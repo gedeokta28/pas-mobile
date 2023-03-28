@@ -79,6 +79,7 @@ class CartPage extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ));
               }
+
               return Column(
                 children: [
                   const Align(
@@ -112,9 +113,9 @@ class CartPage extends StatelessWidget {
                       final ValueNotifier<int?> totalPrice =
                           ValueNotifier(null);
                       for (var element in value.cart) {
-                        totalPrice.value =
-                            (element.productPrice! * element.quantity!.value) +
-                                (totalPrice.value ?? 0);
+                        totalPrice.value = (element.productPrice!.value *
+                                element.quantity!.value) +
+                            (totalPrice.value ?? 0);
                       }
                       return Container(
                         decoration: BoxDecoration(
@@ -143,7 +144,12 @@ class CartPage extends StatelessWidget {
                                         height: 5.0,
                                       ),
                                       ReusableWidget(
-                                          title: 'Total', value: 'Rp. $val'),
+                                        title: 'Total',
+                                        value:
+
+                                            // 'Rp. $val'
+                                            'Rp. ${convertPrice(val.toString())}',
+                                      ),
                                       const SizedBox(
                                         height: 5.0,
                                       ),
