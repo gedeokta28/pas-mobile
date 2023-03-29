@@ -17,6 +17,7 @@ import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
+import 'package:pas_mobile/features/order/presentation/select_checkout_address_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
@@ -71,6 +72,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const CartPage());
     case CheckoutPage.routeName:
       return MaterialPageRoute(builder: (_) => const CheckoutPage());
+    case AddressCheckoutPage.routeName:
+      return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
     case NotificationPage.routeName:
       return MaterialPageRoute(builder: (_) => const NotificationPage());
     case ProductPage.routeName:

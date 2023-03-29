@@ -30,7 +30,7 @@ class PaymentMethodWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: FONT_MEDIUM,
+                fontSize: FONT_GENERAL,
                 color: Colors.black),
           ),
           smallVerticalSpacing(),

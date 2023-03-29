@@ -14,6 +14,7 @@ import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../cart/presentation/providers/cart_provider.dart';
+import 'providers/order_provider.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({
@@ -148,39 +149,28 @@ class CheckoutPage extends StatelessWidget {
                 height: 0,
               );
             } else {
-              return InkWell(
-                onTap: () async {
-                  // logMe(provider.cartItemUpdated[0].quantity);
-                  // showLoading();
-                  // for (var i = 0; i < provider.cartItemUpdated.length; i++) {
-                  //   provider
-                  //       .updateProductCart(
-                  //           itemId: provider.cartItemUpdated[i].id!,
-                  //           qty: provider.cartItemUpdated[i].quantity!
-                  //               .toString())
-                  //       .listen((event) {
-                  //     if (event is AddToCartSuccess) {
-                  //       if (i == (provider.cartItemUpdated.length - 1)) {
-                  //         dismissLoading();
-                  //       }
-                  //     }
-                  //   });
-                  // }
-                },
-                child: Container(
-                  color: secondaryColor,
-                  alignment: Alignment.center,
-                  height: App(context).appHeight(8),
-                  child: const Text(
-                    'Place Order',
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              return Consumer<OrderProvider>(
+                  builder: (BuildContext context, provider, widget) {
+                return InkWell(
+                  onTap: () async {},
+                  child: Container(
+                    color: provider.paymentMethod == null ||
+                            provider.shippingAddressSelected == null
+                        ? secondaryColorShadow
+                        : secondaryColor,
+                    alignment: Alignment.center,
+                    height: App(context).appHeight(8),
+                    child: const Text(
+                      'Place Order',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
-              );
+                );
+              });
             }
           })),
     );

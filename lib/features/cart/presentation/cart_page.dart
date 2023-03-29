@@ -177,7 +177,10 @@ class CartPage extends StatelessWidget {
               return InkWell(
                 onTap: () async {
                   if (provider.cartItemUpdated.isEmpty) {
-                    Navigator.pop(context);
+                    Navigator.pushNamed(context, CheckoutPage.routeName)
+                        .then((_) {
+                      provider.countTotalCartItem();
+                    });
                   } else {
                     showLoading();
                     for (var i = 0; i < provider.cartItemUpdated.length; i++) {
