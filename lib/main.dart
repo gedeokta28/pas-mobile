@@ -5,6 +5,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
+import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'core/presentation/pages/splash_page.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => locator<SearchProvider>()),
         ChangeNotifierProvider(
             create: (context) => locator<CartProvider>()..countTotalCartItem()),
+        ChangeNotifierProvider(create: (context) => locator<OrderProvider>()),
       ],
       child: MaterialApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),

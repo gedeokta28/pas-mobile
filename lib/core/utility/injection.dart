@@ -43,6 +43,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_variant.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
+import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/product_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/search_result_provider.dart';
@@ -134,6 +135,7 @@ Future<void> init() async {
       doAddToCart: locator(),
       getCart: locator(),
       doUpdateCart: locator()));
+  locator.registerFactory<OrderProvider>(() => OrderProvider());
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(

@@ -15,3 +15,8 @@ enum TypeField {
 enum TypeFilter { onlyKeyword, onlyCategory, onlyBrand, customFilter }
 
 enum ProductPageParams { fromCategory, fromBrand, fromHome }
+
+enum PaymentMethod {
+  cash,
+  trasnfer,
+}

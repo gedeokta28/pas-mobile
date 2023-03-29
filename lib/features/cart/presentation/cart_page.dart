@@ -4,6 +4,7 @@ import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/widgets/cart_item.dart';
+import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/presentation/pages/main_page/main_page.dart';
@@ -175,6 +176,30 @@ class CartPage extends StatelessWidget {
             } else {
               return InkWell(
                 onTap: () async {
+                  if (provider.cartItemUpdated.isEmpty) {
+                    Navigator.pop(context);
+                  } else {
+                    showLoading();
+                    for (var i = 0; i < provider.cartItemUpdated.length; i++) {
+                      provider
+                          .updateProductCart(
+                              itemId: provider.cartItemUpdated[i].id!,
+                              qty: provider.cartItemUpdated[i].quantity!
+                                  .toString())
+                          .listen((event) {
+                        if (event is AddToCartSuccess) {
+                          if (i == (provider.cartItemUpdated.length - 1)) {
+                            dismissLoading();
+                            Navigator.pushNamed(context, CheckoutPage.routeName)
+                                .then((_) {
+                              provider.countTotalCartItem();
+                            });
+                          }
+                        }
+                      });
+                    }
+                  }
+
                   // logMe(provider.cartItemUpdated[0].quantity);
                   // showLoading();
                   // for (var i = 0; i < provider.cartItemUpdated.length; i++) {

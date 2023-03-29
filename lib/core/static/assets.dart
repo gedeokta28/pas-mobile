@@ -15,3 +15,5 @@ const String ASSETS_LOGIN = 'assets/images/login_pict.png';
 const String ASSETS_LOADING = 'assets/images/loading-circle.gif';
 const String ASSET_ICON_UPDOWN = 'assets/icons/up-down-icon.png';
 const String ASSET_FILTER_ICON = 'assets/icons/filter-icon.png';
+const String ASSET_TRASNFER_ICON = 'assets/icons/transfer-icon.png';
+const String ASSET_COD_ICON = 'assets/icons/cod-icon.png';
