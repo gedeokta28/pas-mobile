@@ -6,13 +6,17 @@ import '../../../../core/utility/helper.dart';
 import '../../../account/data/models/get_address_model.dart';
 import '../../../account/domain/usecases/get_address_list.dart';
 import '../../../account/presentation/providers/get_address_list_state.dart';
+import '../../../cart/domain/usecases/get_cart.dart';
+import '../../../cart/presentation/providers/cart_item_state.dart';
 
 class OrderProvider extends FormProvider {
   final GetAddressList getAddressList;
+  final GetCart getCart;
 
   // constructor
   OrderProvider({
     required this.getAddressList,
+    required this.getCart,
   });
 
   PaymentMethod? _paymentMethod;
@@ -40,6 +44,18 @@ class OrderProvider extends FormProvider {
       yield GetAddressListFailure(failure: failure);
     }, (result) async* {
       yield GetAddressListSuccess(data: result);
+    });
+  }
+
+  Stream<CartItemState> fetchCart() async* {
+    yield CartItemLoading();
+
+    final updateResult = await getCart.call();
+    yield* updateResult.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield CartItemFailure(failure: failure);
+    }, (result) async* {
+      yield CartItemSuccess(data: result);
     });
   }
 }

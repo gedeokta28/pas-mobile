@@ -136,7 +136,7 @@ Future<void> init() async {
       getCart: locator(),
       doUpdateCart: locator()));
   locator.registerFactory<OrderProvider>(
-      () => OrderProvider(getAddressList: locator()));
+      () => OrderProvider(getAddressList: locator(), getCart: locator()));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(

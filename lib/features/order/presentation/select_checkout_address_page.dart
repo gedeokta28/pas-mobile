@@ -2,22 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
-import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/address_card_checkout.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/checkout_address_widget.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/checkout_item.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/checkout_noted_widget.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/payment_method_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
-import '../../../core/utility/injection.dart';
 import '../../account/presentation/providers/get_address_list_state.dart';
-import '../../account/presentation/widgets/address_card.dart';
 import '../../cart/presentation/providers/cart_provider.dart';
 
 class AddressCheckoutPage extends StatelessWidget {
@@ -64,7 +56,20 @@ class AddressCheckoutPage extends StatelessWidget {
                       return const SizedBox.shrink();
                     case GetAddressListSuccess:
                       final _data = (state.data as GetAddressListSuccess).data;
-
+                      if (_data.isEmpty) {
+                        return Padding(
+                          padding:
+                              EdgeInsets.only(top: App(context).appHeight(20)),
+                          child: const Center(
+                              child: Text(
+                            'Tambahkan Alamat Pengiriman',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Colors.grey),
+                          )),
+                        );
+                      }
                       return ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -82,13 +87,6 @@ class AddressCheckoutPage extends StatelessWidget {
                                     shippingAddress: _data[index],
                                   ));
                             });
-                            // return GestureDetector(
-                            //     onTap: () {
-
-                            //     },
-                            //     child: AddressCardCheckout(
-                            //       shippingAddress: _data[index],
-                            //     ));
                           });
                   }
                   return const SizedBox.shrink();

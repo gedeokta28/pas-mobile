@@ -12,18 +12,14 @@ import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_page.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
 import 'package:pas_mobile/features/order/presentation/select_checkout_address_page.dart';
-import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
-import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
-
-import '../../features/filter/presentation/filter_category_page.dart';
+import '../../features/order/presentation/order_detail_page.dart';
 import '../../features/product/presentation/search_result_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
 import '../presentation/pages/splash_page.dart';
@@ -75,6 +71,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AddressCheckoutPage.routeName:
       return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
     case NotificationPage.routeName:
+    case OrderDetailPage.routeName:
+      final isFromCheckout = settings.arguments as bool;
+      return MaterialPageRoute(
+          builder: (_) => OrderDetailPage(
+                isFromCheckout: isFromCheckout,
+              ));
+    case MainPage.routeName:
+      final index = settings.arguments as int?;
+      return MaterialPageRoute(
+          builder: (_) => MainPage(
+                index: index,
+              ));
+    case NotificationPage.routeName:
       return MaterialPageRoute(builder: (_) => const NotificationPage());
     case ProductPage.routeName:
       if (settings.arguments != null) {
@@ -88,7 +97,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                   categoryName: args.categoryName,
                 ));
       } else {
-        return MaterialPageRoute(builder: (_) => ProductPage());
+        return MaterialPageRoute(builder: (_) => const ProductPage());
       }
 
     case ForgotPasswordPage.routeName:

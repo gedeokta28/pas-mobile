@@ -14,6 +14,7 @@ import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../cart/presentation/providers/cart_provider.dart';
+import 'order_detail_page.dart';
 import 'providers/order_provider.dart';
 
 class CheckoutPage extends StatelessWidget {
@@ -152,7 +153,13 @@ class CheckoutPage extends StatelessWidget {
               return Consumer<OrderProvider>(
                   builder: (BuildContext context, provider, widget) {
                 return InkWell(
-                  onTap: () async {},
+                  onTap: () async {
+                    Navigator.pushNamed(
+                      context,
+                      OrderDetailPage.routeName,
+                      arguments: true, // navbar index
+                    );
+                  },
                   child: Container(
                     color: provider.paymentMethod == null ||
                             provider.shippingAddressSelected == null
