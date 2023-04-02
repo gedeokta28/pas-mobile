@@ -3,6 +3,7 @@ import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
+import 'package:pas_mobile/features/order/presentation/providers/create_order_state.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/checkout_address_widget.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/checkout_item.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/checkout_noted_widget.dart';
@@ -17,12 +18,19 @@ import '../../cart/presentation/providers/cart_provider.dart';
 import 'order_detail_page.dart';
 import 'providers/order_provider.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
   const CheckoutPage({
     Key? key,
   }) : super(key: key);
   static const routeName = '/checkout';
 
+  @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage>
+    with WidgetsBindingObserver {
+  final _orderProvider = locator<OrderProvider>();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -88,6 +96,11 @@ class CheckoutPage extends StatelessWidget {
                     (element.productPrice!.value * element.quantity!.value) +
                         (totalPrice.value ?? 0);
               }
+              List<String> listCartId = [];
+              for (var element in provider.cart) {
+                listCartId.add(element.id!);
+              }
+              _orderProvider.setCartIds = listCartId;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -154,11 +167,27 @@ class CheckoutPage extends StatelessWidget {
                   builder: (BuildContext context, provider, widget) {
                 return InkWell(
                   onTap: () async {
-                    Navigator.pushNamed(
-                      context,
-                      OrderDetailPage.routeName,
-                      arguments: true, // navbar index
-                    );
+                    _orderProvider
+                        .checkoutOrder(
+                            addressIdParam:
+                                provider.shippingAddressSelected!.id,
+                            cartIdParam: _orderProvider.cartIds!,
+                            notesParam: provider.notes ?? '',
+                            paymentMethodParam: provider.paymentMethod!)
+                        .listen((event) {
+                      if (event is CreateOrderLoading) {
+                        showLoading();
+                      } else if (event is CreateOrderFailure) {
+                        dismissLoading();
+                      } else {
+                        dismissLoading();
+                        Navigator.pushNamed(
+                          context,
+                          OrderDetailPage.routeName,
+                          arguments: true, // navbar index
+                        );
+                      }
+                    });
                   },
                   child: Container(
                     color: provider.paymentMethod == null ||

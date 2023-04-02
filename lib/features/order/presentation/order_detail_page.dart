@@ -24,84 +24,97 @@ class OrderDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: Consumer<CartProvider>(
-              builder: (BuildContext context, provider, widget) {
-            return const CustomAppBar(
-              title: "Order Detail",
-              centerTitle: true,
-              canBack: true,
-              hideShadow: false,
-            );
-          })),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              const Center(
-                child: Text(
-                  'Terima Kasih. Pesanan Anda telah diterima',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(fontSize: FONT_GENERAL, color: Colors.black87),
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          MainPage.routeName,
+          (route) => false,
+          arguments: 3, // navbar index
+        );
+
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(kToolbarHeight),
+            child: Consumer<CartProvider>(
+                builder: (BuildContext context, provider, widget) {
+              return const CustomAppBar(
+                title: "Order Detail",
+                centerTitle: true,
+                canBack: false,
+                hideShadow: false,
+              );
+            })),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const Center(
+                  child: Text(
+                    'Terima Kasih. Pesanan Anda telah diterima',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: FONT_GENERAL, color: Colors.black87),
+                  ),
                 ),
-              ),
-              mediumVerticalSpacing(),
-              const OrderDetailTopWidget(),
-              Divider(
-                color: Colors.grey[400],
-              ),
-              mediumVerticalSpacing(),
-              const Text(
-                'Bayar dengan uang tunai pada saat pengiriman',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: FONT_GENERAL,
-                    color: Colors.black),
-              ),
-              const SizedBox(height: 25.0),
-              StreamBuilder<CartItemState>(
-                  stream: context.read<OrderProvider>().fetchCart(),
-                  builder: (context, state) {
-                    switch (state.data.runtimeType) {
-                      case CartItemLoading:
-                        return Center(
-                          child: Image.asset(
-                            ASSETS_LOADING,
-                            height: 100.0,
-                            width: 100.0,
-                          ),
-                        );
-                      case CartItemFailure:
-                        final failure = (state.data as CartItemFailure).failure;
-                        final msg = getErrorMessage(failure);
-                        showShortToast(message: msg);
-                        return const SizedBox.shrink();
-                      case CartItemSuccess:
-                        final _data = (state.data as CartItemSuccess).data;
-                        logMe(_data.length);
-                        logMe('_data.length');
-                        return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: _data.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return OrderItemWidget(itemCart: _data[index]);
-                            });
-                    }
-                    return const SizedBox.shrink();
-                  }),
-              Divider(
-                color: Colors.grey[400],
-              ),
-              OrderDetailItemWidget(title: 'Total', detail: 'Rp. 1231231')
-            ],
+                mediumVerticalSpacing(),
+                const OrderDetailTopWidget(),
+                Divider(
+                  color: Colors.grey[400],
+                ),
+                mediumVerticalSpacing(),
+                const Text(
+                  'Bayar dengan uang tunai pada saat pengiriman',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: FONT_GENERAL,
+                      color: Colors.black),
+                ),
+                const SizedBox(height: 25.0),
+                StreamBuilder<CartItemState>(
+                    stream: context.read<OrderProvider>().fetchCart(),
+                    builder: (context, state) {
+                      switch (state.data.runtimeType) {
+                        case CartItemLoading:
+                          return Center(
+                            child: Image.asset(
+                              ASSETS_LOADING,
+                              height: 100.0,
+                              width: 100.0,
+                            ),
+                          );
+                        case CartItemFailure:
+                          final failure =
+                              (state.data as CartItemFailure).failure;
+                          final msg = getErrorMessage(failure);
+                          showShortToast(message: msg);
+                          return const SizedBox.shrink();
+                        case CartItemSuccess:
+                          final _data = (state.data as CartItemSuccess).data;
+                          logMe(_data.length);
+                          logMe('_data.length');
+                          return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: _data.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return OrderItemWidget(itemCart: _data[index]);
+                              });
+                      }
+                      return const SizedBox.shrink();
+                    }),
+                Divider(
+                  color: Colors.grey[400],
+                ),
+                OrderDetailItemWidget(title: 'Total', detail: 'Rp. 1231231')
+              ],
+            ),
           ),
         ),
       ),

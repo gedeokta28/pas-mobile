@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/order/data/models/order_parameter.dart';
+import 'package:pas_mobile/features/order/domain/usecase/create_order.dart';
+import 'package:pas_mobile/features/order/presentation/providers/create_order_state.dart';
 
 import '../../../../core/presentation/form_provider.dart';
 import '../../../../core/utility/enum.dart';
@@ -11,19 +13,27 @@ import '../../../cart/presentation/providers/cart_item_state.dart';
 
 class OrderProvider extends FormProvider {
   final GetAddressList getAddressList;
+  final DoCreateOrder doCreateOrder;
   final GetCart getCart;
 
   // constructor
   OrderProvider({
     required this.getAddressList,
     required this.getCart,
+    required this.doCreateOrder,
   });
 
   PaymentMethod? _paymentMethod;
   ShippingAddress? _shippingAddressSelected;
+  OrderParameter? _orderParameter;
+  List<String>? _cartIds;
+  String _notes = '';
 
   PaymentMethod? get paymentMethod => _paymentMethod;
   ShippingAddress? get shippingAddressSelected => _shippingAddressSelected;
+  OrderParameter? get orderParameter => _orderParameter;
+  List<String>? get cartIds => _cartIds;
+  String? get notes => _notes;
 
   set setPaymentMethod(val) {
     _paymentMethod = val;
@@ -32,6 +42,18 @@ class OrderProvider extends FormProvider {
 
   set setShippingAddress(val) {
     _shippingAddressSelected = val;
+    notifyListeners();
+  }
+
+  set setCartIds(val) {
+    _cartIds = val;
+    logMe(_cartIds!.length);
+    logMe('_cartIds!.length');
+    notifyListeners();
+  }
+
+  set setNotes(val) {
+    _notes = val;
     notifyListeners();
   }
 
@@ -56,6 +78,42 @@ class OrderProvider extends FormProvider {
       yield CartItemFailure(failure: failure);
     }, (result) async* {
       yield CartItemSuccess(data: result);
+    });
+  }
+
+  setOrderParameter(
+      {required List<String> cartIdParam,
+      required PaymentMethod paymentMethodParam,
+      required String notesParam,
+      required String addressIdParam}) {
+    _orderParameter = OrderParameter(
+        paymentMethod: paymentMethodParam,
+        addressId: addressIdParam,
+        notes: notesParam,
+        cartIds: cartIdParam);
+    notifyListeners();
+    logMe(_orderParameter!.toMap());
+  }
+
+  Stream<CreateOrderState> checkoutOrder(
+      {required List<String> cartIdParam,
+      required PaymentMethod paymentMethodParam,
+      required String notesParam,
+      required String addressIdParam}) async* {
+    yield CreateOrderLoading();
+    OrderParameter _oderParam;
+    _oderParam = OrderParameter(
+        paymentMethod: paymentMethodParam,
+        addressId: addressIdParam,
+        notes: notesParam,
+        cartIds: cartIdParam);
+    final resultOder = await doCreateOrder.execute(_oderParam.toMap());
+    yield* resultOder.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield CreateOrderFailure(failure: failure);
+    }, (result) async* {
+      logMe('suksessssss $result');
+      yield CreateOrderSuccess(orderId: result);
     });
   }
 }
