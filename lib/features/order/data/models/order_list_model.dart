@@ -1,42 +1,41 @@
 // To parse this JSON data, do
 //
-//     final createOrderResponseModel = createOrderResponseModelFromJson(jsonString);
+//     final orderListModel = orderListModelFromJson(jsonString);
 
 import 'dart:convert';
 
-CreateOrderResponseModel createOrderResponseModelFromJson(String str) =>
-    CreateOrderResponseModel.fromJson(json.decode(str));
+OrderListModel orderListModelFromJson(String str) =>
+    OrderListModel.fromJson(json.decode(str));
 
-String createOrderResponseModelToJson(CreateOrderResponseModel data) =>
-    json.encode(data.toJson());
+String orderListModelToJson(OrderListModel data) => json.encode(data.toJson());
 
-class CreateOrderResponseModel {
-  CreateOrderResponseModel({
+class OrderListModel {
+  OrderListModel({
     required this.data,
     required this.status,
     required this.message,
   });
 
-  final DetailOrder data;
+  final List<OrderDataList> data;
   final String status;
   final String message;
 
-  factory CreateOrderResponseModel.fromJson(Map<String, dynamic> json) =>
-      CreateOrderResponseModel(
-        data: DetailOrder.fromJson(json["data"]),
+  factory OrderListModel.fromJson(Map<String, dynamic> json) => OrderListModel(
+        data: List<OrderDataList>.from(
+            json["data"].map((x) => OrderDataList.fromJson(x))),
         status: json["status"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
         "status": status,
         "message": message,
       };
 }
 
-class DetailOrder {
-  DetailOrder({
+class OrderDataList {
+  OrderDataList({
     required this.salesorderno,
     required this.notes,
     required this.salesorderdate,
@@ -78,9 +77,9 @@ class DetailOrder {
   final dynamic processtime;
   final dynamic processorderno;
   final dynamic shippingFee;
-  final List<ProductOrder> products;
+  final List<OrderProduct> products;
 
-  factory DetailOrder.fromJson(Map<String, dynamic> json) => DetailOrder(
+  factory OrderDataList.fromJson(Map<String, dynamic> json) => OrderDataList(
         salesorderno: json["salesorderno"],
         notes: json["notes"],
         salesorderdate: DateTime.parse(json["salesorderdate"]),
@@ -100,8 +99,8 @@ class DetailOrder {
         processtime: json["processtime"],
         processorderno: json["processorderno"],
         shippingFee: json["shipping_fee"],
-        products: List<ProductOrder>.from(
-            json["products"].map((x) => ProductOrder.fromJson(x))),
+        products: List<OrderProduct>.from(
+            json["products"].map((x) => OrderProduct.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -128,8 +127,8 @@ class DetailOrder {
       };
 }
 
-class ProductOrder {
-  ProductOrder({
+class OrderProduct {
+  OrderProduct({
     required this.id,
     required this.salesorderno,
     required this.stockid,
@@ -161,7 +160,7 @@ class ProductOrder {
   final DateTime updatedAt;
   final dynamic deletedAt;
 
-  factory ProductOrder.fromJson(Map<String, dynamic> json) => ProductOrder(
+  factory OrderProduct.fromJson(Map<String, dynamic> json) => OrderProduct(
         id: json["id"],
         salesorderno: json["salesorderno"],
         stockid: json["stockid"],

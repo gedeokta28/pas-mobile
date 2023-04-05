@@ -230,7 +230,9 @@ class CartProvider with ChangeNotifier {
                 productPrice: ValueNotifier(int.parse(arr[0])),
                 quantity: ValueNotifier(event.data[i].qty),
                 unitTag: "unitTag",
-                image: event.data[i].stock.photourl ?? '',
+                image: event.data[i].stock.images.isEmpty
+                    ? ''
+                    : event.data[i].stock.images[0]['url'],
                 priceGrosirCart: _priceGrosirCart),
           );
           addTotalPrice(double.parse(event.data[i].stock.hrg1));

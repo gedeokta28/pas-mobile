@@ -22,3 +22,20 @@ extension LocalizationString on PaymentMethod {
     }
   }
 }
+
+extension StatusOrderString on StatusOrder {
+  String getString() {
+    switch (this) {
+      case StatusOrder.paymentPending:
+        return 'payment pending';
+      case StatusOrder.processing:
+        return 'processing';
+      case StatusOrder.holdOn:
+        return 'hold_on';
+      case StatusOrder.cancelled:
+        return 'cancelled';
+      case StatusOrder.completed:
+        return 'completed';
+    }
+  }
+}

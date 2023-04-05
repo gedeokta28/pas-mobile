@@ -16,10 +16,11 @@ class CheckoutNotedWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<OrderProvider>(
         builder: (BuildContext context, provider, widget) {
+      provider.noteController.clear();
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
+          const Text(
             'Note :',
             style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -30,6 +31,7 @@ class CheckoutNotedWidget extends StatelessWidget {
           Form(
             key: provider.formKey,
             child: TextFormField(
+                controller: provider.noteController,
                 maxLines: 1,
                 textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(
@@ -38,15 +40,6 @@ class CheckoutNotedWidget extends StatelessWidget {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                     focusColor: Colors.white,
-                    // prefixIconConstraints:
-                    //     BoxConstraints(minWidth: 23, maxHeight: 20),
-                    // prefixIcon: Padding(
-                    //   padding: EdgeInsets.only(right: 5, left: 5, bottom: 30),
-                    //   child: Icon(
-                    //     Icons.note_alt_outlined,
-                    //     color: secondaryColor,
-                    //   ),
-                    // ),
                     prefixIcon: Icon(
                       Icons.note_alt,
                       color: secondaryColor,
@@ -68,20 +61,6 @@ class CheckoutNotedWidget extends StatelessWidget {
                       ),
                       borderSide: BorderSide(color: Colors.black45, width: 0.5),
                     ))),
-            // child: TextFormField(
-            //   enabled: true,
-            //   decoration: InputDecoration(
-            //       prefixIconConstraints:
-            //           BoxConstraints(minWidth: 23, maxHeight: 20),
-            //       prefixIcon: Padding(
-            //         padding: const EdgeInsets.only(right: 20),
-            //         child: Icon(
-            //           Icons.email,
-            //           color: secondaryColor,
-            //         ),
-            //       ),
-            //       hintText: "Email Address"),
-            // ),
           ),
         ],
       );

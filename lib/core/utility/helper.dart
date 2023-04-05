@@ -254,3 +254,9 @@ int convertMaxUnitInt(
 
   return result;
 }
+
+String mergeOrderText(String orderId, DateTime date) {
+  var convertDate = DateFormat('d MMMM yyyy').format(date);
+  String resultText = '#$orderId   $convertDate';
+  return resultText;
+}

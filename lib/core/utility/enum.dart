@@ -20,3 +20,5 @@ enum PaymentMethod {
   cash,
   trasnfer,
 }
+
+enum StatusOrder { paymentPending, processing, holdOn, cancelled, completed }

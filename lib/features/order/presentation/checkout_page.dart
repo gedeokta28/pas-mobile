@@ -31,6 +31,7 @@ class CheckoutPage extends StatefulWidget {
 class _CheckoutPageState extends State<CheckoutPage>
     with WidgetsBindingObserver {
   final _orderProvider = locator<OrderProvider>();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -172,20 +173,20 @@ class _CheckoutPageState extends State<CheckoutPage>
                             addressIdParam:
                                 provider.shippingAddressSelected!.id,
                             cartIdParam: _orderProvider.cartIds!,
-                            notesParam: provider.notes ?? '',
+                            notesParam: provider.noteController.text,
                             paymentMethodParam: provider.paymentMethod!)
                         .listen((event) {
                       if (event is CreateOrderLoading) {
                         showLoading();
                       } else if (event is CreateOrderFailure) {
                         dismissLoading();
-                      } else {
+                      } else if (event is CreateOrderSuccess) {
                         dismissLoading();
-                        Navigator.pushNamed(
-                          context,
-                          OrderDetailPage.routeName,
-                          arguments: true, // navbar index
-                        );
+                        logMe(event.orderId);
+                        Navigator.pushReplacementNamed(
+                            context, OrderDetailPage.routeName,
+                            arguments: OrderDetailPageArguments(
+                                orderId: event.orderId, isFromCheckout: true));
                       }
                     });
                   },

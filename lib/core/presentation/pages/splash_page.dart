@@ -23,6 +23,8 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () async {
+      final session = locator<Session>();
+      session.setIndexTab = 0;
       Navigator.pushReplacementNamed(context, MainPage.routeName);
     });
 

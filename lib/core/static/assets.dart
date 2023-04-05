@@ -17,3 +17,4 @@ const String ASSET_ICON_UPDOWN = 'assets/icons/up-down-icon.png';
 const String ASSET_FILTER_ICON = 'assets/icons/filter-icon.png';
 const String ASSET_TRASNFER_ICON = 'assets/icons/transfer-icon.png';
 const String ASSET_COD_ICON = 'assets/icons/cod-icon.png';
+const String ASSES_BCA_ICON = 'assets/icons/bca-icon.png';

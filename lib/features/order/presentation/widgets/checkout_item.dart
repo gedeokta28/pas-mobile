@@ -4,6 +4,7 @@ import 'package:pas_mobile/core/static/dimens.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/static/app_config.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 
 class CheckoutItem extends StatelessWidget {
@@ -21,14 +22,14 @@ class CheckoutItem extends StatelessWidget {
           children: [
             provider.cart[index].image!.isNotEmpty
                 ? Image(
-                    height: 40,
-                    width: 40,
+                    height: App(context).appWidth(15),
+                    width: App(context).appWidth(15),
                     image: NetworkImage(provider.cart[index].image!),
                   )
-                : const Image(
-                    height: 40,
-                    width: 40,
-                    image: AssetImage(ASSETS_PLACEHOLDER),
+                : Image(
+                    height: App(context).appWidth(15),
+                    width: App(context).appWidth(15),
+                    image: const AssetImage(ASSETS_PLACEHOLDER),
                   ),
             smallHorizontalSpacing(),
             Expanded(

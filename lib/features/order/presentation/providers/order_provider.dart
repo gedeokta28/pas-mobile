@@ -1,6 +1,10 @@
 import 'package:pas_mobile/features/order/data/models/order_parameter.dart';
 import 'package:pas_mobile/features/order/domain/usecase/create_order.dart';
+import 'package:pas_mobile/features/order/domain/usecase/detail_order.dart';
+import 'package:pas_mobile/features/order/domain/usecase/list_order.dart';
 import 'package:pas_mobile/features/order/presentation/providers/create_order_state.dart';
+import 'package:pas_mobile/features/order/presentation/providers/detail_order_state.dart';
+import 'package:pas_mobile/features/order/presentation/providers/list_oder_state.dart';
 
 import '../../../../core/presentation/form_provider.dart';
 import '../../../../core/utility/enum.dart';
@@ -14,6 +18,8 @@ import '../../../cart/presentation/providers/cart_item_state.dart';
 class OrderProvider extends FormProvider {
   final GetAddressList getAddressList;
   final DoCreateOrder doCreateOrder;
+  final GetDetailOrder getDetailOrder;
+  final GetListOrder getListOrder;
   final GetCart getCart;
 
   // constructor
@@ -21,6 +27,8 @@ class OrderProvider extends FormProvider {
     required this.getAddressList,
     required this.getCart,
     required this.doCreateOrder,
+    required this.getDetailOrder,
+    required this.getListOrder,
   });
 
   PaymentMethod? _paymentMethod;
@@ -114,6 +122,32 @@ class OrderProvider extends FormProvider {
     }, (result) async* {
       logMe('suksessssss $result');
       yield CreateOrderSuccess(orderId: result);
+    });
+  }
+
+  Stream<DetailOrderState> fetchDetailOrder({required String orderId}) async* {
+    yield DetailOrderLoading();
+
+    final resultOder = await getDetailOrder.execute(orderId);
+    yield* resultOder.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield DetailOrderFailure(failure: failure);
+    }, (result) async* {
+      logMe('suksessssss $result');
+      yield DetailOrderSuccess(detailOrder: result);
+    });
+  }
+
+  Stream<ListOrderState> fetchListOrder() async* {
+    yield ListOrderLoading();
+
+    final resultOder = await getListOrder.execute();
+    yield* resultOder.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield ListOrderFailure(failure: failure);
+    }, (result) async* {
+      logMe('suksessssss $result');
+      yield ListOrderSuccess(listOrder: result);
     });
   }
 }

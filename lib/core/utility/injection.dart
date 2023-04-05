@@ -47,6 +47,8 @@ import 'package:pas_mobile/features/order/data/datasources/order_datasource.dart
 import 'package:pas_mobile/features/order/data/repositories/order_repository_impl.dart';
 import 'package:pas_mobile/features/order/domain/repositories/order_repository.dart';
 import 'package:pas_mobile/features/order/domain/usecase/create_order.dart';
+import 'package:pas_mobile/features/order/domain/usecase/detail_order.dart';
+import 'package:pas_mobile/features/order/domain/usecase/list_order.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/product_provider.dart';
@@ -140,7 +142,11 @@ Future<void> init() async {
       getCart: locator(),
       doUpdateCart: locator()));
   locator.registerFactory<OrderProvider>(() => OrderProvider(
-      getAddressList: locator(), getCart: locator(), doCreateOrder: locator()));
+      getAddressList: locator(),
+      getCart: locator(),
+      doCreateOrder: locator(),
+      getListOrder: locator(),
+      getDetailOrder: locator()));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
@@ -227,4 +233,8 @@ Future<void> init() async {
       () => GetProductVariant(repository: locator()));
   locator.registerLazySingleton<DoCreateOrder>(
       () => DoCreateOrder(repository: locator()));
+  locator.registerLazySingleton<GetDetailOrder>(
+      () => GetDetailOrder(repository: locator()));
+  locator.registerLazySingleton<GetListOrder>(
+      () => GetListOrder(repository: locator()));
 }

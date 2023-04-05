@@ -70,12 +70,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const CheckoutPage());
     case AddressCheckoutPage.routeName:
       return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
-    case NotificationPage.routeName:
     case OrderDetailPage.routeName:
-      final isFromCheckout = settings.arguments as bool;
+      final args = settings.arguments as OrderDetailPageArguments;
       return MaterialPageRoute(
           builder: (_) => OrderDetailPage(
-                isFromCheckout: isFromCheckout,
+                isFromCheckout: args.isFromCheckout,
+                orderId: args.orderId,
               ));
     case MainPage.routeName:
       final index = settings.arguments as int?;
