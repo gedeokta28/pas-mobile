@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/account/presentation/widgets/status_order_container.dart';
 import 'package:pas_mobile/features/order/data/models/order_list_model.dart';
 
 import '../../../../core/static/assets.dart';
@@ -30,19 +31,7 @@ class OrderItemCard extends StatelessWidget {
                           orderData.salesorderno, orderData.salesorderdate),
                       style: const TextStyle(color: Colors.grey, fontSize: 13),
                     ),
-                    Container(
-                      color: Colors.grey[400],
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          orderData.status,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
+                    StatusOrderContainer(statusOrder: orderData.status)
                   ],
                 ),
                 smallVerticalSpacing(),

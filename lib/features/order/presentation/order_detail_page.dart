@@ -20,6 +20,7 @@ import '../../../core/utility/injection.dart';
 import '../../../core/utility/session_helper.dart';
 import '../../cart/presentation/providers/cart_provider.dart';
 import 'providers/order_provider.dart';
+import 'widgets/order_item_detail_widget.dart';
 import 'widgets/order_item_widget.dart';
 
 class OrderDetailPageArguments {
@@ -276,12 +277,13 @@ class OrderDetailPage extends StatelessWidget {
                             itemCount: _data.products.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              return OrderItemWidget(
+                              return OrderItemDetailWidget(
                                   productOrder: _data.products[index]);
                             }),
                         Divider(
                           color: Colors.grey[400],
                         ),
+                        smallVerticalSpacing(),
                         OrderDetailItemWidget(
                             title: 'Metode Pembayaran',
                             detail: _data.paymentype),

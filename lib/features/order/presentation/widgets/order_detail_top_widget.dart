@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pas_mobile/features/account/presentation/widgets/status_order_container.dart';
 import 'package:pas_mobile/features/order/data/models/create_order_response_model.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/order_detail_item_widget.dart';
 
@@ -51,19 +52,7 @@ class OrderDetailTopWidget extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: FONT_GENERAL, color: Colors.black87),
               ),
-              Container(
-                color: Colors.grey[400],
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    orderStatus,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+              StatusOrderContainer(statusOrder: orderStatus)
             ],
           ),
         )

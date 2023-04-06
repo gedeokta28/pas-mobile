@@ -16,6 +16,19 @@ const Color BOTTOM_NAVBAR_BACKGROUND = Colors.white;
 const Color BOTTOM_NAVBAR_UNSELECTED = Colors.black;
 const Color BOTTOM_NAVBAR_SELECTED = secondaryColor;
 
+//color status
+const Color pendingContainerColor = Color(0xFFFFD3A0);
+Color? cancelContainerColor = Colors.red[300];
+Color? holdContainerColor = Colors.amber[300];
+const Color completedContainerColor = Color(0xFFBEFFA1);
+const Color processingContainerColor = Color(0xFFA8D3FF);
+//
+const Color pendingTextColor = Color(0xFFed411f);
+const Color cancelTextColor = Colors.white;
+const Color holdTextColor = Color(0xFFbd7e00);
+const Color completedTextColor = Color(0xFF0e910c);
+const Color processingTextColor = Color(0xFF0080FF);
+
 const List<Color> colorContainer = [
   Color(0xFF236DBE),
   Color(0xFFE58437),
