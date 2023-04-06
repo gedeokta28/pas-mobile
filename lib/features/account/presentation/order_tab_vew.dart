@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 
@@ -7,6 +8,8 @@ import 'package:provider/provider.dart';
 
 import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
+import '../../../core/utility/injection.dart';
+import '../../order/data/models/order_list_model.dart';
 import '../../order/presentation/order_detail_page.dart';
 import '../../order/presentation/providers/list_oder_state.dart';
 
@@ -24,13 +27,13 @@ class OrderProfileTabState extends State<OrderProfileTab>
     with AutomaticKeepAliveClientMixin<OrderProfileTab> {
   @override
   bool get wantKeepAlive => true;
-
   late ScrollController _scrollController;
 
   late ScrollPhysics ph;
   @override
   void initState() {
     super.initState();
+
     _scrollController = ScrollController();
 
     _scrollController.addListener(() {
@@ -56,59 +59,54 @@ class OrderProfileTabState extends State<OrderProfileTab>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ListOrderState>(
-        stream: context.read<OrderProvider>().fetchListOrder(),
-        builder: (context, state) {
-          switch (state.data.runtimeType) {
-            case ListOrderLoading:
-              return Center(
-                child: Image.asset(
-                  ASSETS_LOADING,
-                  height: 100.0,
-                  width: 100.0,
+    return ChangeNotifierProvider(
+        create: (context) =>
+            locator<OrderProvider>()..fetchListOrder().listen((event) {}),
+        child: Consumer<OrderProvider>(builder: (context, provider, _) {
+          if (provider.isLoadOrder) {
+            return Center(
+              child: Image.asset(
+                ASSETS_LOADING,
+                height: 100.0,
+                width: 100.0,
+              ),
+            );
+          } else {
+            if (provider.listOrder.isEmpty) {
+              return const Center(
+                  child: Text(
+                'Belum Memiliki Pesanan',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                    color: Colors.grey),
+              ));
+            } else {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 50),
+                child: RefreshIndicator(
+                  onRefresh: provider.refreshData,
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, OrderDetailPage.routeName,
+                                arguments: OrderDetailPageArguments(
+                                    orderId:
+                                        provider.listOrder[index].salesorderno,
+                                    isFromCheckout: false));
+                          },
+                          child: OrderItemCard(
+                              orderData: provider.listOrder[index]));
+                    },
+                    itemCount: provider.listOrder.length,
+                  ),
                 ),
               );
-            case ListOrderFailure:
-              final failure = (state.data as ListOrderFailure).failure;
-              final msg = getErrorMessage(failure);
-              showShortToast(message: msg);
-              return const SizedBox.shrink();
-            case ListOrderSuccess:
-              final _data = (state.data as ListOrderSuccess).listOrder;
-              if (_data.isEmpty) {
-                return const Center(
-                    child: Text(
-                  'Belum Memiliki Order',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                      color: Colors.grey),
-                ));
-              }
-              return SingleChildScrollView(
-                controller: _scrollController,
-                child: Column(children: [
-                  ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: _data.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, OrderDetailPage.routeName,
-                                  arguments: OrderDetailPageArguments(
-                                      orderId: _data[index].salesorderno,
-                                      isFromCheckout: false));
-                            },
-                            child: OrderItemCard(orderData: _data[index]));
-                      }),
-                  largeVerticalSpacing()
-                ]),
-              );
+            }
           }
-          return const SizedBox.shrink();
-        });
+        }));
   }
 }

@@ -14,6 +14,7 @@ import '../../../account/domain/usecases/get_address_list.dart';
 import '../../../account/presentation/providers/get_address_list_state.dart';
 import '../../../cart/domain/usecases/get_cart.dart';
 import '../../../cart/presentation/providers/cart_item_state.dart';
+import '../../data/models/order_list_model.dart';
 
 class OrderProvider extends FormProvider {
   final GetAddressList getAddressList;
@@ -36,12 +37,16 @@ class OrderProvider extends FormProvider {
   OrderParameter? _orderParameter;
   List<String>? _cartIds;
   String _notes = '';
+  List<OrderDataList> _listOrder = [];
+  bool _isLoadOrder = true;
 
   PaymentMethod? get paymentMethod => _paymentMethod;
   ShippingAddress? get shippingAddressSelected => _shippingAddressSelected;
   OrderParameter? get orderParameter => _orderParameter;
   List<String>? get cartIds => _cartIds;
   String? get notes => _notes;
+  List<OrderDataList> get listOrder => _listOrder;
+  bool get isLoadOrder => _isLoadOrder;
 
   set setPaymentMethod(val) {
     _paymentMethod = val;
@@ -103,6 +108,11 @@ class OrderProvider extends FormProvider {
     logMe(_orderParameter!.toMap());
   }
 
+  refreshList() {
+    logMe('mantapp');
+    notifyListeners();
+  }
+
   Stream<CreateOrderState> checkoutOrder(
       {required List<String> cartIdParam,
       required PaymentMethod paymentMethodParam,
@@ -144,10 +154,34 @@ class OrderProvider extends FormProvider {
     final resultOder = await getListOrder.execute();
     yield* resultOder.fold((failure) async* {
       logMe("failure.message ${failure.message}");
+      _isLoadOrder = false;
       yield ListOrderFailure(failure: failure);
     }, (result) async* {
       logMe('suksessssss $result');
+      _listOrder = result;
+      _isLoadOrder = false;
+      notifyListeners();
       yield ListOrderSuccess(listOrder: result);
     });
+  }
+
+  Stream<ListOrderState> fetchListOrderRefresh() async* {
+    yield ListOrderLoading();
+
+    final resultOder = await getListOrder.execute();
+    yield* resultOder.fold((failure) async* {
+      logMe("failure.message ${failure.message}");
+      yield ListOrderFailure(failure: failure);
+    }, (result) async* {
+      logMe('suksessssss $result');
+      _listOrder = result;
+      notifyListeners();
+      yield ListOrderSuccess(listOrder: result);
+    });
+  }
+
+  Future refreshData() async {
+    await Future.delayed(const Duration(seconds: 3));
+    fetchListOrderRefresh().listen((event) {});
   }
 }
