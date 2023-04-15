@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/form_provider.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
@@ -10,7 +9,7 @@ class FilterProvider extends FormProvider {
   // initial
   final GetCategoryList getCategoryList;
   List<Category> _selectedFilter = [];
-  List<String> _selectedCategoryFilter = [];
+  final List<String> _selectedCategoryFilter = [];
   List<Category> get selectedFilter => _selectedFilter;
   List<String> get selectedCategoryFilter => _selectedCategoryFilter;
   int _priceStart = 0;

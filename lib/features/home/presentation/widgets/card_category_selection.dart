@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
-import 'dart:math' as math;
 
 import '../../../../core/utility/enum.dart';
 import '../product_page.dart';
@@ -71,7 +70,7 @@ class CardSelectionWidget extends StatelessWidget {
                 height: App(context).appHeight(4),
                 width: App(context).appHeight(4),
                 child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
+                    borderRadius: const BorderRadius.all(Radius.circular(100)),
                     child: category.photo != null
                         ? DynamicCachedNetworkImage(
                             imageUrl: category.photo,

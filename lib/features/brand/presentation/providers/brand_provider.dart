@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_brand_list.dart';
-import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
-import 'package:pas_mobile/features/category/presentation/providers/category_state.dart';
 
 import 'brand_state.dart';
 

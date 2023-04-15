@@ -5,7 +5,6 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
 import 'card_category_selection.dart';
-import 'card_widget.dart';
 import 'category_selection_title.dart';
 import '../providers/home_provider.dart';
 import 'package:provider/provider.dart';

@@ -3,11 +3,9 @@ import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/utility/enum.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_state.dart';
 import 'package:pas_mobile/features/brand/presentation/widgets/brand_item.dart';
-import 'package:pas_mobile/features/category/presentation/widgets/category_item.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../core/static/dimens.dart';
 import '../../../core/utility/injection.dart';
 import '../../home/presentation/product_page.dart';
 import 'providers/brand_provider.dart';

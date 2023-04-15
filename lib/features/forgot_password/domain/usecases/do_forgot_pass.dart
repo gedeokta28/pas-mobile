@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../../core/utility/session_helper.dart';
 import '../../data/models/forgot_password_model.dart';
 import '../repositories/forgot_password_repository.dart';
 

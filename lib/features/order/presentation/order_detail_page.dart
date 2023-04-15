@@ -4,7 +4,6 @@ import 'package:pas_mobile/core/utility/extensions.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/order/presentation/providers/detail_order_state.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/address_card_order_detail.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/checkout_noted_widget.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/order_detail_item_widget.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/order_detail_top_widget.dart';
 import 'package:pas_mobile/features/order/presentation/widgets/payment_method_detail.dart';

@@ -60,7 +60,7 @@ class CheckoutAddressWidget extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
+            const Text(
               'Alamat Pengiriman',
               style: TextStyle(
                   fontWeight: FontWeight.bold,

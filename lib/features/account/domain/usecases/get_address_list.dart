@@ -1,9 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../data/models/get_address_model.dart';
-import '../../data/models/update_profile_response_model.dart';
 import '../repositories/profile_repository.dart';
 
 abstract class GetAddressListUseCase<Type> {

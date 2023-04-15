@@ -115,16 +115,16 @@ class ChangePersonalInfoPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
+                        const Text(
                           "*Provinsi",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: FONT_GENERAL,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4.0),
                         Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: SHADOW,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(6)),
@@ -138,10 +138,10 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                       color: primaryColor,
                                       size: 25,
                                     ),
-                                    hint: Text(
+                                    hint: const Text(
                                       "Pilih Provinsi",
                                       style:
-                                          const TextStyle(color: Colors.grey),
+                                          TextStyle(color: Colors.grey),
                                     ),
                                     value: provider.selectedProvince,
                                     onChanged: (Province? item) {

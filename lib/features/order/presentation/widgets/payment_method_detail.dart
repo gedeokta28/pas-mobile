@@ -34,7 +34,7 @@ class PaymentMethodDetailWidget extends StatelessWidget {
                 color: Colors.black),
           ),
           smallVerticalSpacing(),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Padding(
                 padding: const EdgeInsets.only(

@@ -5,12 +5,9 @@ import 'package:pas_mobile/features/category/presentation/providers/category_sta
 import 'package:pas_mobile/features/category/presentation/widgets/category_item.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/dimens.dart';
 import '../../../core/utility/enum.dart';
-import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
 import '../../home/presentation/product_page.dart';
 
@@ -56,7 +53,8 @@ class CategoryPage extends StatelessWidget {
                                       arguments: ProductPageArguments(
                                           productPageParams:
                                               ProductPageParams.fromCategory,
-                                              categoryName: _category[index].categoryname,
+                                          categoryName:
+                                              _category[index].categoryname,
                                           categoryId:
                                               _category[index].categoryid));
                                 },

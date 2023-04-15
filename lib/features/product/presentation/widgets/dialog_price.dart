@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/home/data/models/variant_product_response_model.dart';
 
 import '../../../../core/presentation/widgets/components/dialog_container.dart';
-import '../../../../core/static/app_config.dart';
 import '../../../../core/utility/helper.dart';
 import '../../../home/data/models/detail_product_model.dart';
 
@@ -22,13 +20,13 @@ class DialogPrice {
             onTap: () => Navigator.of(context).pop(),
             child: SingleChildScrollView(
               child: DialogContainer(
-                customPadding: EdgeInsets.all(10),
+                customPadding: const EdgeInsets.all(10),
                 withMargin: true,
                 child: Column(
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87),
@@ -40,8 +38,8 @@ class DialogPrice {
                           borderRadius: BorderRadius.circular(3),
                           color: secondaryColor),
                       child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -54,7 +52,7 @@ class DialogPrice {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -71,7 +69,7 @@ class DialogPrice {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg1),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -88,8 +86,8 @@ class DialogPrice {
                           borderRadius: BorderRadius.circular(3),
                           color: Colors.white),
                       child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -102,7 +100,7 @@ class DialogPrice {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -119,7 +117,7 @@ class DialogPrice {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg2),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
@@ -137,7 +135,7 @@ class DialogPrice {
                           color: secondaryColor),
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -150,7 +148,7 @@ class DialogPrice {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -167,7 +165,7 @@ class DialogPrice {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg3),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -203,13 +201,13 @@ class DialogPriceVariant {
             onTap: () => Navigator.of(context).pop(),
             child: SingleChildScrollView(
               child: DialogContainer(
-                customPadding: EdgeInsets.all(10),
+                customPadding: const EdgeInsets.all(10),
                 withMargin: true,
                 child: Column(
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87),
@@ -222,7 +220,7 @@ class DialogPriceVariant {
                           color: secondaryColor),
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -235,7 +233,7 @@ class DialogPriceVariant {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -252,7 +250,7 @@ class DialogPriceVariant {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg1),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -270,7 +268,7 @@ class DialogPriceVariant {
                           color: Colors.white),
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -283,7 +281,7 @@ class DialogPriceVariant {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
@@ -300,7 +298,7 @@ class DialogPriceVariant {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg2),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
@@ -318,7 +316,7 @@ class DialogPriceVariant {
                           color: secondaryColor),
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -331,7 +329,7 @@ class DialogPriceVariant {
                                   qty1: productDetail.qty1,
                                   qty2: productDetail.qty2,
                                   qty3: productDetail.qty3),
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 13,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -348,7 +346,7 @@ class DialogPriceVariant {
                                 ),
                                 Text(
                                   convertPrice(productDetail.hrg3),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:pas_mobile/features/cart/domain/repositories/cart_repository.dart';
 
 import '../../../../core/error/failures.dart';

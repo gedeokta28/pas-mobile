@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/news_product.dart';
 import 'package:pas_mobile/features/product/presentation/widgets/related_product.dart';
 import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 import 'package:readmore/readmore.dart';
@@ -90,7 +88,7 @@ class ProductFilterDescription extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Brand',
                 style: TextStyle(
                     fontSize: 14.0,
@@ -122,7 +120,7 @@ class ProductFilterDescription extends StatelessWidget {
           smallVerticalSpacing(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+            children: const [
               Text(
                 'Informasi Tambahan',
                 style: TextStyle(
@@ -146,8 +144,8 @@ class ProductFilterDescription extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Colors.black),
           ),
-          RelatedProductList(),
-          SizedBox(height: 100),
+          const RelatedProductList(),
+          const SizedBox(height: 100),
         ],
       ),
     );

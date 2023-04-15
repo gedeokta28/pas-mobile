@@ -58,8 +58,8 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.brand:
         return const BrandPage();
       case M_BTB.order:
-        return Center(
-          child: const Text(
+        return const Center(
+          child: Text(
             "SOON",
             style: TextStyle(
               color: Colors.black,
@@ -70,8 +70,8 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.account:
         return const AccountPage();
       case M_BTB.info:
-        return Center(
-          child: const Text(
+        return const Center(
+          child: Text(
             "SOON",
             style: TextStyle(
               color: Colors.black,

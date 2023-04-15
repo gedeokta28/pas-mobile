@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
-import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/static/dimens.dart';
 import 'package:pas_mobile/core/utility/extensions.dart';
 import 'package:pas_mobile/core/utility/helper.dart';

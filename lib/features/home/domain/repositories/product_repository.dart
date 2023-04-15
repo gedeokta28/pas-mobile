@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:pas_mobile/features/home/data/models/brand_list_response_model.dart';
 import 'package:pas_mobile/features/home/data/models/detail_product_model.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';

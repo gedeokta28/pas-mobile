@@ -3,7 +3,6 @@ import 'package:pas_mobile/features/home/presentation/widgets/banner_slider.dart
 import 'package:pas_mobile/features/home/presentation/widgets/best_product.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/category_selection.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/news_product.dart';
-import 'package:provider/provider.dart';
 
 import 'widgets/home_app_bar.dart';
 

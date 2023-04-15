@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
-import 'package:pas_mobile/features/home/presentation/product_page.dart';
-import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
 import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:provider/provider.dart';
 
@@ -10,12 +6,8 @@ import '../../../../core/presentation/widgets/search_app_bar.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/utility/injection.dart';
 import '../../../filter/presentation/filter_page.dart';
-import '../../../home/presentation/providers/home_provider.dart';
-import '../../../home/presentation/providers/product_state.dart';
-import '../../../home/presentation/widgets/custom_card.dart';
 import '../../../home/presentation/widgets/custom_card_filter.dart';
 import '../../../product/presentation/product_detail_page.dart';
-import '../../../product/presentation/search_result_page.dart';
 import '../providers/search_provider.dart';
 
 class SearchPage extends StatefulWidget {
@@ -126,19 +118,19 @@ class _SearchPageState extends State<SearchPage> {
                                     border: Border.all(
                                         width: 1.0, color: Colors.grey)),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 5),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Filter",
                                         style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Image.asset(
@@ -152,14 +144,14 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 150,
                               height: 40,
                               child: InputDecorator(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(4.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.0)),
                                   ),
                                   contentPadding: EdgeInsets.only(left: 8.0),
                                 ),
@@ -178,7 +170,7 @@ class _SearchPageState extends State<SearchPage> {
                                     onChanged: (newValue) {
                                       provider.setSelectedVal = newValue;
                                     },
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.black87,
                                     ),
@@ -189,10 +181,10 @@ class _SearchPageState extends State<SearchPage> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
-                      Center(
+                      const Center(
                         child: Text(
                           "Product Tidak Tersedia",
                           style: TextStyle(
@@ -241,19 +233,19 @@ class _SearchPageState extends State<SearchPage> {
                                     border: Border.all(
                                         width: 1.0, color: Colors.grey)),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 5),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      const Text(
                                         "Filter",
                                         style: TextStyle(
                                           fontSize: 13,
                                           color: Colors.black87,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Image.asset(
@@ -267,14 +259,14 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                               ),
                             ),
-                            Container(
+                            SizedBox(
                               width: 150,
                               height: 40,
                               child: InputDecorator(
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(4.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4.0)),
                                   ),
                                   contentPadding: EdgeInsets.only(left: 8.0),
                                 ),
@@ -315,7 +307,7 @@ class _SearchPageState extends State<SearchPage> {
                                           .filterCustomProduct(filterParameter)
                                           .listen((event) {});
                                     },
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.black87,
                                     ),

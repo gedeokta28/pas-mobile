@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
-import 'package:pas_mobile/features/product/presentation/product_detail_filter_page.dart';
 import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:provider/provider.dart';
 
@@ -94,7 +93,7 @@ class _ProductPageState extends State<ProductPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        FilterPage(),
+                                        const FilterPage(),
                                   ));
                               FilterParameter filterParameter = FilterParameter(
                                   keyword: '',
@@ -112,19 +111,19 @@ class _ProductPageState extends State<ProductPage> {
                                   border: Border.all(
                                       width: 1.0, color: Colors.grey)),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Filter",
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black87,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Image.asset(
@@ -138,14 +137,14 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 150,
                             height: 40,
                             child: InputDecorator(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4.0)),
                                 ),
                                 contentPadding: EdgeInsets.only(left: 8.0),
                               ),
@@ -164,7 +163,7 @@ class _ProductPageState extends State<ProductPage> {
                                   onChanged: (newValue) {
                                     provider.setSelectedVal = newValue;
                                   },
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     color: Colors.black87,
                                   ),
@@ -175,10 +174,10 @@ class _ProductPageState extends State<ProductPage> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 100,
                     ),
-                    Center(
+                    const Center(
                       child: Text(
                         "Product Tidak Tersedia",
                         style: TextStyle(
@@ -198,7 +197,7 @@ class _ProductPageState extends State<ProductPage> {
                     widget.productPageParams != ProductPageParams.fromBrand &&
                             widget.productPageParams !=
                                 ProductPageParams.fromCategory
-                        ? SizedBox()
+                        ? const SizedBox()
                         : Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
@@ -229,7 +228,7 @@ class _ProductPageState extends State<ProductPage> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        FilterPage(),
+                                        const FilterPage(),
                                   ));
                               FilterParameter filterParameter = FilterParameter(
                                   keyword: '',
@@ -247,19 +246,19 @@ class _ProductPageState extends State<ProductPage> {
                                   border: Border.all(
                                       width: 1.0, color: Colors.grey)),
                               child: Padding(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 5),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    const Text(
                                       "Filter",
                                       style: TextStyle(
                                         fontSize: 13,
                                         color: Colors.black87,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Image.asset(
@@ -273,14 +272,14 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             ),
                           ),
-                          Container(
+                          SizedBox(
                             width: 150,
                             height: 40,
                             child: InputDecorator(
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 border: OutlineInputBorder(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(4.0)),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4.0)),
                                 ),
                                 contentPadding: EdgeInsets.only(left: 8.0),
                               ),
@@ -315,7 +314,7 @@ class _ProductPageState extends State<ProductPage> {
                                         .filterCustomProduct(filterParameter)
                                         .listen((event) {});
                                   },
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     color: Colors.black87,
                                   ),
@@ -370,7 +369,7 @@ class _ProductPageState extends State<ProductPage> {
                               width: 100.0,
                             ),
                           )
-                        : SizedBox()
+                        : const SizedBox()
                   ],
                 ),
               );

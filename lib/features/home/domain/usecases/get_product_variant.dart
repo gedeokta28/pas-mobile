@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../data/models/detail_product_model.dart';
 import '../../data/models/variant_product_response_model.dart';
 
 abstract class GetProductVariantUseCase<Type> {

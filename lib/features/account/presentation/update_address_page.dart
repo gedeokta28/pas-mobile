@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/data/models/provinces_model.dart';
-import 'package:pas_mobile/core/data/models/regencies_model.dart';
 import 'package:pas_mobile/core/presentation/widgets/custom_dialog_confirm.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
-import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/account/presentation/providers/shipping_address_provider.dart';
 
 import 'package:provider/provider.dart';
@@ -85,16 +83,16 @@ class UpdateAddressPage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(
+                        const Text(
                           "*Provinsi",
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: FONT_GENERAL,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4.0),
                         Container(
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: SHADOW,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(6)),
@@ -108,10 +106,9 @@ class UpdateAddressPage extends StatelessWidget {
                                       color: primaryColor,
                                       size: 25,
                                     ),
-                                    hint: Text(
+                                    hint: const Text(
                                       "Pilih Provinsi",
-                                      style:
-                                          const TextStyle(color: Colors.grey),
+                                      style: TextStyle(color: Colors.grey),
                                     ),
                                     value: provider.selectedProvince,
                                     onChanged: (Province? item) {

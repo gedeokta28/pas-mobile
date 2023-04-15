@@ -29,7 +29,6 @@ class _LoginFormState extends State<LoginForm> {
     provider.doLoginApi().listen((state) async {
       switch (state.runtimeType) {
         case LoginFailure:
-          final msg = getErrorMessage((state as LoginFailure).failure);
           // showShortToast(message: msg);
           showShortToast(message: "Periksa Email dan Password Anda");
 
@@ -102,7 +101,7 @@ class _LoginFormState extends State<LoginForm> {
                   if (provider.formKey.currentState!.validate()) submit();
                 },
               ),
-              Container(
+              SizedBox(
                 height: App(context).appHeight(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

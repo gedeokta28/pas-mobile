@@ -88,10 +88,10 @@ class ProductDescription extends StatelessWidget {
                               Border.all(width: 1.0, color: secondaryColor)),
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               "Lihat Harga Grosir",
                               style: TextStyle(
@@ -274,15 +274,15 @@ class ProductDescription extends StatelessWidget {
             ReadMoreText(provider.productDescription,
                 trimLines: 4,
                 style:
-                    TextStyle(fontSize: 13.0, color: Colors.black, height: 1.5),
+                    const TextStyle(fontSize: 13.0, color: Colors.black, height: 1.5),
                 trimMode: TrimMode.Line,
                 trimCollapsedText: 'Baca selengkapnya',
                 trimExpandedText: ' Tampilkan lebih sedikit',
-                lessStyle: TextStyle(
+                lessStyle: const TextStyle(
                     fontSize: 13.0,
                     color: secondaryColor,
                     fontWeight: FontWeight.bold),
-                moreStyle: TextStyle(
+                moreStyle: const TextStyle(
                     fontSize: 13.0,
                     color: secondaryColor,
                     fontWeight: FontWeight.bold)),
@@ -290,7 +290,7 @@ class ProductDescription extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Brand',
                   style: TextStyle(
                       fontSize: 14.0,
@@ -323,7 +323,7 @@ class ProductDescription extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Informasi Tambahan',
                   style: TextStyle(
                       fontSize: 14.0,
@@ -332,7 +332,7 @@ class ProductDescription extends StatelessWidget {
                 ),
                 Text(
                   convertWeight(provider.productWeight),
-                  style: TextStyle(fontSize: 14.0, color: Colors.black),
+                  style: const TextStyle(fontSize: 14.0, color: Colors.black),
                 ),
               ],
             ),
@@ -348,8 +348,8 @@ class ProductDescription extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-            RelatedProductList(),
-            SizedBox(height: 100),
+            const RelatedProductList(),
+            const SizedBox(height: 100),
           ],
         ),
       );

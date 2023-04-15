@@ -1,17 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 
 import 'package:pas_mobile/features/account/presentation/widgets/order_item_card.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
 import '../../../core/utility/injection.dart';
-import '../../order/data/models/order_list_model.dart';
 import '../../order/presentation/order_detail_page.dart';
-import '../../order/presentation/providers/list_oder_state.dart';
 
 class OrderProfileTab extends StatefulWidget {
   const OrderProfileTab({Key? key, required this.parentController})
@@ -59,6 +54,7 @@ class OrderProfileTabState extends State<OrderProfileTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ChangeNotifierProvider(
         create: (context) =>
             locator<OrderProvider>()..fetchListOrder().listen((event) {}),

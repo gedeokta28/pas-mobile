@@ -11,8 +11,8 @@ import '../../../../core/presentation/widgets/custom_dialog_confirm.dart';
 import '../providers/cart_provider.dart';
 
 class CartItem extends StatelessWidget {
-  int index;
-  CartItem({Key? key, required this.index}) : super(key: key);
+  final int index;
+  const CartItem({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class CartItem extends StatelessWidget {
                   SizedBox(
                     width: App(context).appWidth(60),
                     child: Text(
-                      '${provider.cart[index].productName!}',
+                      provider.cart[index].productName!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -54,7 +54,7 @@ class CartItem extends StatelessWidget {
                   const SizedBox(
                     height: 5.0,
                   ),
-                  Container(
+                  SizedBox(
                     width: App(context).appWidth(60),
                     child: Text(
                       'Rp. ${convertPrice(provider.cart[index].productPrice!.value.toString())}',
@@ -106,7 +106,7 @@ class CartItem extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                     color: Colors.black54,
                   )),
@@ -143,7 +143,7 @@ class PlusMinusButtons extends StatelessWidget {
             height: App(context).appWidth(6),
             decoration: BoxDecoration(
               border: Border.all(color: secondaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              borderRadius:const BorderRadius.all(Radius.circular(5.0)),
             ),
             child: Center(
                 child: Text(

@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/global_function.dart';
-import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
-import 'package:pas_mobile/features/product/presentation/providers/product_detail_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_dialog_cart.dart';

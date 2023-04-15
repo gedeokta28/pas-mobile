@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:pas_mobile/features/cart/data/models/cart_response_model.dart';
 
 import '../../../../core/error/failures.dart';
 

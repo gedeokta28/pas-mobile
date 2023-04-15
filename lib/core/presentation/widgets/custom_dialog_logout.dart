@@ -18,11 +18,11 @@ class CustomLogoutDialog extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
             child: Text(
               "Anda ingin keluar dari akun ini ? ",
-              style: const TextStyle(fontSize: 15.0),
+              style: TextStyle(fontSize: 15.0),
               textAlign: TextAlign.center,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,

@@ -1,9 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:pas_mobile/features/home/data/models/brand_list_response_model.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../home/data/models/category_list_response_model.dart';
 
 abstract class BrandState extends Equatable {
   @override

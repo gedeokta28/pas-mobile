@@ -2,7 +2,6 @@
 //
 //     final productListResponseModel = productListResponseModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ProductListResponseModel productListResponseModelFromJson(String str) =>

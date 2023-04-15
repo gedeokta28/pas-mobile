@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:pas_mobile/features/register/domain/usecases/do_register.dart';
-import 'package:pas_mobile/features/register/presentation/providers/register_state.dart';
 
 import '../../../../core/presentation/form_provider.dart';
 import '../../../../core/utility/helper.dart';

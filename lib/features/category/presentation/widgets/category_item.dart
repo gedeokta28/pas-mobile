@@ -44,7 +44,7 @@ class CategoryItem extends StatelessWidget {
           offset: const Offset(-16, 0),
           child: Text(
             category.categoryname,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold,
                 color: Colors.black),

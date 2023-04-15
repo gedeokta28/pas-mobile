@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 
 import '../../../../core/static/assets.dart';
@@ -22,7 +21,7 @@ class AddressCard extends StatelessWidget {
             height: 100,
             decoration: BoxDecoration(
               border: Border.all(color: secondaryColor),
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             ),
             child: Padding(
               padding: const EdgeInsets.only(
@@ -40,31 +39,34 @@ class AddressCard extends StatelessWidget {
                         children: [
                           Text(
                             shippingAddress.id,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
                           Text(
                             shippingAddress.fullname,
-                            style: TextStyle(fontSize: 13, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
                           Text(
                             shippingAddress.phone,
-                            style: TextStyle(fontSize: 13, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 5.0,
                           ),
                           Text(
                             shippingAddress.streetAddress,
-                            style: TextStyle(fontSize: 13, color: Colors.black),
+                            style: const TextStyle(
+                                fontSize: 13, color: Colors.black),
                           )
                         ],
                       ),
@@ -85,7 +87,7 @@ class AddressCard extends StatelessWidget {
           Positioned(
               left: 0,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: secondaryColor,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(10.0),

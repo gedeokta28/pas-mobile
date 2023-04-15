@@ -21,7 +21,7 @@ class CustomDialogCart extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-      children: [
+      children: const [
         Icon(
           Icons.check_circle,
           size: 30,

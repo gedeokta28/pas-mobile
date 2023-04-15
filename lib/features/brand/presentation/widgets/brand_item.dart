@@ -1,9 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/home/data/models/brand_list_response_model.dart';
-import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
 
-import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 
 class BrandItem extends StatelessWidget {
@@ -27,7 +24,7 @@ class BrandItem extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               image: brand.photo.isEmpty
-                  ? DecorationImage(
+                  ? const DecorationImage(
                       image: AssetImage(ASSETS_PLACEHOLDER), fit: BoxFit.cover)
                   : DecorationImage(
                       image: NetworkImage(

@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:pas_mobile/features/account/data/models/create_address_response_model.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../data/models/update_profile_response_model.dart';
 
 abstract class CreateAdressState extends Equatable {
   @override

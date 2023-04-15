@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../data/models/create_address_response_model.dart';

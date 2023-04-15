@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/data/models/regencies_model.dart';
 import 'package:pas_mobile/core/domain/usecases/get_provinces_list.dart';
 import 'package:pas_mobile/core/domain/usecases/get_regencies_list.dart';

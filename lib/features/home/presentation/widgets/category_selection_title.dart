@@ -52,7 +52,7 @@ class ListTitleWidget extends StatelessWidget {
                     ],
                   ),
                 )
-              : SizedBox()
+              : const SizedBox()
         ],
       ),
     );

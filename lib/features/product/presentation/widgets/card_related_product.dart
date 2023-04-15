@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/search/data/models/filter_product_model.dart';
 
-import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 

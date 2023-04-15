@@ -7,9 +7,7 @@ import 'package:pas_mobile/features/cart/presentation/widgets/cart_item.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/dimens.dart';
 import '../../../core/utility/helper.dart';
 import '../../../core/utility/injection.dart';
@@ -242,7 +240,8 @@ class CartPage extends StatelessWidget {
 
 class ReusableWidget extends StatelessWidget {
   final String title, value;
-  const ReusableWidget({Key? key, required this.title, required this.value});
+  const ReusableWidget({Key? key, required this.title, required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

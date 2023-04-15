@@ -2,7 +2,6 @@
 //
 //     final provincesModel = provincesModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 ProvincesModel provincesModelFromJson(String str) => ProvincesModel.fromJson(json.decode(str));

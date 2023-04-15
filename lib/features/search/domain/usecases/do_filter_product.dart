@@ -1,10 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:pas_mobile/features/search/data/models/search_product_response_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/utility/enum.dart';
-import '../../../../core/utility/session_helper.dart';
 import '../../data/models/filter_parameter.dart';
 import '../../data/models/filter_product_model.dart';
 import '../repositories/search_product_repositories.dart';

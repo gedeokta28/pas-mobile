@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
@@ -66,6 +65,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return ChangeNotifierProvider(
         create: (context) => di.locator<ManagementAccountProvider>(),
         builder: (context, _) {
@@ -200,7 +200,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                               ChangeEmailPage.routeName,
                                               arguments: _data);
                                         },
-                                        icon: Icon(
+                                        icon: const Icon(
                                             Icons.arrow_forward_ios_rounded))
                                   ],
                                 ),

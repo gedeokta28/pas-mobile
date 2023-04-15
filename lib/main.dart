@@ -13,7 +13,6 @@ import 'core/routes/route.dart';
 import 'core/utility/injection.dart';
 import 'core/utility/session_helper.dart';
 import 'features/home/presentation/providers/home_provider.dart';
-import 'features/product/presentation/providers/search_result_provider.dart';
 import 'features/search/presentation/providers/search_provider.dart';
 
 Future<void> main() async {

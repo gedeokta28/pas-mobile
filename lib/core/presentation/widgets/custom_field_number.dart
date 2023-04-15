@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 
 import '../../static/colors.dart';
 import '../../static/dimens.dart';
-import 'dart:math' as math;
 
 class CustomPriceField extends StatefulWidget {
   final String? title;
@@ -59,7 +56,6 @@ class CustomPriceField extends StatefulWidget {
 }
 
 class _CustomPriceFieldState extends State<CustomPriceField> {
-  late bool _passwordVisible;
   bool isFirst = true;
   late OutlineInputBorder normalBorder;
 
@@ -68,12 +64,9 @@ class _CustomPriceFieldState extends State<CustomPriceField> {
   late OutlineInputBorder roundErrorBorder;
 
   late OutlineInputBorder roundBorder;
-  String _formatNumber(String s) =>
-      NumberFormat('#,##0', 'ID').format(int.parse(s));
 
   @override
   void initState() {
-    _passwordVisible = widget.isSecure;
     normalBorder = OutlineInputBorder(
       borderRadius: const BorderRadius.all(
         Radius.circular(5.0),
@@ -162,13 +155,13 @@ class _CustomPriceFieldState extends State<CustomPriceField> {
                 child: Material(
                   color: Colors.grey[300],
                   child: Column(
-                    children: [
+                    children: const [
                       Padding(
-                        padding: const EdgeInsets.only(top: 14.0),
+                        padding: EdgeInsets.only(top: 14.0),
                         child: Text(
                           "Rp",
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
+                          style: TextStyle(
                               fontSize: 14, color: Colors.black),
                         ),
                       ),
@@ -187,7 +180,7 @@ class CustomTextInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    if (newValue.text.length == 0) {
+    if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     } else if (newValue.text.compareTo(oldValue.text) != 0) {
       int selectionIndexFromTheRight =

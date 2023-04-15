@@ -1,23 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/filter/presentation/filter_category_page.dart';
-import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
-import 'package:pas_mobile/features/home/presentation/providers/product_state.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/banner_slider.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/best_product.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/card_widget.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/category_selection.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/custom_card.dart';
-import 'package:pas_mobile/features/home/presentation/widgets/news_product.dart';
+
 import 'package:pas_mobile/features/product/presentation/providers/search_result_provider.dart';
 import 'package:provider/provider.dart';
-
-import '../../../core/static/assets.dart';
-import '../../../core/static/colors.dart';
 import '../../../core/utility/injection.dart';
-import '../../filter/presentation/filter_page.dart';
 import '../../home/presentation/widgets/home_app_bar.dart';
-import '../../product/presentation/product_detail_page.dart';
 
 class SearchResultPage extends StatefulWidget {
   const SearchResultPage({Key? key}) : super(key: key);
@@ -44,7 +30,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         ),
         body: Consumer<SearchResultProvider>(builder: (context, provider, _) {
           provider.fetchCategoryList().listen((event) {});
-          return Center(
+          return const Center(
             child: Text("Adas"),
           );
         }),

@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/static/assets.dart';
-import 'package:provider/provider.dart';
-
-import '../../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../core/presentation/widgets/rounded_button.dart';
-import '../../../core/static/dimens.dart';
-import '../../../core/utility/helper.dart';
-import '../../../core/utility/injection.dart';
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({
@@ -17,7 +9,7 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       appBar: CustomAppBar(
         title: "Notification",
@@ -27,7 +19,7 @@ class NotificationPage extends StatelessWidget {
       ),
       body: SafeArea(
           child: Center(
-        child: const Text(
+        child: Text(
           "SOON",
           style: TextStyle(
             color: Colors.black,

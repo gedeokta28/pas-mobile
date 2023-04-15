@@ -1,9 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:pas_mobile/features/search/data/models/search_product_response_model.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../../core/utility/session_helper.dart';
 import '../repositories/search_product_repositories.dart';
 
 abstract class SearchProductUseCase<Type> {

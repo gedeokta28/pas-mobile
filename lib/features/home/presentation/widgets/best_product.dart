@@ -3,14 +3,12 @@ import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
-import '../../../../core/static/assets.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/product_state.dart';
 import 'card_widget.dart';
 import 'package:provider/provider.dart';
 import 'category_selection_title.dart';
-import 'custom_card.dart';
 
 class BestProductList extends StatelessWidget {
   const BestProductList({Key? key}) : super(key: key);

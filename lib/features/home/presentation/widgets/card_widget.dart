@@ -3,7 +3,6 @@ import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';

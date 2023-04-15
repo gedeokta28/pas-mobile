@@ -149,7 +149,7 @@ class _CustomClearTextFieldState extends State<CustomClearTextField> {
                     onPressed: () {
                       widget.controller.clear();
                     },
-                    icon: Icon(Icons.close_rounded)),
+                    icon: const Icon(Icons.close_rounded)),
               )),
           validator: widget.fieldValidator,
         ),

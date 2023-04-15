@@ -2,7 +2,6 @@
 //
 //     final updateProfileResponse = updateProfileResponseFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 UpdateProfileResponse updateProfileResponseFromJson(String str) =>

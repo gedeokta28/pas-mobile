@@ -172,7 +172,7 @@ class _AccountPageState extends State<AccountPage>
                           );
                         },
                         icon: Image.asset(LOGOUT_ICON)),
-                    Text(
+                    const Text(
                       "Logout",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,

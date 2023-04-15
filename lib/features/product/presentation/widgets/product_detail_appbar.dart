@@ -4,12 +4,9 @@ import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/presentation/widgets/network_image.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
-import '../../../../core/utility/injection.dart';
 import '../../../cart/presentation/cart_page.dart';
-import '../../../cart/presentation/providers/cart_provider.dart';
 
 class ProductAppBar extends StatelessWidget {
   final String productId;
@@ -55,7 +52,7 @@ class ProductAppBar extends StatelessWidget {
                                 fit: BoxFit.cover,
                               )),
                       provider.listImage.length < 2
-                          ? SizedBox()
+                          ? const SizedBox()
                           : Positioned(
                               bottom: 0,
                               right: 0,
@@ -80,11 +77,11 @@ class ProductAppBar extends StatelessWidget {
                                         padding:
                                             provider.listImage.length - 1 ==
                                                     index
-                                                ? EdgeInsets.only(
+                                                ? const EdgeInsets.only(
                                                     top: 10.0,
                                                     bottom: 10.0,
                                                     right: 10.0)
-                                                : EdgeInsets.only(
+                                                : const EdgeInsets.only(
                                                     top: 10.0, right: 10.0),
                                         child: GestureDetector(
                                           onTap: () {

@@ -4,7 +4,6 @@ import 'package:pas_mobile/features/search/data/models/filter_product_model.dart
 
 import '../../../../core/static/app_config.dart';
 import '../../../../core/utility/helper.dart';
-import '../../data/models/product_list_response_model.dart';
 
 class CustomCardFilter extends StatelessWidget {
   final ProductFilter product;
@@ -47,7 +46,7 @@ class CustomCardFilter extends StatelessWidget {
                                     product.images[0].url,
                                   ),
                                   fit: BoxFit.cover)
-                              : DecorationImage(
+                              : const DecorationImage(
                                   image: AssetImage(ASSETS_PLACEHOLDER),
                                   fit: BoxFit.cover)),
             ),

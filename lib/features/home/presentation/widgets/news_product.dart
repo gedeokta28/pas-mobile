@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/static/assets.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/home/presentation/providers/product_state.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../../core/presentation/widgets/shimmer_card.dart';
 import '../../../../core/static/app_config.dart';
 import '../../../cart/presentation/providers/cart_provider.dart';
 import '../product_page.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/widgets/rounded_container.dart';
-import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/features/category/presentation/providers/category_state.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/providers/filter_provider.dart';
 import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
@@ -10,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../core/presentation/widgets/custom_field_number.dart';
-import '../../../core/presentation/widgets/custom_text_field.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/static/dimens.dart';
@@ -107,7 +104,7 @@ class FilterPage extends StatelessWidget {
                               ));
                           provider.setListSelected = result;
                         },
-                        child: Text(
+                        child: const Text(
                           "Lihat Semua",
                           style: TextStyle(
                               fontSize: FONT_GENERAL,
@@ -122,7 +119,7 @@ class FilterPage extends StatelessWidget {
                       ? const SizedBox.shrink()
                       : GridView.builder(
                           physics:
-                              NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+                              const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
                           shrinkWrap: true,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
@@ -145,7 +142,7 @@ class FilterPage extends StatelessWidget {
                                       child: Text(
                                         provider
                                             .selectedFilter[index].categoryname,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 13,
                                             color: Colors.grey,
                                             fontWeight: FontWeight.bold),
@@ -158,7 +155,7 @@ class FilterPage extends StatelessWidget {
                                         provider.removeSelected(
                                             provider.selectedFilter[index]);
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.close,
                                         size: 18.0,
                                         color: secondaryColor,

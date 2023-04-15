@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/widgets/custom_simple_dialog.dart';
-import 'package:pas_mobile/features/login/presentation/login_page.dart';
-import 'package:pas_mobile/features/register/presentation/providers/register_provider.dart';
-import 'package:pas_mobile/features/register/presentation/providers/register_state.dart';
 import 'package:provider/provider.dart';
 
-import '../../../core/presentation/pages/main_page/main_page.dart';
 import '../../../core/presentation/widgets/custom_text_field.dart';
 import '../../../core/presentation/widgets/rounded_button.dart';
 import '../../../core/static/colors.dart';
 import '../../../core/static/dimens.dart';
 import '../../../core/utility/enum.dart';
 import '../../../core/utility/helper.dart';
-import '../../../core/utility/injection.dart';
 import '../../../core/utility/validation_helper.dart';
 import 'providers/forgot_password_provider.dart';
 import 'providers/forgot_password_state.dart';
@@ -41,7 +36,6 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
                       Navigator.pop(context);
                     });
               });
-          ;
           break;
         case ForgotPasswordSuccess:
           // showShortToast(message: "Forgot Password Sukses");
