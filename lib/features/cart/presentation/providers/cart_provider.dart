@@ -10,12 +10,15 @@ import 'package:pas_mobile/features/cart/presentation/providers/cart_item_state.
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/utility/helper.dart';
+import '../../../../core/utility/injection.dart';
+import '../../../../core/utility/session_helper.dart';
 import '../../data/cart_model.dart';
 import '../../data/models/cart_updated_model.dart';
 import '../../data/models/price_grosir_model.dart';
 
 class CartProvider with ChangeNotifier {
   //initial
+  final session = locator<Session>();
   final DoAddToCart doAddToCart;
   final DoUpdateCart doUpdateCart;
   final DoDeleteCart doDeleteCart;
@@ -143,15 +146,17 @@ class CartProvider with ChangeNotifier {
   }
 
   void countTotalCartItem() async {
-    countCartItem().listen((event) {
-      if (event is CartItemSuccess) {
-        _isLoadCart = false;
-        _totalCartItem = event.data.length;
-        logMe(_totalCartItem);
-        logMe('_totalCartItem carttt');
-        notifyListeners();
-      }
-    });
+    if (session.isLoggedIn) {
+      countCartItem().listen((event) {
+        if (event is CartItemSuccess) {
+          _isLoadCart = false;
+          _totalCartItem = event.data.length;
+          logMe(_totalCartItem);
+          logMe('_totalCartItem carttt');
+          notifyListeners();
+        }
+      });
+    }
   }
 
   Future<List<Cart>> getData() async {

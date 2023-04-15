@@ -112,9 +112,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         context,
                         listen: false,
                       );
-                      showLoading();
                       checkUserSession().then((value) {
                         if (value) {
+                          showLoading();
                           FormData formData = FormData.fromMap({
                             'stockid': _providerProduct.productId,
                             'qty': 1,

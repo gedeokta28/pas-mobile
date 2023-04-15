@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
+import '../../../../core/utility/injection.dart';
+import '../../../../core/utility/session_helper.dart';
 import '../../../cart/presentation/cart_page.dart';
 
 class ProductAppBar extends StatelessWidget {
@@ -17,6 +19,7 @@ class ProductAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final session = locator<Session>();
     return Consumer<AppBarProvider>(
       builder: (context, provider, _) => SliverAppBar(
         pinned: true,
@@ -119,68 +122,71 @@ class ProductAppBar extends StatelessWidget {
           ),
         ),
         actions: [
-          AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: SIZE_MEDIUM, top: SIZE_SMALL, bottom: SIZE_SMALL),
-                  child: ActionButton(
-                    iconData: Icons.shopping_cart,
-                    onPressed: () {
-                      Navigator.pushNamed(context, CartPage.routeName)
-                          .then((_) {
-                        // final provider = Provider.of<CartProvider>(
-                        //   context,
-                        //   listen: false,
-                        // );
-                        // provider.countTotalCartItem();
-                        provider.countTotalCartItem();
-                      });
-                    },
+          if (session.isLoggedIn)
+            AspectRatio(
+              aspectRatio: 1 / 1,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: SIZE_MEDIUM,
+                        top: SIZE_SMALL,
+                        bottom: SIZE_SMALL),
+                    child: ActionButton(
+                      iconData: Icons.shopping_cart,
+                      onPressed: () {
+                        Navigator.pushNamed(context, CartPage.routeName)
+                            .then((_) {
+                          // final provider = Provider.of<CartProvider>(
+                          //   context,
+                          //   listen: false,
+                          // );
+                          // provider.countTotalCartItem();
+                          provider.countTotalCartItem();
+                        });
+                      },
+                    ),
                   ),
-                ),
-                provider.totalCartItem != 0
-                    ? LayoutBuilder(builder: (_, constraints) {
-                        final size = (constraints.maxWidth / 2) - 8.0;
-                        return InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, CartPage.routeName)
-                                .then((_) {
-                              // final provider = Provider.of<CartProvider>(
-                              //   context,
-                              //   listen: false,
-                              // );
-                              // provider.countTotalCartItem();
-                              provider.countTotalCartItem();
-                            });
-                          },
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Container(
-                                margin: const EdgeInsets.all(7.0),
-                                padding: const EdgeInsets.all(2.0),
-                                width: size,
-                                height: size,
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: ERROR_RED_COLOR,
-                                ),
-                                child: AutoSizeText(
-                                  provider.totalCartItem.toString(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  minFontSize: 8.0,
-                                )),
-                          ),
-                        );
-                      })
-                    : const SizedBox.shrink()
-              ],
+                  provider.totalCartItem != 0
+                      ? LayoutBuilder(builder: (_, constraints) {
+                          final size = (constraints.maxWidth / 2) - 8.0;
+                          return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, CartPage.routeName)
+                                  .then((_) {
+                                // final provider = Provider.of<CartProvider>(
+                                //   context,
+                                //   listen: false,
+                                // );
+                                // provider.countTotalCartItem();
+                                provider.countTotalCartItem();
+                              });
+                            },
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Container(
+                                  margin: const EdgeInsets.all(7.0),
+                                  padding: const EdgeInsets.all(2.0),
+                                  width: size,
+                                  height: size,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ERROR_RED_COLOR,
+                                  ),
+                                  child: AutoSizeText(
+                                    provider.totalCartItem.toString(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    minFontSize: 8.0,
+                                  )),
+                            ),
+                          );
+                        })
+                      : const SizedBox.shrink()
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
