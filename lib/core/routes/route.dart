@@ -68,8 +68,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const CartPage());
     case CheckoutPage.routeName:
       return MaterialPageRoute(builder: (_) => const CheckoutPage());
-    case AddressCheckoutPage.routeName:
-      return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
+    // case AddressCheckoutPage.routeName:
+    //   return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
     case OrderDetailPage.routeName:
       final args = settings.arguments as OrderDetailPageArguments;
       return MaterialPageRoute(

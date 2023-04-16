@@ -25,11 +25,18 @@ class CheckoutAddressWidget extends StatelessWidget {
           children: [
             smallVerticalSpacing(),
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, AddressCheckoutPage.routeName)
-                    .then((_) {
-                  logMe(provider.shippingAddressSelected!.addressDetail);
-                });
+              onTap: () async {
+                final resultAddress = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          provider.shippingAddressSelected != null
+                              ? AddressCheckoutPage(
+                                  shippingAddress:
+                                      provider.shippingAddressSelected!)
+                              : const AddressCheckoutPage(),
+                    ));
+                provider.setShippingAddress = resultAddress;
               },
               child: Container(
                   decoration: BoxDecoration(
@@ -69,11 +76,18 @@ class CheckoutAddressWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8.0),
             GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, AddressCheckoutPage.routeName)
-                    .then((_) {
-                  logMe(provider.shippingAddressSelected!.addressDetail);
-                });
+              onTap: () async {
+                final resultAddress = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          provider.shippingAddressSelected != null
+                              ? AddressCheckoutPage(
+                                  shippingAddress:
+                                      provider.shippingAddressSelected!)
+                              : const AddressCheckoutPage(),
+                    ));
+                provider.setShippingAddress = resultAddress;
               },
               child: AddressCardCheckout(
                   shippingAddress: provider.shippingAddressSelected!),

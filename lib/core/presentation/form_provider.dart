@@ -21,6 +21,8 @@ class FormProvider with ChangeNotifier {
   final TextEditingController _detailAddressController =
       TextEditingController();
   final TextEditingController _postCodeController = TextEditingController();
+  final TextEditingController _searchAddressController =
+      TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -63,6 +65,7 @@ class FormProvider with ChangeNotifier {
   TextEditingController get streetNameController => _streetNameController;
   TextEditingController get detailAddressController => _detailAddressController;
   TextEditingController get postCodeController => _postCodeController;
+  TextEditingController get searchAddressController => _searchAddressController;
 
   GlobalKey<FormState> get formKey => _formKey;
 

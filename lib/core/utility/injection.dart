@@ -71,6 +71,7 @@ import '../../features/login/data/datasources/login_data_source.dart';
 import '../../features/login/domain/repositories/login_repository.dart';
 import '../../features/login/domain/usecases/do_login.dart';
 import '../../features/login/presentation/providers/login_provider.dart';
+import '../../features/order/presentation/providers/address_checkout_provider.dart';
 import '../../features/search/presentation/providers/search_provider.dart';
 import '../network/dio_client.dart';
 import '../network/network_info.dart';
@@ -147,6 +148,10 @@ Future<void> init() async {
       doCreateOrder: locator(),
       getListOrder: locator(),
       getDetailOrder: locator()));
+  locator
+      .registerFactory<AddressCheckoutProvider>(() => AddressCheckoutProvider(
+            getAddressList: locator(),
+          ));
 
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
