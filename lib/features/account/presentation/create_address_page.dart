@@ -19,9 +19,9 @@ import '../../../core/utility/validation_helper.dart';
 import 'providers/create_address_state.dart';
 
 class CreateAddressPage extends StatelessWidget {
-  const CreateAddressPage({
-    Key? key,
-  }) : super(key: key);
+  final bool isFromListPage;
+  const CreateAddressPage({Key? key, this.isFromListPage = false})
+      : super(key: key);
   static const routeName = '/create-address';
 
   void submit() {
@@ -195,13 +195,16 @@ class CreateAddressPage extends StatelessWidget {
                               if (event is CreateAdressSuccess) {
                                 showShortToast(
                                     message: 'Alamat Berhasil Ditambahkan');
-
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  MainPage.routeName,
-                                  (route) => false,
-                                  arguments: 3, // navbar index
-                                );
+                                if (isFromListPage) {
+                                  Navigator.pop(context, true);
+                                } else {
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    MainPage.routeName,
+                                    (route) => false,
+                                    arguments: 3, // navbar index
+                                  );
+                                }
                               } else if (event is CreateAdressFailure) {
                                 final msg = getErrorMessage(event.failure);
                                 showDialog(

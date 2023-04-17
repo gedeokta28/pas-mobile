@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 
+import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../update_address_page.dart';
 
 class AddressCard extends StatelessWidget {
   final ShippingAddress shippingAddress;
-  const AddressCard({Key? key, required this.shippingAddress})
+  final bool isFromList;
+  final Function? onTapBack;
+
+  const AddressCard(
+      {Key? key,
+      required this.shippingAddress,
+      this.isFromList = false,
+      this.onTapBack})
       : super(key: key);
 
   @override
@@ -18,7 +26,7 @@ class AddressCard extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            height: 100,
+            height: App(context).appHeight(11),
             decoration: BoxDecoration(
               border: Border.all(color: secondaryColor),
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
@@ -38,19 +46,11 @@ class AddressCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            shippingAddress.id,
+                            shippingAddress.fullname,
                             style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            shippingAddress.fullname,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.black),
                           ),
                           const SizedBox(
                             height: 5.0,
@@ -73,9 +73,15 @@ class AddressCard extends StatelessWidget {
                       IconButton(
                           iconSize: 15,
                           onPressed: () {
-                            Navigator.pushNamed(
-                                context, UpdateAddressPage.routeName,
-                                arguments: shippingAddress);
+                            if (isFromList) {
+                              onTapBack!();
+                            } else {
+                              Navigator.pushNamed(
+                                  context, UpdateAddressPage.routeName,
+                                  arguments: UpdateAddressPageArguments(
+                                      shippingAddress: shippingAddress,
+                                      isFromList: false));
+                            }
                           },
                           icon: Image.asset(EDIT_ICON))
                     ],

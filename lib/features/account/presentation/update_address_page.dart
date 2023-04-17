@@ -20,11 +20,24 @@ import '../../../core/utility/injection.dart';
 import '../../../core/utility/validation_helper.dart';
 import 'providers/create_address_state.dart';
 
+class UpdateAddressPageArguments {
+  final ShippingAddress shippingAddress;
+  final bool isFromList;
+
+  UpdateAddressPageArguments({
+    required this.shippingAddress,
+    required this.isFromList,
+  });
+}
+
 class UpdateAddressPage extends StatelessWidget {
   final ShippingAddress shippingAddress;
+  final bool isFromList;
+
   const UpdateAddressPage({
     Key? key,
     required this.shippingAddress,
+    required this.isFromList,
   }) : super(key: key);
   static const routeName = '/update-address';
 
@@ -190,13 +203,18 @@ class UpdateAddressPage extends StatelessWidget {
                                 if (event is CreateAdressSuccess) {
                                   showShortToast(
                                       message: 'Alamat Telah Dihapus');
-
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    MainPage.routeName,
-                                    (route) => false,
-                                    arguments: 3, // navbar index
-                                  );
+                                  if (isFromList) {
+                                    logMe('fromm list');
+                                    Navigator.pop(context, true);
+                                    Navigator.pop(context, true);
+                                  } else {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      MainPage.routeName,
+                                      (route) => false,
+                                      arguments: 3, // navbar index
+                                    );
+                                  }
                                 } else if (event is CreateAdressFailure) {
                                   final msg = getErrorMessage(event.failure);
                                   showDialog(
@@ -228,13 +246,16 @@ class UpdateAddressPage extends StatelessWidget {
                               .listen((event) {
                             if (event is CreateAdressSuccess) {
                               showShortToast(message: 'Alamat Berhasil Diubah');
-
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                MainPage.routeName,
-                                (route) => false,
-                                arguments: 3, // navbar index
-                              );
+                              if (isFromList) {
+                                Navigator.pop(context, true);
+                              } else {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  MainPage.routeName,
+                                  (route) => false,
+                                  arguments: 3, // navbar index
+                                );
+                              }
                             } else if (event is CreateAdressFailure) {
                               final msg = getErrorMessage(event.failure);
                               showDialog(

@@ -19,6 +19,7 @@ import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
 import 'package:pas_mobile/features/order/presentation/select_checkout_address_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
+import '../../features/account/presentation/address_list_page.dart';
 import '../../features/order/presentation/order_detail_page.dart';
 import '../../features/product/presentation/search_result_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
@@ -51,12 +52,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 profile: args.profile,
               ));
     case CreateAddressPage.routeName:
-      return MaterialPageRoute(builder: (_) => const CreateAddressPage());
+      final args = settings.arguments as bool;
+      return MaterialPageRoute(
+          builder: (_) => CreateAddressPage(
+                isFromListPage: args,
+              ));
     case UpdateAddressPage.routeName:
-      final args = settings.arguments as ShippingAddress;
+      final args = settings.arguments as UpdateAddressPageArguments;
       return MaterialPageRoute(
           builder: (_) => UpdateAddressPage(
-                shippingAddress: args,
+                shippingAddress: args.shippingAddress,
+                isFromList: args.isFromList,
               ));
     case RegisterPage.routeName:
       return MaterialPageRoute(builder: (_) => const RegisterPage());
@@ -70,6 +76,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const CheckoutPage());
     // case AddressCheckoutPage.routeName:
     //   return MaterialPageRoute(builder: (_) => const AddressCheckoutPage());
+    case AddressListPage.routeName:
+      return MaterialPageRoute(builder: (_) => const AddressListPage());
     case OrderDetailPage.routeName:
       final args = settings.arguments as OrderDetailPageArguments;
       return MaterialPageRoute(

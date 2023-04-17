@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/domain/usecases/get_provinces_list.dart';
 import 'package:pas_mobile/core/presentation/region_state.dart';
@@ -9,7 +10,9 @@ import 'package:pas_mobile/features/account/domain/usecases/do_update_address.da
 import 'package:pas_mobile/features/account/domain/usecases/get_address_list.dart';
 
 import '../../../../core/data/models/provinces_model.dart';
+import '../../../../core/error/failures.dart';
 import '../../../../core/presentation/form_provider.dart';
+import '../../../order/presentation/providers/shipping_address_state.dart';
 import 'create_address_state.dart';
 import 'get_address_list_state.dart';
 
@@ -22,13 +25,21 @@ class ShippingAddressProvider extends FormProvider {
   final DoDeleteAddress doDeleteAddress;
   final DoUpdateAddress doUpdateAddress;
   late List<Province> _provinceList = [];
+  late List<ShippingAddress> _shipingAddressList;
   late bool _isProvinceValidate = true;
   Province? _selectedProvince;
+  ShippingAddressListState _state = ShippingAddressListInitial();
+  late List<ShippingAddress> _searchResult = [];
+  bool _resultIsEmpty = false;
 
   //get
   List<Province> get provinceList => _provinceList;
   bool get isProvinceValidate => _isProvinceValidate;
   Province? get selectedProvince => _selectedProvince;
+  List<ShippingAddress> get shipingAddressList => _shipingAddressList;
+  ShippingAddressListState get state => _state;
+  List<ShippingAddress> get searchResult => _searchResult;
+  bool get resultIsEmpty => _resultIsEmpty;
 
   //setter
   set setSelectedProvince(val) {
@@ -36,8 +47,28 @@ class ShippingAddressProvider extends FormProvider {
     notifyListeners();
   }
 
+  set setShippingAddressList(val) {
+    _shipingAddressList = val;
+    notifyListeners();
+  }
+
+  set setState(val) {
+    _state = val;
+    notifyListeners();
+  }
+
   set setProvinceValidate(val) {
     _isProvinceValidate = val;
+    notifyListeners();
+  }
+
+  set setSearchResult(val) {
+    _searchResult = val;
+    notifyListeners();
+  }
+
+  set setResultEmpty(val) {
+    _resultIsEmpty = val;
     notifyListeners();
   }
 
@@ -49,6 +80,46 @@ class ShippingAddressProvider extends FormProvider {
     required this.doDeleteAddress,
     required this.doUpdateAddress,
   });
+  Future<void> fetchAddressListFromApi() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    setState = ShippingAddressListLoading();
+
+    late Either<Failure, List<ShippingAddress>> result;
+
+    result = await getAddressList();
+    await Future.delayed(const Duration(milliseconds: 500));
+    result.fold(
+      (failure) => setState = ShippingAddressListFailure(failure: failure),
+      (data) {
+        setShippingAddressList = data;
+        if (data.isEmpty) {
+          setState = ShippingAddressListEmpty();
+        } else {
+          setState = const ShippingAddressListSuccess();
+        }
+      },
+    );
+  }
+
+  onSearchTextChanged(String text) async {
+    _searchResult.clear();
+    if (text.isEmpty) {
+      notifyListeners();
+      return;
+    }
+
+    for (var data in _shipingAddressList) {
+      if (data.addressDetail.toLowerCase().contains(text) ||
+          data.streetAddress.toLowerCase().contains(text) ||
+          data.phone.toLowerCase().contains(text) ||
+          data.fullname.toLowerCase().contains(text)) _searchResult.add(data);
+    }
+
+    if (_searchResult.isEmpty) {
+      setResultEmpty = true;
+    }
+    notifyListeners();
+  }
 
   Stream<RegionState> fetchProvinceList() async* {
     yield RegionLoading();
@@ -126,6 +197,7 @@ class ShippingAddressProvider extends FormProvider {
   }
 
   Stream<GetAddressListState> fetchAddressList() async* {
+    await Future.delayed(const Duration(milliseconds: 500));
     yield GetAddressListLoading();
 
     final updateResult = await getAddressList();

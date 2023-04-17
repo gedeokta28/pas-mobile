@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/account/presentation/address_list_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_personal_info_page.dart';
@@ -14,6 +15,7 @@ import '../../../../core/utility/injection.dart' as di;
 
 import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
+import '../../home/presentation/widgets/category_selection_title.dart';
 import 'change_username_page.dart';
 import 'providers/get_address_list_state.dart';
 import 'providers/management_account_provider.dart';
@@ -270,26 +272,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                       icon: Image.asset(EDIT_ICON))
                                 ],
                               ),
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, CreateAddressPage.routeName);
-                                },
-                                child: SizedBox(
-                                  height: App(context).appHeight(6),
-                                  width: App(context).appWidth(45),
-                                  child: const Center(
-                                    child: Text(
-                                      "Tambah Alamat (+)",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: secondaryColor),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              smallVerticalSpacing(),
+                              // smallVerticalSpacing(),
                               ChangeNotifierProvider(
                                   create: (context) =>
                                       di.locator<ShippingAddressProvider>(),
@@ -320,29 +303,131 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                               final _data = (state.data
                                                       as GetAddressListSuccess)
                                                   .data;
+                                              if (_data.isEmpty) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(
+                                                        context,
+                                                        CreateAddressPage
+                                                            .routeName,
+                                                        arguments: false);
+                                                  },
+                                                  child: SizedBox(
+                                                    height: App(context)
+                                                        .appHeight(6),
+                                                    // width: App(context).appWidth(45),
+                                                    child: const Center(
+                                                      child: Text(
+                                                        "Tambah Alamat (+)",
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color:
+                                                                secondaryColor),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
 
-                                              return ListView.builder(
-                                                  padding: EdgeInsets.zero,
-                                                  shrinkWrap: true,
-                                                  itemCount: _data.length,
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return GestureDetector(
+                                              return Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      InkWell(
                                                         onTap: () {
                                                           Navigator.pushNamed(
                                                               context,
-                                                              UpdateAddressPage
+                                                              CreateAddressPage
                                                                   .routeName,
-                                                              arguments:
-                                                                  _data[index]);
+                                                              arguments: false);
                                                         },
-                                                        child: AddressCard(
-                                                          shippingAddress:
-                                                              _data[index],
-                                                        ));
-                                                  });
+                                                        child: SizedBox(
+                                                          height: App(context)
+                                                              .appHeight(6),
+                                                          // width: App(context).appWidth(45),
+                                                          child: const Center(
+                                                            child: Text(
+                                                              "Tambah Alamat (+)",
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color:
+                                                                      secondaryColor),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Navigator.pushNamed(
+                                                              context,
+                                                              AddressListPage
+                                                                  .routeName);
+                                                        },
+                                                        child: SizedBox(
+                                                          height: App(context)
+                                                              .appHeight(6),
+                                                          child: const Center(
+                                                            child: Text(
+                                                              "Lihat semua",
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      primaryColor,
+                                                                  fontSize:
+                                                                      13.0,
+                                                                  decoration:
+                                                                      TextDecoration
+                                                                          .underline,
+                                                                  decorationThickness:
+                                                                      1.5,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                          // ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  ListView.builder(
+                                                      padding: EdgeInsets.zero,
+                                                      shrinkWrap: true,
+                                                      itemCount: _data.length,
+                                                      physics:
+                                                          const NeverScrollableScrollPhysics(),
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.pushNamed(
+                                                                  context,
+                                                                  UpdateAddressPage
+                                                                      .routeName,
+                                                                  arguments: UpdateAddressPageArguments(
+                                                                      shippingAddress:
+                                                                          _data[
+                                                                              index],
+                                                                      isFromList:
+                                                                          false));
+                                                            },
+                                                            child: AddressCard(
+                                                              shippingAddress:
+                                                                  _data[index],
+                                                            ));
+                                                      }),
+                                                ],
+                                              );
                                           }
                                           return const SizedBox.shrink();
                                         });
