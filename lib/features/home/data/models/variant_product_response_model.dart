@@ -41,19 +41,23 @@ class VariantList {
     required this.color,
   });
 
-  final List<ProductVariant> size;
-  final List<ProductVariant> color;
+  final List<ProductVariant>? size;
+  final List<ProductVariant>? color;
 
   factory VariantList.fromJson(Map<String, dynamic> json) => VariantList(
-        size: List<ProductVariant>.from(
-            json["size"].map((x) => ProductVariant.fromJson(x))),
-        color: List<ProductVariant>.from(
-            json["color"].map((x) => ProductVariant.fromJson(x))),
+        size: json["size"] == null
+            ? []
+            : List<ProductVariant>.from(
+                json["size"].map((x) => ProductVariant.fromJson(x))),
+        color: json["color"] == null
+            ? []
+            : List<ProductVariant>.from(
+                json["color"].map((x) => ProductVariant.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "size": List<dynamic>.from(size.map((x) => x.toJson())),
-        "color": List<dynamic>.from(color.map((x) => x.toJson())),
+        "size": List<dynamic>.from(size!.map((x) => x.toJson())),
+        "color": List<dynamic>.from(color!.map((x) => x.toJson())),
       };
 }
 
@@ -135,7 +139,7 @@ class ProductVariant {
         qty3: json["qty3"],
         unit3: json["unit3"],
         berat: json["berat"],
-        discountinued: json["discountinued"],
+        discountinued: json["discountinued"] ?? '',
         photourl: json["photourl"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

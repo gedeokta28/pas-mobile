@@ -55,12 +55,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => locator<ProductProvider>()
-            ..fetchProductDetail(widget.productId).listen((event) {})
-            ..fetchRelatedProduct(widget.categoryId, widget.productId)
-                .listen((event) {})
-            ..fetchProductVariant(widget.productId).listen((event) {}),
-        ),
+            create: (_) => locator<ProductProvider>()
+              ..fetchProductDetail(widget.productId).listen((event) {})
+              ..fetchRelatedProduct(widget.categoryId, widget.productId)
+                  .listen((event) {})
+            // ..fetchProductVariant(widget.productId).listen((event) {}),
+            ),
         ChangeNotifierProvider(
           create: (_) => _appBarProvider
             ..fetchProductDetail(widget.productId).listen((event) {}),

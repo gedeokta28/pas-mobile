@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/product/presentation/providers/product_provider.dart';
+import 'package:pas_mobile/features/product/presentation/widgets/read_more_data.dart';
 import 'package:pas_mobile/features/product/presentation/widgets/related_product.dart';
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
@@ -15,12 +17,22 @@ import '../../../../core/utility/injection.dart';
 import '../../../login/presentation/login_page.dart';
 import 'dialog_price.dart';
 
-class ProductDescription extends StatelessWidget {
+class ProductDescription extends StatefulWidget {
   const ProductDescription({Key? key}) : super(key: key);
+
+  @override
+  State<ProductDescription> createState() => _ProductDescriptionState();
+}
+
+class _ProductDescriptionState extends State<ProductDescription> {
+  bool showMore = false;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ProductProvider>(builder: (context, provider, _) {
+      String htmlData = provider.productDescription;
+      final numLines = '\n'.allMatches(provider.productDescription).length + 1;
+      logMe('numLines $numLines');
       return Container(
         color: Colors.white,
         padding: const EdgeInsets.symmetric(horizontal: SIZE_MEDIUM),
@@ -87,8 +99,8 @@ class ProductDescription extends StatelessWidget {
                           border:
                               Border.all(width: 1.0, color: secondaryColor)),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
@@ -108,160 +120,160 @@ class ProductDescription extends StatelessWidget {
               ),
             ),
             const Divider(),
-            smallVerticalSpacing(),
-            if (!provider.isLoadingVariant)
-              const Text(
-                'Size',
-                style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            smallVerticalSpacing(),
-            if (!provider.isLoadingVariant)
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  !provider.expandVariant
-                      ? Expanded(
-                          child: GridView.builder(
-                            padding: EdgeInsets.zero,
-                            physics:
-                                const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio:
-                                  MediaQuery.of(context).size.width /
-                                      (MediaQuery.of(context).size.height / 6),
-                            ),
-                            itemCount: provider.productVariantList.size.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  if (index == provider.variantSelected) {
-                                    provider.setVariantSelected = null;
-                                    provider.setProductSelected(
-                                        productDetail: provider.productDetail);
-                                  } else {
-                                    provider.setVariantSelected = index;
-                                    provider.setProductSelected(
-                                        productVariantSelected: provider
-                                            .productVariantList.size[index]);
-                                  }
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 5, bottom: 8.0),
-                                  child: RoundedContainer(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            provider.productVariantList
-                                                .size[index].stockname,
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color:
-                                                    provider.variantSelected ==
-                                                            index
-                                                        ? Colors.white
-                                                        : Colors.black87,
-                                                fontWeight: FontWeight.bold),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    color: provider.variantSelected == index
-                                        ? secondaryColor
-                                        : SHADOW,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        )
-                      : Expanded(
-                          child: GridView.builder(
-                            padding: EdgeInsets.zero,
-                            physics:
-                                const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio:
-                                  MediaQuery.of(context).size.width /
-                                      (MediaQuery.of(context).size.height / 6),
-                            ),
-                            itemCount: provider.productVariantList.size.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  provider.setVariantSelected = index;
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 5, bottom: 8.0),
-                                  child: RoundedContainer(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            "Ukuran 1 Ukuran 1 Ukuran 1",
-                                            style: TextStyle(
-                                                fontSize: 11,
-                                                color:
-                                                    provider.variantSelected ==
-                                                            index
-                                                        ? Colors.white
-                                                        : Colors.black87,
-                                                fontWeight: FontWeight.bold),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    color: provider.variantSelected == index
-                                        ? secondaryColor
-                                        : SHADOW,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                  provider.productVariantList.size.length > 2
-                      ? IconButton(
-                          onPressed: () {
-                            if (provider.expandVariant) {
-                              provider.setExpandVariant = false;
-                            } else {
-                              provider.setExpandVariant = true;
-                            }
-                          },
-                          icon: Icon(
-                            provider.expandVariant
-                                ? Icons.keyboard_arrow_up_rounded
-                                : Icons.keyboard_arrow_down_rounded,
-                            color: Colors.black87,
-                            size: 27,
-                          ),
-                        )
-                      : Container()
-                ],
-              ),
-            smallVerticalSpacing(),
-            const Divider(),
+            // smallVerticalSpacing(),
+            // if (!provider.isLoadingVariant)
+            //   const Text(
+            //     'Size',
+            //     style: TextStyle(
+            //         fontSize: 14.0,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.black),
+            //   ),
+            // smallVerticalSpacing(),
+            // if (!provider.isLoadingVariant)
+            //   Row(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     children: [
+            //       !provider.expandVariant
+            //           ? Expanded(
+            //               child: GridView.builder(
+            //                 padding: EdgeInsets.zero,
+            //                 physics:
+            //                     const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+            //                 shrinkWrap: true,
+            //                 gridDelegate:
+            //                     SliverGridDelegateWithFixedCrossAxisCount(
+            //                   crossAxisCount: 2,
+            //                   childAspectRatio:
+            //                       MediaQuery.of(context).size.width /
+            //                           (MediaQuery.of(context).size.height / 6),
+            //                 ),
+            //                 itemCount: provider.productVariantList.size!.length,
+            //                 itemBuilder: (context, index) {
+            //                   return InkWell(
+            //                     onTap: () {
+            //                       if (index == provider.variantSelected) {
+            //                         provider.setVariantSelected = null;
+            //                         provider.setProductSelected(
+            //                             productDetail: provider.productDetail);
+            //                       } else {
+            //                         provider.setVariantSelected = index;
+            //                         provider.setProductSelected(
+            //                             productVariantSelected: provider
+            //                                 .productVariantList.size![index]);
+            //                       }
+            //                     },
+            //                     child: Padding(
+            //                       padding: const EdgeInsets.only(
+            //                           right: 5, bottom: 8.0),
+            //                       child: RoundedContainer(
+            //                         child: Row(
+            //                           mainAxisAlignment:
+            //                               MainAxisAlignment.spaceBetween,
+            //                           children: [
+            //                             Flexible(
+            //                               child: Text(
+            //                                 provider.productVariantList
+            //                                     .size![index].stockname,
+            //                                 style: TextStyle(
+            //                                     fontSize: 11,
+            //                                     color:
+            //                                         provider.variantSelected ==
+            //                                                 index
+            //                                             ? Colors.white
+            //                                             : Colors.black87,
+            //                                     fontWeight: FontWeight.bold),
+            //                                 maxLines: 1,
+            //                                 overflow: TextOverflow.ellipsis,
+            //                               ),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                         color: provider.variantSelected == index
+            //                             ? secondaryColor
+            //                             : SHADOW,
+            //                       ),
+            //                     ),
+            //                   );
+            //                 },
+            //               ),
+            //             )
+            //           : Expanded(
+            //               child: GridView.builder(
+            //                 padding: EdgeInsets.zero,
+            //                 physics:
+            //                     const NeverScrollableScrollPhysics(), // to disable GridView's scrolling
+            //                 shrinkWrap: true,
+            //                 gridDelegate:
+            //                     SliverGridDelegateWithFixedCrossAxisCount(
+            //                   crossAxisCount: 2,
+            //                   childAspectRatio:
+            //                       MediaQuery.of(context).size.width /
+            //                           (MediaQuery.of(context).size.height / 6),
+            //                 ),
+            //                 itemCount: provider.productVariantList.size!.length,
+            //                 itemBuilder: (context, index) {
+            //                   return InkWell(
+            //                     onTap: () {
+            //                       provider.setVariantSelected = index;
+            //                     },
+            //                     child: Padding(
+            //                       padding: const EdgeInsets.only(
+            //                           right: 5, bottom: 8.0),
+            //                       child: RoundedContainer(
+            //                         child: Row(
+            //                           mainAxisAlignment:
+            //                               MainAxisAlignment.spaceBetween,
+            //                           children: [
+            //                             Flexible(
+            //                               child: Text(
+            //                                 "Ukuran 1 Ukuran 1 Ukuran 1",
+            //                                 style: TextStyle(
+            //                                     fontSize: 11,
+            //                                     color:
+            //                                         provider.variantSelected ==
+            //                                                 index
+            //                                             ? Colors.white
+            //                                             : Colors.black87,
+            //                                     fontWeight: FontWeight.bold),
+            //                                 maxLines: 1,
+            //                                 overflow: TextOverflow.ellipsis,
+            //                               ),
+            //                             ),
+            //                           ],
+            //                         ),
+            //                         color: provider.variantSelected == index
+            //                             ? secondaryColor
+            //                             : SHADOW,
+            //                       ),
+            //                     ),
+            //                   );
+            //                 },
+            //               ),
+            //             ),
+            //       provider.productVariantList.size!.length > 2
+            //           ? IconButton(
+            //               onPressed: () {
+            //                 if (provider.expandVariant) {
+            //                   provider.setExpandVariant = false;
+            //                 } else {
+            //                   provider.setExpandVariant = true;
+            //                 }
+            //               },
+            //               icon: Icon(
+            //                 provider.expandVariant
+            //                     ? Icons.keyboard_arrow_up_rounded
+            //                     : Icons.keyboard_arrow_down_rounded,
+            //                 color: Colors.black87,
+            //                 size: 27,
+            //               ),
+            //             )
+            //           : Container()
+            //     ],
+            //   ),
+            // smallVerticalSpacing(),
+            // const Divider(),
             smallVerticalSpacing(),
             const Text(
               'Detail Produk',
@@ -271,21 +283,11 @@ class ProductDescription extends StatelessWidget {
                   color: Colors.black),
             ),
             smallVerticalSpacing(),
-            ReadMoreText(provider.productDescription,
-                trimLines: 4,
-                style:
-                    const TextStyle(fontSize: 13.0, color: Colors.black, height: 1.5),
-                trimMode: TrimMode.Line,
-                trimCollapsedText: 'Baca selengkapnya',
-                trimExpandedText: ' Tampilkan lebih sedikit',
-                lessStyle: const TextStyle(
-                    fontSize: 13.0,
-                    color: secondaryColor,
-                    fontWeight: FontWeight.bold),
-                moreStyle: const TextStyle(
-                    fontSize: 13.0,
-                    color: secondaryColor,
-                    fontWeight: FontWeight.bold)),
+            ReadMoreHtml(
+                htmlData: htmlData,
+                maxLength: 1,
+                readMoreText: 'read more',
+                readLessText: 'show less'),
             mediumVerticalSpacing(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

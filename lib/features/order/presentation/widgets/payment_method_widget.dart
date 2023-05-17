@@ -39,7 +39,7 @@ class PaymentMethodWidget extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return SizedBox(
-                      height: App(context).appHeight(25),
+                      height: App(context).appHeight(15),
                       child: LayoutBuilder(builder: (context, constaints) {
                         return ListView(
                           children: [
@@ -58,23 +58,23 @@ class PaymentMethodWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                                height: constaints.maxHeight * 0.30,
-                                child: PaymentTile(
-                                  title: 'Cash On Delivery',
-                                  assets: ASSET_COD_ICON,
-                                  onTap: () {
-                                    provider.setPaymentMethod =
-                                        PaymentMethod.cash;
-                                    Navigator.pop(context);
-                                  },
-                                  selected: provider.paymentMethod == null
-                                      ? false
-                                      : provider.paymentMethod ==
-                                              PaymentMethod.cash
-                                          ? true
-                                          : false,
-                                )),
+                            // SizedBox(
+                            //     height: constaints.maxHeight * 0.30,
+                            //     child: PaymentTile(
+                            //       title: 'Cash On Delivery',
+                            //       assets: ASSET_COD_ICON,
+                            //       onTap: () {
+                            //         provider.setPaymentMethod =
+                            //             PaymentMethod.cash;
+                            //         Navigator.pop(context);
+                            //       },
+                            //       selected: provider.paymentMethod == null
+                            //           ? false
+                            //           : provider.paymentMethod ==
+                            //                   PaymentMethod.cash
+                            //               ? true
+                            //               : false,
+                            //     )),
                             SizedBox(
                                 height: constaints.maxHeight * 0.30,
                                 child: PaymentTile(

@@ -103,7 +103,7 @@ class ProductDetail {
         berat: json["berat"],
         discountinued: json["discountinued"] ?? '',
         photourl: json["photourl"],
-        stockdescription: json["stockdescription"],
+        stockdescription: json["stockdescription"] ?? '-',
         imagesProductDetail: List<ImageProductDetail>.from(
             json["images"].map((x) => ImageProductDetail.fromJson(x))),
         brand: Brand.fromJson(json["brand"]),
