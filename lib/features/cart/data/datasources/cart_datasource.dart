@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/utility/extensions.dart';
@@ -7,6 +8,7 @@ import 'package:pas_mobile/features/cart/data/models/cart_response_model.dart';
 
 abstract class CartDataSource {
   Future<CartResponseModel> addToCart(FormData formData);
+  Future<CartResponseModel> addToCartQuickOrder(dynamic productList);
   Future<CartResponseModel> updateCart(Map<String, String> data, String cartId);
   Future<CartResponseModel> deleteCart(String cartId);
   Future<List<ItemCart>> getCart();
@@ -25,6 +27,24 @@ class CartDataSourceImpl implements CartDataSource {
       final response = await dio.post(
         path,
         data: formData,
+      );
+      final model = CartResponseModel.fromJson(response.data);
+      return model;
+    } catch (e) {
+      logMe(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<CartResponseModel> addToCartQuickOrder(dynamic productList) async {
+    String path = 'api/carts';
+    dio.withToken();
+
+    try {
+      final response = await dio.post(
+        path,
+        data: productList,
       );
       final model = CartResponseModel.fromJson(response.data);
       return model;

@@ -3,6 +3,7 @@ import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/features/account/presentation/account_page.dart';
 import 'package:pas_mobile/features/brand/presentation/brand_page.dart';
 import 'package:pas_mobile/features/home/presentation/home_page.dart';
+import 'package:pas_mobile/features/quick_order/presentation/quick_order_page.dart';
 
 enum M_BTB {
   home,
@@ -58,15 +59,7 @@ extension M_BTBExtension on M_BTB {
       case M_BTB.brand:
         return const BrandPage();
       case M_BTB.order:
-        return const Center(
-          child: Text(
-            "SOON",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        );
+        return const QuickOrderPage();
       case M_BTB.account:
         return const AccountPage();
       case M_BTB.info:

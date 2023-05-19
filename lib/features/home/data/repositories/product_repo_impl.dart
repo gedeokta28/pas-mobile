@@ -28,6 +28,18 @@ class ProductRepoImpl implements ProductRepsitory {
   }
 
   @override
+  Future<Either<Failure, ProductListResponseModel>> getProductListByUrl(
+      String url) async {
+    try {
+      final data = await dataSource.getProductListByUrl(url);
+      return Right(data);
+    } on DioError catch (e) {
+      logMe("Failure Product Repo ${e.error}");
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, CategoryListResponseModel>> getCategoryList() async {
     try {
       final data = await dataSource.getCategoryList();

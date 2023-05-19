@@ -40,6 +40,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_brand_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_product_list_by_url.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_variant.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
@@ -53,6 +54,7 @@ import 'package:pas_mobile/features/order/presentation/providers/order_provider.
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/product_provider.dart';
 import 'package:pas_mobile/features/product/presentation/providers/search_result_provider.dart';
+import 'package:pas_mobile/features/quick_order/presentation/providers/quick_order_provider.dart';
 import 'package:pas_mobile/features/register/data/datasources/register_data_source.dart';
 import 'package:pas_mobile/features/register/data/repositories/register_repo_impl.dart';
 import 'package:pas_mobile/features/register/domain/repositories/register_repository.dart';
@@ -67,6 +69,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/account/domain/usecases/get_profile.dart';
 import '../../features/account/presentation/providers/shipping_address_provider.dart';
+import '../../features/cart/domain/usecases/add_to_cart_quick_order.dart';
 import '../../features/login/data/datasources/login_data_source.dart';
 import '../../features/login/domain/repositories/login_repository.dart';
 import '../../features/login/domain/usecases/do_login.dart';
@@ -131,6 +134,10 @@ Future<void> init() async {
           ));
   locator.registerFactory<CategoryProvider>(
       () => CategoryProvider(getCategoryList: locator()));
+  locator.registerFactory<QuickOrderProvider>(() => QuickOrderProvider(
+      getProductList: locator(),
+      addToCartQuickOrder: locator(),
+      getProductListByUrl: locator()));
   locator.registerFactory<BrandProvider>(
       () => BrandProvider(getBrandList: locator()));
   locator.registerFactory<FilterProvider>(
@@ -204,6 +211,8 @@ Future<void> init() async {
       () => GetRegenciesList(repository: locator()));
   locator.registerLazySingleton<GetProductList>(
       () => GetProductList(repository: locator()));
+  locator.registerLazySingleton<GetProductListByUrl>(
+      () => GetProductListByUrl(repository: locator()));
   locator.registerLazySingleton<GetProductDetail>(
       () => GetProductDetail(repository: locator()));
   locator.registerLazySingleton<GetCategoryList>(
@@ -229,6 +238,8 @@ Future<void> init() async {
       () => DoUpdateAddress(repository: locator()));
   locator.registerLazySingleton<DoAddToCart>(
       () => DoAddToCart(repository: locator()));
+  locator.registerLazySingleton<AddToCartQuickOrder>(
+      () => AddToCartQuickOrder(repository: locator()));
   locator.registerLazySingleton<DoUpdateCart>(
       () => DoUpdateCart(repository: locator()));
   locator.registerLazySingleton<GetCart>(() => GetCart(repository: locator()));

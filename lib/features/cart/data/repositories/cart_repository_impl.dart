@@ -33,6 +33,22 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
+  Future<Either<Failure, CartResponseModel>> addToCartQuickOrder(
+      dynamic productList) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.addToCartQuickOrder(productList);
+        return Right(result);
+      } on DioError catch (e) {
+        logMe(e);
+        return const Left(ServerFailure());
+      }
+    } else {
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, List<ItemCart>>> getCart() async {
     if (await networkInfo.isConnected) {
       try {

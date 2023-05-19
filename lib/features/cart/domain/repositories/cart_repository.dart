@@ -7,6 +7,8 @@ import '../../data/models/cart_list_model.dart';
 
 abstract class CartRepository {
   Future<Either<Failure, CartResponseModel>> addToCart(FormData formData);
+  Future<Either<Failure, CartResponseModel>> addToCartQuickOrder(
+      dynamic productList);
   Future<Either<Failure, CartResponseModel>> updateCart(
       Map<String, String> data, String cartId);
   Future<Either<Failure, CartResponseModel>> deleteCart(String cartId);
