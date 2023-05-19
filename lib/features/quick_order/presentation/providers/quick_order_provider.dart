@@ -9,42 +9,62 @@ import 'package:pas_mobile/features/quick_order/presentation/providers/quick_ord
 import 'package:pas_mobile/features/quick_order/presentation/providers/quick_product_refresh_state.dart';
 
 import '../../../../core/error/failures.dart';
+import '../../../../core/utility/enum.dart';
 import '../../../../core/utility/helper.dart';
 import '../../../cart/domain/usecases/add_to_cart_quick_order.dart';
 import '../../../home/data/models/product_list_response_model.dart';
 import '../../../home/domain/usecases/get_product_list.dart';
+import '../../../search/data/models/filter_parameter.dart';
+import '../../../search/data/models/filter_product_model.dart';
+import '../../../search/domain/usecases/do_filter_product.dart';
+import '../../../search/presentation/providers/search_state.dart';
+import 'quick_product_filter.dart';
 import 'quick_product_state.dart';
 
 class QuickOrderProvider extends ChangeNotifier {
   // initial
   final GetProductList getProductList;
   final GetProductListByUrl getProductListByUrl;
+  final DoFilterProduct doFilterProduct;
   final AddToCartQuickOrder addToCartQuickOrder;
   QuickProductState _state = QuickProductInitial();
+  QuickProductFilterState _stateSearch = QuickProductFilterInitial();
   late List<Product> _productList = [];
   String? _nextUrl;
   List<ProductQuick> _selectedProduct = [];
-  // List<Product> _selectedProduct = [];
   List<ProductQuick> _quickOrderProduct = [];
+  bool _isSearch = false;
 
   // constructor
   QuickOrderProvider({
     required this.getProductList,
     required this.getProductListByUrl,
     required this.addToCartQuickOrder,
+    required this.doFilterProduct,
   });
 
   //get
   QuickProductState get state => _state;
+  QuickProductFilterState get stateSearch => _stateSearch;
+  bool get isSearch => _isSearch;
   List<Product> get productList => _productList;
   List<ProductQuick> get quickOrderProduct => _quickOrderProduct;
   String get nextUrl => _nextUrl ?? '';
-  // List<Product> get selectedProduct => _selectedProduct;
   List<ProductQuick> get selectedProduct => _selectedProduct;
 
   //set
   set setState(val) {
     _state = val;
+    notifyListeners();
+  }
+
+  set setStateSearch(val) {
+    _stateSearch = val;
+    notifyListeners();
+  }
+
+  set setIsSearch(val) {
+    _isSearch = val;
     notifyListeners();
   }
 
@@ -79,6 +99,8 @@ class QuickOrderProvider extends ChangeNotifier {
   }
 
   Future<void> fetchProduct() async {
+    _quickOrderProduct.clear();
+    showLoading();
     await Future.delayed(const Duration(milliseconds: 500));
     setState = QuickProductLoading();
 
@@ -87,8 +109,12 @@ class QuickOrderProvider extends ChangeNotifier {
     result = await getProductList();
     await Future.delayed(const Duration(milliseconds: 500));
     result.fold(
-      (failure) => setState = QuickProductFailure(failure: failure),
+      (failure) {
+        dismissLoading();
+        setState = QuickProductFailure(failure: failure);
+      },
       (data) {
+        dismissLoading();
         setState = const QuickProductLoaded();
         setProductList = data.data;
         for (var i = 0; i < data.data.length; i++) {
@@ -187,20 +213,39 @@ class QuickOrderProvider extends ChangeNotifier {
     });
   }
 
-  testCart() {
-    List<QuickCartParam> cartItems = [];
-    for (var i = 0; i < _selectedProduct.length; i++) {
-      QuickCartParam _cartParam;
-      _cartParam = QuickCartParam(
-        stockId: _selectedProduct[i].id,
-        quantity: _selectedProduct[i].quantity!.value,
-      );
-      cartItems.add(_cartParam);
-    }
-    CartListParam cartList = CartListParam(carts: cartItems);
-    // String jsonStr = json.encode(cartList.toJson());
-    Map<String, dynamic> payload = {"carts": cartList.toJson()};
-    String payloadJson = json.encode(payload);
-    logMe(payloadJson);
+  Future<void> filterProduct(String keyword) async {
+    _quickOrderProduct.clear();
+    showLoading();
+    await Future.delayed(const Duration(milliseconds: 500));
+    setStateSearch = QuickProductFilterLoading();
+    late Either<Failure, List<ProductFilter>> result;
+
+    result = await doFilterProduct(
+        TypeFilter.onlyKeyword, FilterParameter(keyword: keyword));
+    result.fold(
+      (failure) {
+        dismissLoading();
+        setStateSearch = QuickProductFailure(failure: failure);
+      },
+      (data) {
+        for (var i = 0; i < data.length; i++) {
+          var arr = data[i].hrg1.split('.');
+          _quickOrderProduct.add(
+            ProductQuick(
+                id: data[i].stockid,
+                productId: data[i].stockid,
+                productName: data[i].stockname,
+                initialPrice: int.tryParse(arr[0]),
+                productPrice: ValueNotifier(int.parse(arr[0])),
+                quantity: ValueNotifier(1),
+                unitTag: "unitTag",
+                image: data[i].photourl == null ? '' : data[i].photourl!,
+                priceGrosirProductQuick: null),
+          );
+        }
+        dismissLoading();
+        setStateSearch = QuickProductFilterLoaded(data: data);
+      },
+    );
   }
 }

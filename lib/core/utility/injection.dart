@@ -137,6 +137,7 @@ Future<void> init() async {
   locator.registerFactory<QuickOrderProvider>(() => QuickOrderProvider(
       getProductList: locator(),
       addToCartQuickOrder: locator(),
+      doFilterProduct: locator(),
       getProductListByUrl: locator()));
   locator.registerFactory<BrandProvider>(
       () => BrandProvider(getBrandList: locator()));

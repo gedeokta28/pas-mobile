@@ -59,4 +59,5 @@ class SearchProductDataSourceImplementation implements SearchProductDataSource {
       rethrow;
     }
   }
+  
 }
