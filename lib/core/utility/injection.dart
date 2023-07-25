@@ -44,6 +44,7 @@ import 'package:pas_mobile/features/home/domain/usecases/get_product_list_by_url
 import 'package:pas_mobile/features/home/domain/usecases/get_product_variant.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
+import 'package:pas_mobile/features/notification/presentation/notification_provider.dart';
 import 'package:pas_mobile/features/order/data/datasources/order_datasource.dart';
 import 'package:pas_mobile/features/order/data/repositories/order_repository_impl.dart';
 import 'package:pas_mobile/features/order/domain/repositories/order_repository.dart';
@@ -118,6 +119,7 @@ Future<void> init() async {
       getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
       () => ForgotPasswordProvider(doForgotPassword: locator()));
+  locator.registerFactory<NotificationProvider>(() => NotificationProvider());
   locator.registerFactory<ManagementAccountProvider>(() =>
       ManagementAccountProvider(
           getProvincesList: locator(),

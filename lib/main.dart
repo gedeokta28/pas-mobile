@@ -3,7 +3,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/core/utility/firebase_helper.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/core/utility/notification_helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +23,8 @@ Future<void> main() async {
     await init();
 
     locator.isReady<Session>().then((_) async {
+      await FirebaseHelper.init();
+      await NotificationHelper().init();
       runApp(const MyApp());
     });
   } catch (e) {

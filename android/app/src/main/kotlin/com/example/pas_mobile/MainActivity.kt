@@ -1,4 +1,4 @@
-package com.example.pas_mobile
+package com.pas.mobile_app
 
 import io.flutter.embedding.android.FlutterActivity
 

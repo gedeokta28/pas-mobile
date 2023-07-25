@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812123483864",
+    "project_id": "pas-mobile-6afdd",
+    "storage_bucket": "pas-mobile-6afdd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812123483864:android:67c44ced1c1e9cc40771ad",
+        "android_client_info": {
+          "package_name": "com.pas.mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812123483864-k40vbblo2p829gut5gdq86hrr0c22tm0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ_euABE5e32y6MVimjgqwsoYDMZe9ZQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812123483864-k40vbblo2p829gut5gdq86hrr0c22tm0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
