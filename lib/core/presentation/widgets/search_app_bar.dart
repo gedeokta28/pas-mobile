@@ -25,6 +25,9 @@ class SearchAppBar extends StatelessWidget {
             onSubmitted: (value) {
               search.filterProduct(value).listen((event) {});
             },
+            onClear: () {
+              search.controller.clear();
+            },
             focusNode: search.focusNode,
             onFocus: (focus) => search.setFocus = focus,
             onChanged: (value) {

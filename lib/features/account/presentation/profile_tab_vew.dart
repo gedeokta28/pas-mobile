@@ -15,7 +15,6 @@ import '../../../../core/utility/injection.dart' as di;
 
 import '../../../core/static/app_config.dart';
 import '../../../core/static/assets.dart';
-import '../../home/presentation/widgets/category_selection_title.dart';
 import 'change_username_page.dart';
 import 'providers/get_address_list_state.dart';
 import 'providers/management_account_provider.dart';

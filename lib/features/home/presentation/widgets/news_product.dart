@@ -30,7 +30,7 @@ class NewsProductList extends StatelessWidget {
           title: 'Product Terbaru',
         ),
         StreamBuilder<ProductState>(
-            stream: context.read<HomeProvider>().fetchProductList(),
+            stream: context.read<HomeProvider>().fetchProductList(null),
             builder: (_, snap) {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {

@@ -7,7 +7,6 @@ import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
 import '../../../../core/utility/helper.dart';
 import '../../../cart/presentation/widgets/cart_item.dart';
-import '../../../home/data/models/product_list_response_model.dart';
 import '../providers/quick_order_provider.dart';
 
 class QuickOrderItem extends StatelessWidget {
@@ -71,140 +70,285 @@ class QuickOrderItem extends StatelessWidget {
                 const SizedBox(
                   height: 5.0,
                 ),
-                SizedBox(
-                  width: App(context).appWidth(35),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 25,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: secondaryColor),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '1',
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Rp',
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.bold,
+                value.quickOrderProduct[index].qty1! == '0.00' &&
+                        value.quickOrderProduct[index].qty2 == '0.00' &&
+                        value.quickOrderProduct[index].qty3 == '0.00'
+                    ? SizedBox(
+                        width: App(context).appWidth(50),
+                        child: Container(
+                          height: 25,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(3),
+                              color: secondaryColor),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Rp',
+                                      maxLines: 1,
+                                      style: TextStyle(
+                                          fontSize: 11.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    Text(
+                                      convertPriceDisc(
+                                          value.quickOrderProduct[index].hrg1!,
+                                          value.quickOrderProduct[index]
+                                              .disclist1!),
+                                      style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    : SizedBox(
+                        width: App(context).appWidth(50),
+                        child: Column(
+                          children: [
+                            value.quickOrderProduct[index].qty1 == '0.00'
+                                ? const SizedBox()
+                                : Container(
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: secondaryColor),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            getQuantity(
+                                                hrg: 1,
+                                                satuan1: value
+                                                    .quickOrderProduct[index]
+                                                    .unit1!,
+                                                satuan2: value
+                                                    .quickOrderProduct[index]
+                                                    .unit2!,
+                                                satuan3: value
+                                                    .quickOrderProduct[index]
+                                                    .unit3!,
+                                                qty1: value
+                                                    .quickOrderProduct[index]
+                                                    .qty1!,
+                                                qty2: value
+                                                    .quickOrderProduct[index]
+                                                    .qty2!,
+                                                qty3: value
+                                                    .quickOrderProduct[index]
+                                                    .qty3!),
+                                            style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Rp',
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize: 11.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                              Text(
+                                                convertPriceDisc(
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .hrg1!,
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .disclist1!),
+                                                style: const TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                            const SizedBox(height: 3),
+                            value.quickOrderProduct[index].qty2 == '0.00'
+                                ? const SizedBox()
+                                : Container(
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
                                         color: Colors.white),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            getQuantity(
+                                                hrg: 2,
+                                                satuan1: value
+                                                    .quickOrderProduct[index]
+                                                    .unit1!,
+                                                satuan2: value
+                                                    .quickOrderProduct[index]
+                                                    .unit2!,
+                                                satuan3: value
+                                                    .quickOrderProduct[index]
+                                                    .unit3!,
+                                                qty1: value
+                                                    .quickOrderProduct[index]
+                                                    .qty1!,
+                                                qty2: value
+                                                    .quickOrderProduct[index]
+                                                    .qty2!,
+                                                qty3: value
+                                                    .quickOrderProduct[index]
+                                                    .qty3!),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Rp',
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize: 11.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black),
+                                              ),
+                                              Text(
+                                                convertPriceDisc(
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .hrg1!,
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .disclist2!),
+                                                style: const TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                  Text(
-                                    convertPrice('2000'),
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
+                            const SizedBox(height: 3),
+                            value.quickOrderProduct[index].qty3 == '0.00'
+                                ? const SizedBox()
+                                : Container(
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(3),
+                                        color: secondaryColor),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            getQuantity(
+                                                hrg: 3,
+                                                satuan1: value
+                                                    .quickOrderProduct[index]
+                                                    .unit1!,
+                                                satuan2: value
+                                                    .quickOrderProduct[index]
+                                                    .unit2!,
+                                                satuan3: value
+                                                    .quickOrderProduct[index]
+                                                    .unit3!,
+                                                qty1: value
+                                                    .quickOrderProduct[index]
+                                                    .qty1!,
+                                                qty2: value
+                                                    .quickOrderProduct[index]
+                                                    .qty2!,
+                                                qty3: value
+                                                    .quickOrderProduct[index]
+                                                    .qty3!),
+                                            style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Row(
+                                            children: [
+                                              const Text(
+                                                'Rp',
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                    fontSize: 11.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white),
+                                              ),
+                                              Text(
+                                                convertPriceDisc(
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .hrg1!,
+                                                    value
+                                                        .quickOrderProduct[
+                                                            index]
+                                                        .disclist3!),
+                                                style: const TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
                       ),
-                      Container(
-                        height: 25,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '2',
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Rp',
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    convertPrice('1900'),
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 25,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: secondaryColor),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '3',
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Rp',
-                                    maxLines: 1,
-                                    style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  Text(
-                                    convertPrice('2300'),
-                                    style: const TextStyle(
-                                        fontSize: 13,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 ValueListenableBuilder<int>(
                     valueListenable: value.quickOrderProduct[index].quantity!,
                     builder: (context, val, child) {
-                      return PlusMinusButtons(
+                      return PlusMinusOrderButtons(
                         addQuantity: () {
                           value.addQuantity(value.quickOrderProduct[index].id);
                         },
-                        deleteQuantity: () {},
+                        deleteQuantity: () {
+                          value.deleteQuantity(
+                              value.quickOrderProduct[index].id);
+                        },
+                        changeQuantity: (val) {
+                          value.changeQuantity(
+                              value.quickOrderProduct[index].id, val);
+                        },
                         text: val.toString(),
                       );
                     }),
@@ -220,6 +364,7 @@ class QuickOrderItem extends StatelessWidget {
                     title: null,
                     value: valueSelected,
                     onChanged: (_) {
+                      FocusScope.of(context).requestFocus(FocusNode());
                       onSelect();
                     },
                     checkColor: Colors.white,

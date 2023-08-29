@@ -114,7 +114,14 @@ class FilterProvider extends FormProvider {
         yield CategoryFailure(failure: failure);
       },
       (data) async* {
-        yield CategoryLoaded(data: data.data);
+        List<Category> _categoryList = [];
+        _categoryList = data.data;
+        _categoryList.sort((a, b) {
+          return a.categoryname
+              .toLowerCase()
+              .compareTo(b.categoryname.toLowerCase());
+        });
+        yield CategoryLoaded(data: _categoryList);
       },
     );
   }

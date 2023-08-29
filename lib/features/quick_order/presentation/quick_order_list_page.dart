@@ -3,7 +3,6 @@ import 'package:pas_mobile/features/quick_order/presentation/providers/quick_pro
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../core/static/colors.dart';
 import 'providers/quick_order_provider.dart';
 import 'widget/quick_order_item.dart';
 

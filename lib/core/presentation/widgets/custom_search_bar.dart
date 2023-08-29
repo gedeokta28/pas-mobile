@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/widgets/rounded_container.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final bool isFromHome;
@@ -7,6 +8,7 @@ class CustomSearchBar extends StatelessWidget {
   final Function(bool focus)? onFocus;
   final Function(String value)? onChanged;
   final void Function(String)? onSubmitted;
+  final void Function()? onClear;
   final FocusNode? focusNode;
   final VoidCallback? onSearch;
   final bool enabled;
@@ -17,6 +19,7 @@ class CustomSearchBar extends StatelessWidget {
       this.controller,
       this.isFromHome = false,
       this.onSearch,
+      this.onClear,
       this.enabled = true,
       this.height = 48.0,
       this.onFocus,
@@ -52,6 +55,18 @@ class CustomSearchBar extends StatelessWidget {
               size: height / 1.5,
             ),
             prefixIconColor: Colors.grey,
+            suffixIcon: onClear != null
+                ? GestureDetector(
+                    onTap: () {
+                      onClear!();
+                    },
+                    child: Icon(
+                      Icons.close,
+                      size: height / 1.5,
+                    ),
+                  )
+                : null,
+            suffixIconColor: onClear != null ? Colors.grey : null,
             hintText: hint ?? "Search",
             hintStyle: const TextStyle(fontSize: 14.0),
           ),

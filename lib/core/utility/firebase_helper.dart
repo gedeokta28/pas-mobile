@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/core/utility/injection.dart';
 import 'package:pas_mobile/firebase_options.dart';
 
 import 'notification_helper.dart';
@@ -23,6 +24,16 @@ class FirebaseHelper {
 
   Future<String?> getToken() async {
     return await messaging.getToken();
+  }
+
+  static Future<void> subscribeToTopic() async {
+    await messaging.subscribeToTopic('activity.notification');
+    logMe('--- Subscribe topic succedd');
+  }
+
+  static Future<void> unsubscribeFromTopic() async {
+    await messaging.unsubscribeFromTopic('activity.notification');
+    logMe('--- Unsubscribe topic succedd');
   }
 
   static Future<void> setupMessaging() async {

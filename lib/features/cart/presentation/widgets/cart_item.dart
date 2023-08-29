@@ -139,11 +139,11 @@ class PlusMinusButtons extends StatelessWidget {
           color: secondaryColor,
         ),
         Container(
-            width: App(context).appWidth(8),
-            height: App(context).appWidth(6),
+            width: App(context).appWidth(15),
+            height: App(context).appWidth(7),
             decoration: BoxDecoration(
               border: Border.all(color: secondaryColor),
-              borderRadius:const BorderRadius.all(Radius.circular(5.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
             ),
             child: Center(
                 child: Text(
@@ -151,6 +151,75 @@ class PlusMinusButtons extends StatelessWidget {
               style: const TextStyle(
                   fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
             ))),
+        IconButton(
+            onPressed: addQuantity,
+            icon: Image.asset(PLUS_ICON),
+            color: secondaryColor),
+      ],
+    );
+  }
+}
+
+class PlusMinusOrderButtons extends StatelessWidget {
+  final VoidCallback deleteQuantity;
+  final VoidCallback addQuantity;
+  final Function(String val) changeQuantity;
+  final String text;
+  const PlusMinusOrderButtons(
+      {Key? key,
+      required this.addQuantity,
+      required this.deleteQuantity,
+      required this.changeQuantity,
+      required this.text})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TextEditingController _textEditingController =
+    //     TextEditingController(text: text);
+    final TextEditingController _textEditingController =
+        TextEditingController.fromValue(TextEditingValue(
+            text: text,
+            selection: TextSelection.collapsed(offset: text.length)));
+    return Row(
+      children: [
+        IconButton(
+          onPressed: deleteQuantity,
+          icon: Image.asset(MINUS_ICON),
+          color: secondaryColor,
+        ),
+        Container(
+            width: App(context).appWidth(15),
+            height: App(context).appWidth(7),
+            decoration: BoxDecoration(
+              border: Border.all(color: secondaryColor),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            ),
+            child: Center(
+                child:
+                    //     Text(
+                    //   text,
+                    //   style: const TextStyle(
+                    //       fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
+                    // )
+                    TextField(
+                        textAlign: TextAlign.center,
+                        controller: _textEditingController,
+                        onSubmitted: (val) {
+                          changeQuantity(val);
+                        },
+                        onChanged: (val) {
+                          changeQuantity(val);
+                        },
+                        keyboardType: TextInputType.number,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: FONT_GENERAL),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.all(0.0),
+                          border: InputBorder.none,
+                          isDense: true,
+                        )))),
         IconButton(
             onPressed: addQuantity,
             icon: Image.asset(PLUS_ICON),

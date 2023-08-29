@@ -87,7 +87,6 @@ class ShippingAddressProvider extends FormProvider {
     late Either<Failure, List<ShippingAddress>> result;
 
     result = await getAddressList();
-    await Future.delayed(const Duration(milliseconds: 500));
     result.fold(
       (failure) => setState = ShippingAddressListFailure(failure: failure),
       (data) {

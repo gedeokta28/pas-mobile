@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/notification/data/models/order_notif_response_model.dart';
 
 import '../../../../core/static/app_config.dart';
 
 class TransaksiNotifWidget extends StatelessWidget {
   final Function? onTapBack;
+  final OrderNotif orderNotif;
 
-  const TransaksiNotifWidget({Key? key, this.onTapBack}) : super(key: key);
+  const TransaksiNotifWidget(
+      {Key? key, this.onTapBack, required this.orderNotif})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,45 +24,48 @@ class TransaksiNotifWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               width: App(context).appWidth(80),
               child: Row(
                 children: [
                   Container(
                     height: App(context).appHeight(10),
-                    width: App(context).appWidth(23),
+                    width: App(context).appWidth(27),
                     color: secondaryColor,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          '#78789',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(
-                          height: 3.0,
-                        ),
-                        const Text(
-                          '07 Nov 2022',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white60,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '#${orderNotif.data.orderId}',
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 3.0,
+                          ),
+                          Text(
+                            convertDate(orderNotif.createdAt),
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white60,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   mediumHorizontalSpacing(),
-                  const Flexible(
+                  Flexible(
                     child: Text(
-                      'Order anda sedangOrder anda sedangOrder anda sedangOrder anda sedang',
+                      orderNotif.data.message,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 15, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

@@ -1,14 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/product/presentation/providers/product_provider.dart';
 import 'package:pas_mobile/features/product/presentation/widgets/read_more_data.dart';
 import 'package:pas_mobile/features/product/presentation/widgets/related_product.dart';
 import 'package:provider/provider.dart';
-import 'package:readmore/readmore.dart';
 
-import '../../../../core/presentation/widgets/rounded_container.dart';
 import '../../../../core/static/app_config.dart';
 import '../../../../core/static/assets.dart';
 import '../../../../core/static/dimens.dart';
@@ -76,46 +73,53 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      if (sessionHelper.isLoggedIn == false) {
-                        Navigator.pushNamed(context, LoginPage.routeName);
-                      } else {
-                        if (provider.isProductVariantSelected) {
-                          await DialogPriceVariant.displayDialogOKCallBack(
-                              context,
-                              "Harga Grosir",
-                              provider.prodouctVariant);
-                        } else {
-                          await DialogPrice.displayDialogOKCallBack(
-                              context, "Harga Grosir", provider.productDetail);
-                        }
-                      }
-                    },
-                    child: Container(
-                      height: 25,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border:
-                              Border.all(width: 1.0, color: secondaryColor)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "Lihat Harga Grosir",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: secondaryColor,
-                                  fontWeight: FontWeight.bold),
+                  provider.productDetail.qty1 == '0' &&
+                          provider.productDetail.qty2 == '0' &&
+                          provider.productDetail.qty3 == '0'
+                      ? const SizedBox()
+                      : GestureDetector(
+                          onTap: () async {
+                            if (sessionHelper.isLoggedIn == false) {
+                              Navigator.pushNamed(context, LoginPage.routeName);
+                            } else {
+                              if (provider.isProductVariantSelected) {
+                                await DialogPriceVariant
+                                    .displayDialogOKCallBack(
+                                        context,
+                                        "Harga Grosir",
+                                        provider.prodouctVariant);
+                              } else {
+                                await DialogPrice.displayDialogOKCallBack(
+                                    context,
+                                    "Harga Grosir",
+                                    provider.productDetail);
+                              }
+                            }
+                          },
+                          child: Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                    width: 1.0, color: secondaryColor)),
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Lihat Harga Grosir",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: secondaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

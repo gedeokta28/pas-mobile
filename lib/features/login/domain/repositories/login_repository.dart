@@ -5,5 +5,6 @@ import '../../../../core/error/failures.dart';
 import '../../data/models/login_data_model.dart';
 
 abstract class LoginRepository {
+  Future<Either<Failure, bool>> updateDeviceToken(String token);
   Future<Either<Failure, LoginDataModel>> doLogin(FormData data);
 }

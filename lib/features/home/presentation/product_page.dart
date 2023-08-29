@@ -17,6 +17,7 @@ class ProductPageArguments {
   final String categoryName;
   final String brandId;
   final String brandName;
+  final FilterParameter? filterParameter;
   final ProductPageParams productPageParams;
 
   ProductPageArguments(
@@ -24,12 +25,14 @@ class ProductPageArguments {
       this.brandId = '',
       this.categoryName = '',
       this.brandName = '',
+      this.filterParameter,
       this.productPageParams = ProductPageParams.fromHome});
 }
 
 class ProductPage extends StatefulWidget {
   final String categoryId;
   final String categoryName;
+  final FilterParameter? filterParameter;
   final String brandId;
   final String brandName;
   final ProductPageParams productPageParams;
@@ -37,6 +40,7 @@ class ProductPage extends StatefulWidget {
   const ProductPage(
       {Key? key,
       this.categoryId = '',
+      this.filterParameter,
       this.brandId = '',
       this.categoryName = '',
       this.brandName = '',
@@ -56,8 +60,10 @@ class _ProductPageState extends State<ProductPage> {
     final double itemWidth = size.width / 61;
     return ChangeNotifierProvider(
       create: (_) => locator<HomeProvider>()
-        ..filterCustomProduct(FilterParameter(
-                brandId: widget.brandId, categoryId: widget.categoryId))
+        ..filterCustomProduct(widget.filterParameter == null
+                ? FilterParameter(
+                    brandId: widget.brandId, categoryId: widget.categoryId)
+                : widget.filterParameter!)
             .listen((event) {}),
       builder: (context, child) => Scaffold(
         appBar: const PreferredSize(

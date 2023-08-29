@@ -115,19 +115,6 @@ class CartProvider with ChangeNotifier {
       logMe("failure.message ${failure.message}");
       yield CartItemFailure(failure: failure);
     }, (result) async* {
-      // _cartList = result;
-      // for (var element in _cartList) {
-      //   double d = double.parse(element.stock.hrg1);
-      //   _totalPrice = _totalPrice + d;
-      //   SharedPreferences prefs = await SharedPreferences.getInstance();
-      //   prefs.setInt('cart_items', _counter);
-      //   prefs.setInt('item_quantity', _quantity);
-      //   prefs.setDouble('total_price', _totalPrice);
-      //   _counter++;
-      // }
-
-      // logMe('manta');
-      // logMe(_totalPrice);
       yield CartItemSuccess(data: result);
     });
   }
@@ -167,95 +154,152 @@ class CartProvider with ChangeNotifier {
     fetchCart().listen((event) {
       if (event is CartItemSuccess) {
         for (var i = 0; i < event.data.length; i++) {
-          var arr = event.data[i].stock.hrg1.split('.');
+          double qty1Final = double.parse(event.data[i].stock.qty1);
+          double qty2Final = double.parse(event.data[i].stock.qty2);
+          double qty3Final = double.parse(event.data[i].stock.qty3);
+          int minQty1Int = 0, maxQty1Int = 0;
+          int minQty2Int = 0, maxQty2Int = 0;
+          //1
+          minQty1Int = qty1Final.toInt();
+          maxQty1Int = (qty2Final.toInt() - 1);
+          //2
+          minQty2Int = qty2Final.toInt();
+          maxQty2Int = (qty3Final.toInt() - 1);
           List<PriceGrosirCart> _priceGrosirCart = [];
-          _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: convertMinUnitInt(
-                hrg: 1,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            maxUnit: convertMaxUnitInt(
-                hrg: 1,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            price: convertPrice(event.data[i].stock.hrg1),
-          ));
-          _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: convertMinUnitInt(
-                hrg: 2,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            maxUnit: convertMaxUnitInt(
-                hrg: 2,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            price: convertPrice(event.data[i].stock.hrg2),
-          ));
-          _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: convertMinUnitInt(
-                hrg: 3,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            maxUnit: convertMaxUnitInt(
-                hrg: 3,
-                satuan1: event.data[i].stock.unit1,
-                satuan2: event.data[i].stock.unit2,
-                satuan3: event.data[i].stock.unit3,
-                qty1: event.data[i].stock.qty1,
-                qty2: event.data[i].stock.qty2,
-                qty3: event.data[i].stock.qty3),
-            price: convertPrice(event.data[i].stock.hrg3),
-          ));
+          if (maxQty1Int < 0) {
+            if (minQty2Int == 0) {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty1Int,
+                maxUnit: maxQty2Int,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
+              ));
+            } else {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty1Int,
+                maxUnit: minQty1Int,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
+              ));
+            }
+          } else {
+            if (maxQty1Int == minQty1Int) {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty1Int,
+                maxUnit: minQty1Int,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
+              ));
+            } else {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty1Int,
+                maxUnit: maxQty1Int,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
+              ));
+            }
+          }
+
+          if (event.data[i].stock.qty2 != '0') {
+            if (maxQty2Int < 0) {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty2Int,
+                maxUnit: 100000,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist2),
+              ));
+            } else {
+              _priceGrosirCart.add(PriceGrosirCart(
+                minUnit: minQty2Int,
+                maxUnit: maxQty2Int,
+                price: convertPriceDisc(
+                    event.data[i].stock.hrg1, event.data[i].stock.disclist2),
+              ));
+            }
+          }
+
+          if (event.data[i].stock.qty3 != '0') {
+            _priceGrosirCart.add(PriceGrosirCart(
+              minUnit: qty3Final.toInt(),
+              maxUnit: 100000,
+              price: convertPriceDisc(
+                  event.data[i].stock.hrg1, event.data[i].stock.disclist3),
+            ));
+          }
+
+          // _priceGrosirCart.add(PriceGrosirCart(
+          //   minUnit: toIntQty(event.data[i].stock.qty1),
+          //   maxUnit: toIntQty(event.data[i].stock.qty2) - 1,
+          //   price: convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1),
+          // ));
+          // _priceGrosirCart.add(PriceGrosirCart(
+          //   minUnit: toIntQty(event.data[i].stock.qty2),
+          //   maxUnit: toIntQty(event.data[i].stock.qty3) - 1,
+          //   price: convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist2),
+          // ));
+          // _priceGrosirCart.add(PriceGrosirCart(
+          //   minUnit: toIntQty(event.data[i].stock.qty3),
+          //   maxUnit: 0,
+          //   price: convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist3),
+          // ));
+          // _priceGrosirCart.add(PriceGrosirCart(
+          //   minUnit: toIntQty(event.data[i].stock.qty3),
+          //   maxUnit: 0,
+          //   price: convertPriceDisc(event.data[i].stock.hrg1, '0'),
+          // ));
+          logMe("_priceGrosirCart_priceGrosirCart ${_priceGrosirCart.length}");
+
+          String initPrice = convertPriceDisc(
+              event.data[i].stock.hrg1, event.data[i].stock.disclist1);
+          for (int iGros = 0; iGros < _priceGrosirCart.length; iGros++) {
+            if (event.data[i].qty >= _priceGrosirCart[iGros].minUnit! &&
+                event.data[i].qty <= _priceGrosirCart[iGros].maxUnit!) {
+              initPrice = _priceGrosirCart[iGros].price!;
+              break;
+            }
+          }
+          // if (event.data[i].qty >= toIntQty(event.data[i].stock.qty1) &&
+          //     event.data[i].qty <= (toIntQty(event.data[i].stock.qty2) - 1)) {
+          //   initPrice = convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1);
+          // } else if (event.data[i].qty >= toIntQty(event.data[i].stock.qty2) &&
+          //     event.data[i].qty <= (toIntQty(event.data[i].stock.qty3) - 1)) {
+          //   // logMe('elseeee 2');
+          //   // logMe(event.data[i].stock.hrg1);
+          //   // logMe(event.data[i].stock.disclist2);
+          //   initPrice = convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1);
+          // } else if (event.data[i].qty >= toIntQty(event.data[i].stock.qty3)) {
+          //   logMe('elseeee 3');
+          //   initPrice = convertPriceDisc(
+          //       event.data[i].stock.hrg1, event.data[i].stock.disclist3);
+          // } else {
+          //   initPrice = convertPriceDisc(event.data[i].stock.hrg1, '0');
+          //   logMe('elseeee');
+          // }
+
           cart.add(
             Cart(
                 id: event.data[i].id,
                 productId: event.data[i].stock.stockid,
                 productName: event.data[i].stock.stockname,
-                initialPrice: int.tryParse(arr[0]),
-                productPrice: ValueNotifier(int.parse(arr[0])),
+                initialPrice: removeToPrice(initPrice),
+                productPrice: ValueNotifier(removeToPrice(initPrice)),
                 quantity: ValueNotifier(event.data[i].qty),
                 unitTag: "unitTag",
-                image: event.data[i].stock.images.isEmpty
-                    ? ''
-                    : event.data[i].stock.images[0]['url'],
+                image: event.data[i].stock.photourl.isNotEmpty
+                    ? event.data[i].stock.photourl
+                    : event.data[i].stock.images.isEmpty
+                        ? ''
+                        : event.data[i].stock.images[0]['url'],
                 priceGrosirCart: _priceGrosirCart),
           );
           addTotalPrice(double.parse(event.data[i].stock.hrg1));
           addCounter();
-
-          // logMe(_priceGrosirCart[0].toMap());
-          // logMe(_priceGrosirCart[1].toMap());
-          // logMe(_priceGrosirCart[2].toMap());
         }
-        // logMe("asdasasda");
-
-        // logMe(cart[0].priceGrosirCart![0].toMap());
-        // logMe(cart[0].priceGrosirCart![1].toMap());
-        // logMe(cart[0].priceGrosirCart![2].toMap());
-
-        // logMe(cart[1].priceGrosirCart![0].toMap());
-        // logMe(cart[1].priceGrosirCart![1].toMap());
-        // logMe(cart[1].priceGrosirCart![2].toMap());
         _isLoadCart = false;
         notifyListeners();
       }
@@ -297,27 +341,50 @@ class CartProvider with ChangeNotifier {
   void addQuantity(String id) {
     final index = cart.indexWhere((element) => element.id == id);
     cart[index].quantity!.value = cart[index].quantity!.value + 1;
-    int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
-    int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
-    int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
-    int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
-    // _setPrefsItems();
+    // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
+    // logMe(cart[index].priceGrosirCart![0].price);
+    // logMe(cart[index].priceGrosirCart![1].price);
+    // logMe(cart[index].priceGrosirCart![2].price);
+    // logMe(cart[index].priceGrosirCart![3].price);
 
-    if (cart[index].quantity!.value >= minUnit1 &&
-        cart[index].quantity!.value <= maxUnit1) {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![0].price!);
-    } else if (cart[index].quantity!.value >= minUnit2 &&
-        cart[index].quantity!.value <= maxUnit2) {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![1].price!);
-    } else {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![2].price!);
+    // if (cart[index].quantity!.value >= minUnit1 &&
+    //     cart[index].quantity!.value <= maxUnit1) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
+    // } else {}
+    // else if (cart[index].quantity!.value >= minUnit2 &&
+    //     cart[index].quantity!.value <= maxUnit2) {
+    //   logMe('elseeee 2');
+    //   logMe('elseeee 2 $maxUnit2');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
+    // } else if (cart[index].quantity!.value >= minUnit3) {
+    //   logMe('elseeee 3');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
+    // } else {
+    //   logMe('elseeee 4');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
+    // }
+
+    for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
+      if (cart[index].quantity!.value >=
+              cart[index].priceGrosirCart![i].minUnit! &&
+          cart[index].quantity!.value <=
+              cart[index].priceGrosirCart![i].maxUnit!) {
+        cart[index].productPrice!.value =
+            removeToPrice(cart[index].priceGrosirCart![i].price!);
+        logMe('1111 ${cart[index].priceGrosirCart![i].price!}');
+        break;
+      }
     }
-
     notifyListeners();
   }
 
@@ -332,22 +399,42 @@ class CartProvider with ChangeNotifier {
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
     // _setPrefsItems();
-    int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
-    int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
-    int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
-    int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+    // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
 
-    if (cart[index].quantity!.value >= minUnit1 &&
-        cart[index].quantity!.value <= maxUnit1) {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![0].price!);
-    } else if (cart[index].quantity!.value >= minUnit2 &&
-        cart[index].quantity!.value <= maxUnit2) {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![1].price!);
-    } else {
-      cart[index].productPrice!.value =
-          int.parse(cart[index].priceGrosirCart![2].price!);
+    // if (cart[index].quantity!.value >= minUnit1 &&
+    //     cart[index].quantity!.value <= maxUnit1) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
+    // } else if (cart[index].quantity!.value >= minUnit2 &&
+    //     cart[index].quantity!.value <= maxUnit2) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
+    // } else if (cart[index].quantity!.value >= minUnit3) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
+    // } else {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
+    // }
+    for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
+      logMe(cart[index].priceGrosirCart![i].minUnit);
+      logMe(cart[index].priceGrosirCart![i].maxUnit);
+      logMe(cart[index].priceGrosirCart![i].price);
+    }
+    for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
+      if (cart[index].quantity!.value >=
+              cart[index].priceGrosirCart![i].minUnit! &&
+          cart[index].quantity!.value <=
+              cart[index].priceGrosirCart![i].maxUnit!) {
+        cart[index].productPrice!.value =
+            removeToPrice(cart[index].priceGrosirCart![i].price!);
+        logMe('1111 ${cart[index].priceGrosirCart![i].price!}');
+        break;
+      }
     }
     notifyListeners();
   }

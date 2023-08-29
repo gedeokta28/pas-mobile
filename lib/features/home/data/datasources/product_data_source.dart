@@ -8,7 +8,7 @@ import '../../../../core/utility/helper.dart';
 import '../models/detail_product_model.dart';
 
 abstract class ProductDataSource {
-  Future<ProductListResponseModel> getProductList();
+  Future<ProductListResponseModel> getProductList(String? type);
   Future<ProductListResponseModel> getProductListByUrl(String url);
   Future<ProductDetail> getProductDetail(String productId);
   Future<CategoryListResponseModel> getCategoryList();
@@ -22,8 +22,13 @@ class ProductDataSourceImplementation implements ProductDataSource {
   ProductDataSourceImplementation({required this.dio});
 
   @override
-  Future<ProductListResponseModel> getProductList() async {
-    String url = 'api/products';
+  Future<ProductListResponseModel> getProductList(String? type) async {
+    String url;
+    if (type == null) {
+      url = 'api/products';
+    } else {
+      url = 'api/products?type=best-seller';
+    }
 
     try {
       final response = await dio.get(

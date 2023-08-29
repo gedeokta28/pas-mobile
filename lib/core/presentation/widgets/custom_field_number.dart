@@ -154,8 +154,8 @@ class _CustomPriceFieldState extends State<CustomPriceField> {
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Material(
                   color: Colors.grey[300],
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       Padding(
                         padding: EdgeInsets.only(top: 14.0),
                         child: Text(

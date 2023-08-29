@@ -32,150 +32,164 @@ class DialogPrice {
                           color: Colors.black87),
                     ),
                     smallVerticalSpacing(),
-                    Container(
-                      height: 25,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: secondaryColor),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              convertStrUnit(
-                                  hrg: 1,
-                                  satuan1: productDetail.unit1,
-                                  satuan2: productDetail.unit2,
-                                  satuan3: productDetail.unit3,
-                                  qty1: productDetail.qty1,
-                                  qty2: productDetail.qty2,
-                                  qty3: productDetail.qty3),
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
+                    productDetail.qty1 == '0'
+                        ? const SizedBox()
+                        : Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: secondaryColor),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    getQuantity(
+                                        hrg: 1,
+                                        satuan1: productDetail.unit1,
+                                        satuan2: productDetail.unit2,
+                                        satuan3: productDetail.unit3,
+                                        qty1: productDetail.qty1,
+                                        qty2: productDetail.qty2,
+                                        qty3: productDetail.qty3),
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Rp',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        convertPriceDisc(productDetail.hrg1,
+                                            productDetail.disclist1),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Rp',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                Text(
-                                  convertPrice(productDetail.hrg1),
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                          ),
+                    const SizedBox(height: 5),
+                    productDetail.qty2 == '0'
+                        ? const SizedBox()
+                        : Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    getQuantity(
+                                        hrg: 2,
+                                        satuan1: productDetail.unit1,
+                                        satuan2: productDetail.unit2,
+                                        satuan3: productDetail.unit3,
+                                        qty1: productDetail.qty1,
+                                        qty2: productDetail.qty2,
+                                        qty3: productDetail.qty3),
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Rp',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black),
+                                      ),
+                                      Text(
+                                        convertPriceDisc(productDetail.hrg1,
+                                            productDetail.disclist2),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              convertStrUnit(
-                                  hrg: 2,
-                                  satuan1: productDetail.unit1,
-                                  satuan2: productDetail.unit2,
-                                  satuan3: productDetail.unit3,
-                                  qty1: productDetail.qty1,
-                                  qty2: productDetail.qty2,
-                                  qty3: productDetail.qty3),
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                          ),
+                    const SizedBox(height: 5),
+                    productDetail.qty3 == '0'
+                        ? const SizedBox()
+                        : Container(
+                            height: 25,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(3),
+                                color: secondaryColor),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    getQuantity(
+                                        hrg: 3,
+                                        satuan1: productDetail.unit1,
+                                        satuan2: productDetail.unit2,
+                                        satuan3: productDetail.unit3,
+                                        qty1: productDetail.qty1,
+                                        qty2: productDetail.qty2,
+                                        qty3: productDetail.qty3),
+                                    style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        'Rp',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                            fontSize: 11.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.white),
+                                      ),
+                                      Text(
+                                        convertPriceDisc(productDetail.hrg1,
+                                            productDetail.disclist3),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Rp',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  convertPrice(productDetail.hrg2),
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 25,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          color: secondaryColor),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              convertStrUnit(
-                                  hrg: 3,
-                                  satuan1: productDetail.unit1,
-                                  satuan2: productDetail.unit2,
-                                  satuan3: productDetail.unit3,
-                                  qty1: productDetail.qty1,
-                                  qty2: productDetail.qty2,
-                                  qty3: productDetail.qty3),
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Rp',
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                                Text(
-                                  convertPrice(productDetail.hrg3),
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          ),
                   ],
                 ),
               ),
@@ -219,8 +233,8 @@ class DialogPriceVariant {
                           borderRadius: BorderRadius.circular(3),
                           color: secondaryColor),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -267,8 +281,8 @@ class DialogPriceVariant {
                           borderRadius: BorderRadius.circular(3),
                           color: Colors.white),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -315,8 +329,8 @@ class DialogPriceVariant {
                           borderRadius: BorderRadius.circular(3),
                           color: secondaryColor),
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/home/presentation/best_product_list_page.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -19,7 +20,15 @@ class BestProductList extends StatelessWidget {
       children: [
         ListTitleWidget(
           onTap: () {
-            Navigator.pushNamed(context, ProductPage.routeName).then((_) {
+            // Navigator.pushNamed(context, ProductPage.routeName).then((_) {
+            //   final provider = Provider.of<CartProvider>(
+            //     context,
+            //     listen: false,
+            //   );
+            //   provider.countTotalCartItem();
+            // });
+            Navigator.pushNamed(context, BestProductListPage.routeName)
+                .then((_) {
               final provider = Provider.of<CartProvider>(
                 context,
                 listen: false,
@@ -30,7 +39,8 @@ class BestProductList extends StatelessWidget {
           title: 'Product Terbaik',
         ),
         StreamBuilder<ProductState>(
-            stream: context.read<HomeProvider>().fetchProductList(),
+            stream:
+                context.read<HomeProvider>().fetchProductList('best-product'),
             builder: (_, snap) {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {

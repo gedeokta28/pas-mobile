@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
+import 'package:pas_mobile/features/notification/presentation/notification_provider.dart';
 import 'package:pas_mobile/features/search/presentation/pages/search_page.dart';
 import 'package:provider/provider.dart';
 
@@ -38,44 +40,85 @@ class HomeAppBar extends StatelessWidget {
           ),
         ),
         actions: [
-          // ClipRRect(
-          //   child: Material(
-          //     color: Colors.transparent,
-          //     child: InkWell(
-          // child: const Padding(
-          //   padding:
-          //       EdgeInsets.only(left: 8.0, top: 5, right: 5, bottom: 5),
-          //         child: Icon(
-          //           Icons.account_circle,
-          //           color: Colors.white,
-          //           size: 30,
-          //         ),
-          //       ),
-          //       onTap: () {
-          //         Navigator.pushNamed(context, LoginPage.routeName);
-          //       },
-          //     ),
-          //   ),
-          // ),
           sessionHelper.isLoggedIn
-              ? ClipRRect(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      child: const Padding(
-                        padding: EdgeInsets.only(
-                            left: 10.0, top: 5, right: 5, bottom: 5),
-                        child: Icon(
-                          Icons.notifications,
-                          size: 30.0,
-                          color: Colors.white,
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(
-                            context, NotificationPage.routeName);
-                      },
-                    ),
+              ? AspectRatio(
+                  aspectRatio: 1 / 1,
+                  child: Stack(
+                    children: [
+                      Consumer<NotificationProvider>(
+                          builder: (context, provider, _) =>
+                              LayoutBuilder(builder: (_, constraints) {
+                                return Center(
+                                  child: ClipRRect(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        child: Padding(
+                                          padding: sessionHelper.isLoggedIn
+                                              ? const EdgeInsets.all(5)
+                                              : const EdgeInsets.only(
+                                                  left: 15.0,
+                                                  top: 5,
+                                                  right: 5,
+                                                  bottom: 5),
+                                          child: const Icon(
+                                            Icons.notifications,
+                                            size: 30.0,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Navigator.pushNamed(context,
+                                                  NotificationPage.routeName)
+                                              .then((_) {
+                                            provider.calculateNotif();
+                                            logMe(provider.countNotifOrder);
+                                            logMe(provider.countNotif);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              })),
+                      Consumer<NotificationProvider>(
+                        builder: (context, provider, _) =>
+                            LayoutBuilder(builder: (_, constraints) {
+                          if ((provider.countNotifOrder +
+                                  provider.countNotif) ==
+                              0) {
+                            return const SizedBox.shrink();
+                          } else {
+                            final size = (constraints.maxWidth / 2) - 15.0;
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                        context, NotificationPage.routeName)
+                                    .then((_) {
+                                  provider.calculateNotif();
+                                  logMe(provider.countNotifOrder);
+                                  logMe(provider.countNotif);
+                                });
+                              },
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: Container(
+                                  margin: const EdgeInsets.all(12.0),
+                                  padding: const EdgeInsets.all(2.0),
+                                  width: size,
+                                  height: size,
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: ERROR_RED_COLOR,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        }),
+                      )
+                    ],
                   ),
                 )
               : const SizedBox(

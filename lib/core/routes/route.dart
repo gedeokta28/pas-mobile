@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
-import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
 import 'package:pas_mobile/features/account/data/models/profile_model.dart';
 import 'package:pas_mobile/features/account/presentation/change_email_page.dart';
 import 'package:pas_mobile/features/account/presentation/change_password_page.dart';
@@ -12,11 +11,11 @@ import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_page.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
+import 'package:pas_mobile/features/home/presentation/best_product_list_page.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
-import 'package:pas_mobile/features/order/presentation/select_checkout_address_page.dart';
 import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
 import '../../features/account/presentation/address_list_page.dart';
@@ -99,6 +98,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         return MaterialPageRoute(
             builder: (_) => ProductPage(
                   categoryId: args.categoryId,
+                  filterParameter: args.filterParameter,
                   brandId: args.brandId,
                   productPageParams: args.productPageParams,
                   brandName: args.brandName,
@@ -110,6 +110,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case ForgotPasswordPage.routeName:
       return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
+    case BestProductListPage.routeName:
+      return MaterialPageRoute(builder: (_) => const BestProductListPage());
     case FilterPage.routeName:
       return MaterialPageRoute(builder: (_) => const FilterPage());
     case SearchResultPage.routeName:

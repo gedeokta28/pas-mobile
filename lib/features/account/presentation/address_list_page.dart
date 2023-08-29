@@ -3,7 +3,6 @@ import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/order/presentation/providers/shipping_address_state.dart';
-import 'package:pas_mobile/features/order/presentation/widgets/address_card_checkout.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/pages/main_page/main_page.dart';

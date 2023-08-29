@@ -51,9 +51,9 @@ class FilterPage extends StatelessWidget {
                           FocusManager.instance.primaryFocus?.unfocus();
                           provider.clearFilter();
                         },
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.refresh_sharp,
                               color: greyColor,

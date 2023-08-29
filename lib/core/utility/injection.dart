@@ -7,6 +7,7 @@ import 'package:pas_mobile/core/data/repositories/region_repo_impl.dart';
 import 'package:pas_mobile/core/domain/repositories/region_repository.dart';
 import 'package:pas_mobile/core/domain/usecases/get_provinces_list.dart';
 import 'package:pas_mobile/core/domain/usecases/get_regencies_list.dart';
+import 'package:pas_mobile/core/presentation/update_fcm_token_provider.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/account/data/datasources/profile_datasource.dart';
 import 'package:pas_mobile/features/account/data/repositories/profile_repository_impl.dart';
@@ -16,6 +17,8 @@ import 'package:pas_mobile/features/account/domain/usecases/do_delete_address.da
 import 'package:pas_mobile/features/account/domain/usecases/do_update_address.dart';
 import 'package:pas_mobile/features/account/domain/usecases/do_update_profile.dart';
 import 'package:pas_mobile/features/account/domain/usecases/get_address_list.dart';
+import 'package:pas_mobile/features/account/domain/usecases/get_info.dart';
+import 'package:pas_mobile/features/account/presentation/providers/info_provider.dart';
 import 'package:pas_mobile/features/account/presentation/providers/management_account_provider.dart';
 import 'package:pas_mobile/features/brand/presentation/providers/brand_provider.dart';
 import 'package:pas_mobile/features/cart/data/datasources/cart_datasource.dart';
@@ -42,8 +45,15 @@ import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list_by_url.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_variant.dart';
+import 'package:pas_mobile/features/home/presentation/providers/best_product_provider.dart';
 import 'package:pas_mobile/features/home/presentation/providers/home_provider.dart';
 import 'package:pas_mobile/features/login/data/repositories/login_repo_impl.dart';
+import 'package:pas_mobile/features/login/domain/usecases/update_fcm_token.dart';
+import 'package:pas_mobile/features/notification/data/datasources/notification_data_source.dart';
+import 'package:pas_mobile/features/notification/data/repositories/notification_repo_impl.dart';
+import 'package:pas_mobile/features/notification/domain/repositories/notification_repository.dart';
+import 'package:pas_mobile/features/notification/domain/usecases/get_activity_notif.dart';
+import 'package:pas_mobile/features/notification/domain/usecases/get_order_notif.dart';
 import 'package:pas_mobile/features/notification/presentation/notification_provider.dart';
 import 'package:pas_mobile/features/order/data/datasources/order_datasource.dart';
 import 'package:pas_mobile/features/order/data/repositories/order_repository_impl.dart';
@@ -119,13 +129,16 @@ Future<void> init() async {
       getProductList: locator(), getCategoryList: locator()));
   locator.registerFactory<ForgotPasswordProvider>(
       () => ForgotPasswordProvider(doForgotPassword: locator()));
-  locator.registerFactory<NotificationProvider>(() => NotificationProvider());
+  locator.registerFactory<NotificationProvider>(() => NotificationProvider(
+      getActivityNotification: locator(), getOrderNotification: locator()));
   locator.registerFactory<ManagementAccountProvider>(() =>
       ManagementAccountProvider(
           getProvincesList: locator(),
           getRegenciesList: locator(),
           doUpdateProfile: locator(),
           getProfile: locator()));
+  locator
+      .registerFactory<InfoProvider>(() => InfoProvider(getAboutUs: locator()));
   locator
       .registerFactory<ShippingAddressProvider>(() => ShippingAddressProvider(
             getProvincesList: locator(),
@@ -141,6 +154,8 @@ Future<void> init() async {
       addToCartQuickOrder: locator(),
       doFilterProduct: locator(),
       getProductListByUrl: locator()));
+  locator.registerFactory<BestProductProvider>(() => BestProductProvider(
+      getProductList: locator(), getProductListByUrl: locator()));
   locator.registerFactory<BrandProvider>(
       () => BrandProvider(getBrandList: locator()));
   locator.registerFactory<FilterProvider>(
@@ -166,6 +181,8 @@ Future<void> init() async {
 //Datasource
   locator.registerLazySingleton<LoginDataSource>(
       () => LoginDataSourceImplementation(dio: locator()));
+  locator.registerLazySingleton<NotificationDataSource>(
+      () => NotificationDataSourceImpl(dio: locator()));
   locator.registerLazySingleton<RegisterDataSource>(
       () => RegisterDataSourceImplementation(dio: locator()));
   locator.registerLazySingleton<ProductDataSource>(
@@ -186,6 +203,8 @@ Future<void> init() async {
 //Repository
   locator.registerLazySingleton<LoginRepository>(
       () => LoginRepoImpl(dataSource: locator()));
+  locator.registerLazySingleton<NotificationRepository>(() =>
+      NotificationRepoImpl(dataSource: locator(), networkInfo: locator()));
   locator.registerLazySingleton<RegisterRepository>(
       () => RegisterRepoImpl(dataSource: locator()));
   locator.registerLazySingleton<ProductRepsitory>(
@@ -206,6 +225,15 @@ Future<void> init() async {
 //Usecase
   locator.registerLazySingleton<DoLogin>(
       () => DoLogin(repository: locator(), session: locator()));
+  locator.registerLazySingleton<UpdateFcmToken>(() => UpdateFcmToken(
+        repository: locator(),
+      ));
+  locator.registerLazySingleton<DeviceTokenProvider>(
+      () => DeviceTokenProvider(updateFcmToken: locator(), session: locator()));
+  locator.registerLazySingleton<GetActivityNotification>(
+      () => GetActivityNotification(repository: locator()));
+  locator.registerLazySingleton<GetOrderNotification>(
+      () => GetOrderNotification(repository: locator()));
   locator.registerLazySingleton<DoRegister>(
       () => DoRegister(repository: locator(), session: locator()));
   locator.registerLazySingleton<GetProvincesList>(
@@ -229,6 +257,7 @@ Future<void> init() async {
   locator.registerLazySingleton<DoFilterProduct>(
       () => DoFilterProduct(repository: locator()));
   locator.registerLazySingleton<GetProfile>(() => GetProfile(locator()));
+  locator.registerLazySingleton<GetInfo>(() => GetInfo(locator()));
   locator.registerLazySingleton<DoUpdateProfile>(
       () => DoUpdateProfile(repository: locator()));
   locator.registerLazySingleton<DoCreateAddress>(

@@ -19,6 +19,7 @@ class HomeProvider extends ChangeNotifier {
   final DoFilterProduct doFilterProduct;
   late FilterParameter _filterParameterSelected = FilterParameter();
   static List<Product> _listProduct = [];
+  int _current = 0;
   late final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 5.0)..addListener(_scrollListener);
 
@@ -73,6 +74,7 @@ class HomeProvider extends ChangeNotifier {
 
   bool get isSearchResult => _isSearchResult;
   bool get isLoadingProduct => _isLoadingProduct;
+  int get current => _current;
   FilterParameter get filterParameterSelected => _filterParameterSelected;
   bool get isStopLoad => _isStopLoad;
   bool get isLoadingMoreData => _isLoadingMoreData;
@@ -89,16 +91,21 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  set setCurrent(val) {
+    _current = val;
+    notifyListeners();
+  }
+
   // constructor
   HomeProvider(
       {required this.getProductList,
       required this.getCategoryList,
       required this.doFilterProduct});
 
-  Stream<ProductState> fetchProductList() async* {
+  Stream<ProductState> fetchProductList(String? type) async* {
     yield ProductLoading();
 
-    final result = await getProductList();
+    final result = await getProductList(type);
     yield* result.fold(
       (failure) async* {
         yield ProductFailure(failure: failure);
@@ -126,6 +133,9 @@ class HomeProvider extends ChangeNotifier {
 
   Stream<SearchState> filterCustomProduct(
       FilterParameter filterParameter) async* {
+    if (filterParameter.priceBy == 'desc' || filterParameter.priceBy == 'asc') {
+      _selectedValue = filterParameter.priceBy;
+    }
     logMe("keywordddd");
     _filterParameterSelected = filterParameter;
     _isSearchResult = true;

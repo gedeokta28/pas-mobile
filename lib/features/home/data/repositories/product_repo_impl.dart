@@ -17,9 +17,10 @@ class ProductRepoImpl implements ProductRepsitory {
   ProductRepoImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, ProductListResponseModel>> getProductList() async {
+  Future<Either<Failure, ProductListResponseModel>> getProductList(
+      String? type) async {
     try {
-      final data = await dataSource.getProductList();
+      final data = await dataSource.getProductList(type);
       return Right(data);
     } on DioError catch (e) {
       logMe("Failure Login Repo ${e.error}");

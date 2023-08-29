@@ -106,7 +106,7 @@ class Stock {
   String unit3;
   String berat;
   String discountinued;
-  dynamic photourl;
+  String photourl;
   String stockdescription;
   List<dynamic> images;
   Brand brand;
@@ -124,15 +124,27 @@ class Stock {
         disclist2: json["disclist2"],
         hrg3: json["hrg3"],
         disclist3: json["disclist3"],
-        qty1: json["qty1"],
-        unit1: json["unit1"],
-        qty2: json["qty2"],
-        unit2: json["unit2"],
-        qty3: json["qty3"],
-        unit3: json["unit3"],
+        qty1: json["qty1"] == null
+            ? '0'
+            : json["qty1"] == '0.00'
+                ? '0'
+                : json["qty1"],
+        unit1: json["unit1"] ?? 'pcs',
+        qty2: json["qty2"] == null
+            ? '0'
+            : json["qty2"] == '0.00'
+                ? '0'
+                : json["qty2"],
+        unit2: json["unit2"] ?? 'pcs',
+        qty3: json["qty3"] == null
+            ? '0'
+            : json["qty3"] == '0.00'
+                ? '0'
+                : json["qty3"],
+        unit3: json["unit3"] ?? 'pcs',
         berat: json["berat"],
         discountinued: json["discountinued"] ?? '',
-        photourl: json["photourl"],
+        photourl: json["photourl"] ?? '',
         stockdescription: json["stockdescription"] ?? '-',
         images: List<dynamic>.from(json["images"].map((x) => x)),
         brand: Brand.fromJson(json["brand"]),

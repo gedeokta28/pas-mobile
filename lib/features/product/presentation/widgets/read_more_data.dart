@@ -9,12 +9,12 @@ class ReadMoreHtml extends StatefulWidget {
   final String readMoreText;
   final String readLessText;
 
-  ReadMoreHtml({
+  const ReadMoreHtml({Key? key, 
     required this.htmlData,
     required this.maxLength,
     required this.readMoreText,
     required this.readLessText,
-  });
+  }) : super(key: key);
 
   @override
   _ReadMoreHtmlState createState() => _ReadMoreHtmlState();
@@ -34,8 +34,8 @@ class _ReadMoreHtmlState extends State<ReadMoreHtml> {
             style: {
               '#': Style(
                 fontSize: FontSize.medium,
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
+                margin: Margins.zero,
+                padding: HtmlPaddings.zero,
                 fontStyle: FontStyle.normal,
               ),
             },
@@ -51,8 +51,8 @@ class _ReadMoreHtmlState extends State<ReadMoreHtml> {
             style: {
               '#': Style(
                 fontSize: FontSize.medium,
-                margin: EdgeInsets.zero,
-                padding: EdgeInsets.zero,
+                margin: Margins.zero,
+                padding: HtmlPaddings.zero,
                 fontStyle: FontStyle.normal,
               ),
             },
@@ -68,7 +68,7 @@ class _ReadMoreHtmlState extends State<ReadMoreHtml> {
             },
             child: Text(
               isExpanded ? widget.readLessText : widget.readMoreText,
-              style: TextStyle(color: secondaryColor),
+              style: const TextStyle(color: secondaryColor),
             ),
           ),
         ],

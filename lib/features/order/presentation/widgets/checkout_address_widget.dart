@@ -43,13 +43,13 @@ class CheckoutAddressWidget extends StatelessWidget {
                     border: Border.all(color: secondaryColor, width: 0.5),
                     borderRadius: const BorderRadius.all(Radius.circular(8.0)),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(
+                  child: const Padding(
+                    padding: EdgeInsets.only(
                         left: 10, top: 10, bottom: 10, right: 12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Pilih Alamat',
                           style: TextStyle(

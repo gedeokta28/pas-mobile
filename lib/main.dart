@@ -6,7 +6,9 @@ import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/firebase_helper.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/core/utility/notification_helper.dart';
+import 'package:pas_mobile/features/account/presentation/providers/info_provider.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
+import 'package:pas_mobile/features/notification/presentation/notification_provider.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +43,11 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => locator<HomeProvider>()),
+        ChangeNotifierProvider(create: (context) => locator<InfoProvider>()),
         ChangeNotifierProvider(create: (context) => locator<SearchProvider>()),
+        ChangeNotifierProvider(
+            create: (context) =>
+                locator<NotificationProvider>()..countTotalCartItem()),
         ChangeNotifierProvider(
             create: (context) => locator<CartProvider>()..countTotalCartItem()),
         ChangeNotifierProvider(create: (context) => locator<OrderProvider>()),
@@ -145,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
         ),

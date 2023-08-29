@@ -118,9 +118,9 @@ class ProductFilterDescription extends StatelessWidget {
           smallVerticalSpacing(),
           const Divider(),
           smallVerticalSpacing(),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
                 'Informasi Tambahan',
                 style: TextStyle(

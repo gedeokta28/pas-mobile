@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/features/cart/data/models/price_grosir_model.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list_by_url.dart';
 import 'package:pas_mobile/features/quick_order/data/product_quick_model.dart';
 import 'package:pas_mobile/features/quick_order/data/quick_order_param.dart';
@@ -17,7 +18,6 @@ import '../../../home/domain/usecases/get_product_list.dart';
 import '../../../search/data/models/filter_parameter.dart';
 import '../../../search/data/models/filter_product_model.dart';
 import '../../../search/domain/usecases/do_filter_product.dart';
-import '../../../search/presentation/providers/search_state.dart';
 import 'quick_product_filter.dart';
 import 'quick_product_state.dart';
 
@@ -34,6 +34,7 @@ class QuickOrderProvider extends ChangeNotifier {
   List<ProductQuick> _selectedProduct = [];
   List<ProductQuick> _quickOrderProduct = [];
   bool _isSearch = false;
+  final TextEditingController _controller = TextEditingController();
 
   // constructor
   QuickOrderProvider({
@@ -46,6 +47,7 @@ class QuickOrderProvider extends ChangeNotifier {
   //get
   QuickProductState get state => _state;
   QuickProductFilterState get stateSearch => _stateSearch;
+  TextEditingController get controller => _controller;
   bool get isSearch => _isSearch;
   List<Product> get productList => _productList;
   List<ProductQuick> get quickOrderProduct => _quickOrderProduct;
@@ -106,8 +108,7 @@ class QuickOrderProvider extends ChangeNotifier {
 
     late Either<Failure, ProductListResponseModel> result;
 
-    result = await getProductList();
-    await Future.delayed(const Duration(milliseconds: 500));
+    result = await getProductList(null);
     result.fold(
       (failure) {
         dismissLoading();
@@ -118,22 +119,55 @@ class QuickOrderProvider extends ChangeNotifier {
         setState = const QuickProductLoaded();
         setProductList = data.data;
         for (var i = 0; i < data.data.length; i++) {
+          List<PriceGrosirCart> _priceGrosirCart = [];
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty1),
+            maxUnit: toIntQty(data.data[i].qty2) - 1,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist1),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty2),
+            maxUnit: toIntQty(data.data[i].qty3) - 1,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist2),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist3),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data.data[i].hrg1, '0'),
+          ));
           var arr = data.data[i].hrg1.split('.');
           _quickOrderProduct.add(
             ProductQuick(
-                id: data.data[i].stockid,
-                productId: data.data[i].stockid,
-                productName: data.data[i].stockname,
-                initialPrice: int.tryParse(arr[0]),
-                productPrice: ValueNotifier(int.parse(arr[0])),
-                quantity: ValueNotifier(1),
-                unitTag: "unitTag",
-                image:
-                    data.data[i].photourl == null ? '' : data.data[i].photourl!,
-                priceGrosirProductQuick: null),
+              id: data.data[i].stockid,
+              productId: data.data[i].stockid,
+              productName: data.data[i].stockname,
+              initialPrice: int.tryParse(arr[0]),
+              productPrice: ValueNotifier(int.parse(arr[0])),
+              quantity: ValueNotifier(1),
+              unitTag: "unitTag",
+              image:
+                  data.data[i].photourl == null ? '' : data.data[i].photourl!,
+              priceGrosirProductQuick: _priceGrosirCart,
+              hrg1: data.data[i].hrg1,
+              hrg2: data.data[i].hrg2,
+              hrg3: data.data[i].hrg3,
+              unit1: data.data[i].unit1,
+              unit2: data.data[i].unit2,
+              unit3: data.data[i].unit3,
+              disclist1: data.data[i].disclist1,
+              disclist2: data.data[i].disclist2,
+              disclist3: data.data[i].disclist3,
+              qty1: data.data[i].qty1,
+              qty2: data.data[i].qty2,
+              qty3: data.data[i].qty3,
+            ),
           );
         }
-
         setNextUrl = data.links.next ?? '';
       },
     );
@@ -151,19 +185,53 @@ class QuickOrderProvider extends ChangeNotifier {
         final temp = List<Product>.from(_productList);
         temp.addAll(data.data);
         for (var i = 0; i < data.data.length; i++) {
+          List<PriceGrosirCart> _priceGrosirCart = [];
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty1),
+            maxUnit: toIntQty(data.data[i].qty2) - 1,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist1),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty2),
+            maxUnit: toIntQty(data.data[i].qty3) - 1,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist2),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data.data[i].hrg1, data.data[i].disclist3),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data.data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data.data[i].hrg1, '0'),
+          ));
           var arr = data.data[i].hrg1.split('.');
           _quickOrderProduct.add(
             ProductQuick(
-                id: data.data[i].stockid,
-                productId: data.data[i].stockid,
-                productName: data.data[i].stockname,
-                initialPrice: int.tryParse(arr[0]),
-                productPrice: ValueNotifier(int.parse(arr[0])),
-                quantity: ValueNotifier(1),
-                unitTag: "unitTag",
-                image:
-                    data.data[i].photourl == null ? '' : data.data[i].photourl!,
-                priceGrosirProductQuick: null),
+              id: data.data[i].stockid,
+              productId: data.data[i].stockid,
+              productName: data.data[i].stockname,
+              initialPrice: int.tryParse(arr[0]),
+              productPrice: ValueNotifier(int.parse(arr[0])),
+              quantity: ValueNotifier(1),
+              unitTag: "unitTag",
+              image:
+                  data.data[i].photourl == null ? '' : data.data[i].photourl!,
+              priceGrosirProductQuick: _priceGrosirCart,
+              hrg1: data.data[i].hrg1,
+              hrg2: data.data[i].hrg2,
+              hrg3: data.data[i].hrg3,
+              unit1: data.data[i].unit1,
+              unit2: data.data[i].unit2,
+              unit3: data.data[i].unit3,
+              disclist1: data.data[i].disclist1,
+              disclist2: data.data[i].disclist2,
+              disclist3: data.data[i].disclist3,
+              qty1: data.data[i].qty1,
+              qty2: data.data[i].qty2,
+              qty3: data.data[i].qty3,
+            ),
           );
         }
         setProductList = temp;
@@ -185,6 +253,25 @@ class QuickOrderProvider extends ChangeNotifier {
     final index = _quickOrderProduct.indexWhere((element) => element.id == id);
     _quickOrderProduct[index].quantity!.value =
         _quickOrderProduct[index].quantity!.value + 1;
+    logMe(_quickOrderProduct[index].quantity!.value + 1);
+    notifyListeners();
+  }
+
+  void changeQuantity(String id, String value) {
+    final index = _quickOrderProduct.indexWhere((element) => element.id == id);
+    _quickOrderProduct[index].quantity!.value = int.parse(value);
+
+    notifyListeners();
+  }
+
+  void deleteQuantity(String id) {
+    final index = _quickOrderProduct.indexWhere((element) => element.id == id);
+    final currentQuantity = _quickOrderProduct[index].quantity!.value;
+    if (currentQuantity <= 1) {
+      currentQuantity == 1;
+    } else {
+      _quickOrderProduct[index].quantity!.value = currentQuantity - 1;
+    }
 
     notifyListeners();
   }
@@ -229,9 +316,42 @@ class QuickOrderProvider extends ChangeNotifier {
       },
       (data) {
         for (var i = 0; i < data.length; i++) {
+          List<PriceGrosirCart> _priceGrosirCart = [];
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data[i].qty1),
+            maxUnit: toIntQty(data[i].qty2) - 1,
+            price: convertPriceDisc(data[i].hrg1, data[i].disclist1),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data[i].qty2),
+            maxUnit: toIntQty(data[i].qty3) - 1,
+            price: convertPriceDisc(data[i].hrg1, data[i].disclist2),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data[i].hrg1, data[i].disclist3),
+          ));
+          _priceGrosirCart.add(PriceGrosirCart(
+            minUnit: toIntQty(data[i].qty3),
+            maxUnit: 0,
+            price: convertPriceDisc(data[i].hrg1, '0'),
+          ));
           var arr = data[i].hrg1.split('.');
           _quickOrderProduct.add(
             ProductQuick(
+                hrg1: data[i].hrg1,
+                hrg2: data[i].hrg2,
+                hrg3: data[i].hrg3,
+                unit1: data[i].unit1,
+                unit2: data[i].unit2,
+                unit3: data[i].unit3,
+                disclist1: data[i].disclist1,
+                disclist2: data[i].disclist2,
+                disclist3: data[i].disclist3,
+                qty1: data[i].qty1,
+                qty2: data[i].qty2,
+                qty3: data[i].qty3,
                 id: data[i].stockid,
                 productId: data[i].stockid,
                 productName: data[i].stockname,
@@ -240,7 +360,7 @@ class QuickOrderProvider extends ChangeNotifier {
                 quantity: ValueNotifier(1),
                 unitTag: "unitTag",
                 image: data[i].photourl == null ? '' : data[i].photourl!,
-                priceGrosirProductQuick: null),
+                priceGrosirProductQuick: _priceGrosirCart),
           );
         }
         dismissLoading();

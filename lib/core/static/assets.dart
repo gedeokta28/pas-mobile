@@ -18,3 +18,12 @@ const String ASSET_FILTER_ICON = 'assets/icons/filter-icon.png';
 const String ASSET_TRASNFER_ICON = 'assets/icons/transfer-icon.png';
 const String ASSET_COD_ICON = 'assets/icons/cod-icon.png';
 const String ASSES_BCA_ICON = 'assets/icons/bca-icon.png';
+const String ASSET_IKLAN_1 = 'assets/images/iklan_1.jpg';
+const String ASSET_IKLAN_2 = 'assets/images/iklan_2.jpg';
+
+List<String> listIklan = [ASSET_IKLAN_1, ASSET_IKLAN_2];
+List<String> listBanner = [
+  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_1.jpg',
+  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_2.jpg',
+  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_3.jpg'
+];

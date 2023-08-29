@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/features/quick_order/presentation/providers/quick_product_refresh_state.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'providers/quick_order_provider.dart';
 import 'widget/quick_order_item.dart';

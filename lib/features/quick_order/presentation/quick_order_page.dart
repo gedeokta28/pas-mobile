@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/presentation/widgets/custom_simple_dialog.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/quick_order/presentation/providers/quick_product_filter.dart';
 import 'package:pas_mobile/features/quick_order/presentation/providers/quick_product_state.dart';
@@ -47,10 +48,18 @@ class _QuickOrderPageState extends State<QuickOrderPage> {
                   builder: (BuildContext context, provider, widget) {
                 return CustomSearchBar(
                   hint: "Search",
+                  controller: provider.controller,
                   height: kToolbarHeight - SIZE_MEDIUM,
                   onSubmitted: (value) {
                     provider.setIsSearch = true;
                     provider.filterProduct(value);
+                  },
+                  onClear: () {
+                    if (provider.controller.text.isNotEmpty) {
+                      provider.controller.clear();
+                      provider.setIsSearch = false;
+                      provider.fetchProduct();
+                    }
                   },
                   onChanged: (value) {
                     if (value.isEmpty) {
@@ -211,29 +220,32 @@ class _QuickOrderPageState extends State<QuickOrderPage> {
                       title: "Masukkan Keranjang ",
                       color: secondaryColor,
                       event: () {
-                        provider.addToCart().listen((event) {
-                          if (event is AddToCartQuickOrderLoading) {
-                            showLoading();
-                          } else if (event is AddToCartQuickOrderFailure) {
-                            dismissLoading();
-                          } else if (event is AddToCartQuickOrderSuccess) {
-                            dismissLoading();
-                            showDialog(
+                        if (provider.selectedProduct.isEmpty) {
+                          showDialog(
                               barrierDismissible: false,
                               context: context,
                               builder: (context) {
-                                Future.delayed(
-                                  const Duration(seconds: 1),
-                                  () {
-                                    Navigator.pushNamedAndRemoveUntil(
-                                      context,
-                                      MainPage.routeName,
-                                      (route) => false,
-                                      arguments: 0, // navbar index
-                                    );
-                                    Navigator.pushNamed(
-                                            context, CartPage.routeName)
-                                        .then((_) {
+                                return CustomSimpleDialog(
+                                    text: 'Harap pilih product !',
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    });
+                              });
+                        } else {
+                          provider.addToCart().listen((event) {
+                            if (event is AddToCartQuickOrderLoading) {
+                              showLoading();
+                            } else if (event is AddToCartQuickOrderFailure) {
+                              dismissLoading();
+                            } else if (event is AddToCartQuickOrderSuccess) {
+                              dismissLoading();
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  Future.delayed(
+                                    const Duration(seconds: 1),
+                                    () {
                                       final provider =
                                           Provider.of<CartProvider>(
                                         locator<GlobalKey<NavigatorState>>()
@@ -241,16 +253,33 @@ class _QuickOrderPageState extends State<QuickOrderPage> {
                                         listen: false,
                                       );
                                       provider.countTotalCartItem();
-                                    });
-                                  },
-                                );
-                                return const CustomDialogCart(
-                                  text: 'Produk Dimasukkan Keranjang',
-                                );
-                              },
-                            );
-                          }
-                        });
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        MainPage.routeName,
+                                        (route) => false,
+                                        arguments: 2, // navbar index
+                                      );
+                                      // Navigator.pushNamed(
+                                      //         context, CartPage.routeName)
+                                      //     .then((_) {
+                                      //   final provider =
+                                      //       Provider.of<CartProvider>(
+                                      //     locator<GlobalKey<NavigatorState>>()
+                                      //         .currentContext!,
+                                      //     listen: false,
+                                      //   );
+                                      //   provider.countTotalCartItem();
+                                      // });
+                                    },
+                                  );
+                                  return const CustomDialogCart(
+                                    text: 'Produk Dimasukkan Keranjang',
+                                  );
+                                },
+                              );
+                            }
+                          });
+                        }
                       },
                     );
                   }),

@@ -8,7 +8,8 @@ import '../../data/models/category_list_response_model.dart';
 import '../../data/models/variant_product_response_model.dart';
 
 abstract class ProductRepsitory {
-  Future<Either<Failure, ProductListResponseModel>> getProductList();
+  Future<Either<Failure, ProductListResponseModel>> getProductList(
+      String? type);
   Future<Either<Failure, ProductListResponseModel>> getProductListByUrl(
       String url);
   Future<Either<Failure, CategoryListResponseModel>> getCategoryList();

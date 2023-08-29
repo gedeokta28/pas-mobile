@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pas_mobile/core/utility/firebase_helper.dart';
 
 import '../../../../core/presentation/form_provider.dart';
 import '../../../../core/utility/helper.dart';
@@ -27,6 +28,7 @@ class LoginProvider extends FormProvider {
     }, (result) async* {
       session.setToken = result.accessToken;
       session.setLoggedIn = true;
+      await FirebaseHelper.subscribeToTopic();
       dismissLoading();
       yield LoginSuccess(data: result);
     });

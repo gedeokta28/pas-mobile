@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/core/utility/firebase_helper.dart';
 import 'package:pas_mobile/core/utility/session_helper.dart';
 
 import '../error/failures.dart';
@@ -37,6 +40,7 @@ Widget largeHorizontalSpacing() => const SizedBox(width: SIZE_LARGE);
 Widget superLargeVerticalSpacing() => const SizedBox(height: 40);
 
 Future<void> sessionLogOut() async {
+  await FirebaseHelper.unsubscribeFromTopic();
   final session = locator<Session>();
   await session.clearSession();
 }
@@ -86,9 +90,19 @@ String convertPrice(String price) {
   return currencyFormatter.format(d).toString();
 }
 
+String convertPriceDisc(String price, String disc) {
+  double d = double.parse(price);
+  double discParse = double.parse(disc);
+  double percent = (discParse / 100) * d;
+  double result = d - percent;
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
+  return currencyFormatter.format(result).toString();
+}
+
 String convertWeight(String weight) {
   String weightTxt = weight.replaceAll('.00', '');
-  int weightTotal = int.parse(weightTxt);
+  double weightTotal = double.parse(weightTxt);
+  // int weightTotal = int.parse(weightTxt);
   if (weightTotal > 999) {
     double result = weightTotal / 1000;
     String showWeight = 'Berat : ${result.toStringAsFixed(1)} kg';
@@ -97,6 +111,12 @@ String convertWeight(String weight) {
     String showWeight = 'Berat : $weightTotal g';
     return showWeight;
   }
+}
+
+int removeToPrice(String price) {
+  String weightTxt = price.replaceAll('.', '');
+  int result = int.parse(weightTxt);
+  return result;
 }
 
 String convertStrUnit(
@@ -216,6 +236,11 @@ int convertMinUnitInt(
   return result;
 }
 
+int toIntQty(String qty) {
+  int result = double.parse(qty).toInt();
+  return result;
+}
+
 int convertMaxUnitInt(
     {required int hrg,
     required String satuan1,
@@ -259,4 +284,68 @@ String mergeOrderText(String orderId, DateTime date) {
   var convertDate = DateFormat('d MMMM yyyy').format(date);
   String resultText = '#$orderId   $convertDate';
   return resultText;
+}
+
+String convertDate(DateTime date) {
+  var convertDate = DateFormat('d MMMM yyyy').format(date);
+  return convertDate;
+}
+
+String removeHtmlTage(String value) {
+  // String data = value.replaceAll('"\\\"', '');
+  // String data1 = data.replaceAll('""\""', '');
+  // String data2 = data1.replaceAll('"\\"', '');
+
+  return json.decode(value);
+}
+
+String getQuantity(
+    {required int hrg,
+    required String satuan1,
+    required String satuan2,
+    required String satuan3,
+    required String qty1,
+    required String qty2,
+    required String qty3}) {
+  String result;
+  double qty1Final = double.parse(qty1);
+  double qty2Final = double.parse(qty2);
+  double qty3Final = double.parse(qty3);
+
+  int minQty1Int = 0, maxQty1Int = 0;
+  int minQty2Int = 0, maxQty2Int = 0;
+
+  //1
+  minQty1Int = qty1Final.toInt();
+  maxQty1Int = (qty2Final.toInt() - 1);
+  //2
+  minQty2Int = qty2Final.toInt();
+  maxQty2Int = (qty3Final.toInt() - 1);
+  //3
+
+  if (hrg == 1) {
+    if (maxQty1Int < 0) {
+      if (minQty2Int == 0) {
+        result = "$minQty1Int - $maxQty2Int $satuan1";
+      } else {
+        result = "$minQty1Int  $satuan1";
+      }
+    } else {
+      if (maxQty1Int == minQty1Int) {
+        result = "$minQty1Int $satuan1";
+      } else {
+        result = "$minQty1Int - $maxQty1Int $satuan1";
+      }
+    }
+  } else if (hrg == 2) {
+    if (maxQty2Int < 0) {
+      result = "$minQty2Int+  $satuan2";
+    } else {
+      result = "$minQty2Int - $maxQty2Int $satuan2";
+    }
+  } else {
+    result = "${qty3Final.toInt()}+ $satuan3";
+  }
+
+  return result;
 }

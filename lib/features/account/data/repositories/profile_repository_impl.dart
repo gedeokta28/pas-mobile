@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/features/account/data/datasources/profile_datasource.dart';
+import 'package:pas_mobile/features/account/data/models/info_response_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
@@ -24,6 +25,21 @@ class ProfileRepositoryImpl implements ProfileRepository {
     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.getProfile();
+        return Right(result);
+      } on DioError catch (e) {
+        logMe(e);
+        return const Left(ServerFailure());
+      }
+    } else {
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, InfoData>> getInfo() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.getInfo();
         return Right(result);
       } on DioError catch (e) {
         logMe(e);

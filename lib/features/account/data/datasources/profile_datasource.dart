@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/utility/extensions.dart';
 import 'package:pas_mobile/features/account/data/models/get_address_model.dart';
+import 'package:pas_mobile/features/account/data/models/info_response_model.dart';
 import 'package:pas_mobile/features/account/data/models/update_profile_response_model.dart';
 
 import '../../../../core/error/exception.dart';
@@ -11,6 +12,7 @@ import '../models/profile_model.dart';
 
 abstract class ProfileDataSource {
   Future<Profile> getProfile();
+  Future<InfoData> getInfo();
   Future<UpdateProfileResponse> doUpdateProfile(Map<String, String> data);
   Future<CreateAddressResponseModel> doUpdateAddress(
       Map<String, String> data, String addressId);
@@ -32,6 +34,21 @@ class ProfileDataSourceImpl implements ProfileDataSource {
 
     if (response.statusCode == HttpStatus.ok) {
       final profileResponse = ProfileModel.fromJson(response.data);
+      return profileResponse.data;
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<InfoData> getInfo() async {
+    String path = 'api/aboutus';
+    dio.withToken();
+
+    final response = await dio.get(path);
+
+    if (response.statusCode == HttpStatus.ok) {
+      final profileResponse = InfoResponseModel.fromJson(response.data);
       return profileResponse.data;
     } else {
       throw ServerException();

@@ -33,4 +33,14 @@ class LoginRepoImpl implements LoginRepository {
       return const ServerFailure();
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> updateDeviceToken(String token) async {
+    try {
+      final result = await dataSource.updateDeviceToken(token);
+      return Right(result);
+    } catch (e) {
+      return const Left(ServerFailure());
+    }
+  }
 }

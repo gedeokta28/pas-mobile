@@ -5,7 +5,7 @@ import 'package:pas_mobile/features/home/domain/repositories/product_repository.
 import '../../../../core/error/failures.dart';
 
 abstract class GetProductListUseCase<Type> {
-  Future<Either<Failure, ProductListResponseModel>> call();
+  Future<Either<Failure, ProductListResponseModel>> call(String? type);
 }
 
 class GetProductList implements GetProductListUseCase<String> {
@@ -14,8 +14,8 @@ class GetProductList implements GetProductListUseCase<String> {
   GetProductList({required this.repository});
 
   @override
-  Future<Either<Failure, ProductListResponseModel>> call() async {
-    final result = await repository.getProductList();
+  Future<Either<Failure, ProductListResponseModel>> call(String? type) async {
+    final result = await repository.getProductList(type);
     return result.fold((l) => Left(l), (r) {
       return Right(r);
     });

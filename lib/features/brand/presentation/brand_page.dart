@@ -19,7 +19,7 @@ class BrandPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height) / 102;
+    final double itemHeight = (size.height) / 80;
     final double itemWidth = size.width / 60;
     return ChangeNotifierProvider(
       create: (_) => locator<BrandProvider>(),
@@ -45,7 +45,7 @@ class BrandPage extends StatelessWidget {
                             child: GridView.builder(
                                 gridDelegate:
                                     SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 150,
+                                        maxCrossAxisExtent: 120,
                                         childAspectRatio:
                                             (itemWidth / itemHeight),
                                         crossAxisSpacing: 10),

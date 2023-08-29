@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/presentation/update_fcm_token_provider.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
 import 'package:pas_mobile/features/register/presentation/register_page.dart';
@@ -24,16 +25,17 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  final _deviceTokenProvider = locator<DeviceTokenProvider>();
+
   void submit() {
     final provider = context.read<LoginProvider>();
     provider.doLoginApi().listen((state) async {
       switch (state.runtimeType) {
         case LoginFailure:
-          // showShortToast(message: msg);
           showShortToast(message: "Periksa Email dan Password Anda");
-
           break;
         case LoginSuccess:
+          _deviceTokenProvider.checkDeviceToken();
           Navigator.pushReplacementNamed(
               locator<GlobalKey<NavigatorState>>().currentContext!,
               MainPage.routeName);
@@ -81,9 +83,9 @@ class _LoginFormState extends State<LoginForm> {
                 onTap: () {
                   Navigator.pushNamed(context, ForgotPasswordPage.routeName);
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Text("Lupa Password ?",
                         textAlign: TextAlign.end,
                         style: TextStyle(

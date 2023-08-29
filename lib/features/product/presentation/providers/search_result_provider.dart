@@ -3,6 +3,7 @@ import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 
+import '../../../home/data/models/category_list_response_model.dart';
 import '../../../home/domain/usecases/get_category_list.dart';
 import '../../../home/presentation/providers/category_selection_state.dart';
 import '../../../home/presentation/providers/product_state.dart';
@@ -42,7 +43,7 @@ class SearchResultProvider extends ChangeNotifier {
     logMe("asdaaa");
     yield ProductLoading();
 
-    final result = await getProductList();
+    final result = await getProductList(null);
     yield* result.fold(
       (failure) async* {
         yield ProductFailure(failure: failure);
@@ -70,7 +71,14 @@ class SearchResultProvider extends ChangeNotifier {
         yield CategorySelectionFailure(failure: failure);
       },
       (data) async* {
-        yield CategorySelectionLoaded(data: data.data);
+        List<Category> _categoryList = [];
+        _categoryList = data.data;
+        _categoryList.sort((a, b) {
+          return a.categoryname
+              .toLowerCase()
+              .compareTo(b.categoryname.toLowerCase());
+        });
+        yield CategorySelectionLoaded(data: _categoryList);
       },
     );
   }
