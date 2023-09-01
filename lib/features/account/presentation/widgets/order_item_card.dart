@@ -38,12 +38,12 @@ class OrderItemCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    orderData.products[0].stockthumb != null
+                    orderData.products[0].stock.photourl.isNotEmpty
                         ? Image(
                             height: App(context).appWidth(20),
                             width: App(context).appWidth(20),
-                            image:
-                                NetworkImage(orderData.products[0].stockthumb),
+                            image: NetworkImage(
+                                orderData.products[0].stock.photourl),
                           )
                         : Image(
                             height: App(context).appWidth(20),
@@ -51,59 +51,63 @@ class OrderItemCard extends StatelessWidget {
                             image: const AssetImage(ASSETS_PLACEHOLDER),
                           ),
                     smallHorizontalSpacing(),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          orderData.products[0].stockname,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          '${orderData.products.length} produk',
-                          style: const TextStyle(
-                            fontSize: 13,
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            orderData.products[0].stockname,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold),
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Qty : ${orderData.products[0].qtyorder}',
-                          style:
-                              const TextStyle(color: Colors.grey, fontSize: 13),
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            const Text(
-                              'Total : ',
-                              style: TextStyle(fontSize: 13),
+                          const SizedBox(height: 5),
+                          Text(
+                            '${orderData.products.length} produk',
+                            style: const TextStyle(
+                              fontSize: 13,
                             ),
-                            Row(
-                              children: [
-                                const Text(
-                                  'Rp',
-                                  style: TextStyle(
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                Text(
-                                  convertPrice(orderData.salesordergrandtotal
-                                      .toString()),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            'Qty : ${orderData.products[0].qtyorder}',
+                            style: const TextStyle(
+                                color: Colors.grey, fontSize: 13),
+                          ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              const Text(
+                                'Total : ',
+                                style: TextStyle(fontSize: 13),
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Rp',
+                                    style: TextStyle(
+                                        fontSize: 11.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                  ),
+                                  Text(
+                                    convertPrice(orderData.salesordergrandtotal
+                                        .toString()),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

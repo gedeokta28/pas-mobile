@@ -54,7 +54,7 @@ class OrderDataSourceImpl implements OrderDataSource {
 
   @override
   Future<List<OrderDataList>> listOrder() async {
-    String path = 'api/orders';
+    String path = 'api/orders?orderby=salesorderno&direction=desc';
     dio.withToken();
 
     try {

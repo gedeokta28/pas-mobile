@@ -18,11 +18,11 @@ class OrderItemWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            productOrder.stockthumb != null
+            productOrder.stock.photourl.isNotEmpty
                 ? Image(
                     height: App(context).appWidth(15),
                     width: App(context).appWidth(15),
-                    image: NetworkImage(productOrder.stockthumb),
+                    image: NetworkImage(productOrder.stock.photourl),
                   )
                 : Image(
                     height: App(context).appWidth(15),

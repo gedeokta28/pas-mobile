@@ -144,6 +144,7 @@ class ProductOrder {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.stock,
   });
 
   final String id;
@@ -160,6 +161,7 @@ class ProductOrder {
   final DateTime createdAt;
   final DateTime updatedAt;
   final dynamic deletedAt;
+  final StockOrderDetail stock;
 
   factory ProductOrder.fromJson(Map<String, dynamic> json) => ProductOrder(
         id: json["id"],
@@ -175,6 +177,7 @@ class ProductOrder {
         nettotal: json["nettotal"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        stock: StockOrderDetail.fromJson(json["stock"]),
         deletedAt: json["deleted_at"],
       );
 
@@ -192,6 +195,88 @@ class ProductOrder {
         "nettotal": nettotal,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "stock": stock.toJson(),
         "deleted_at": deletedAt,
+      };
+}
+
+class StockOrderDetail {
+  final String stockid;
+  final String stockname;
+  final String barcode;
+  final String hrg1;
+  final String disclist1;
+  final String hrg2;
+  final String disclist2;
+  final String hrg3;
+  final String disclist3;
+  final String qty1;
+  final String qty2;
+  final String qty3;
+  final String berat;
+  final dynamic discountinued;
+  final String photourl;
+  final dynamic stockdescription;
+  final List<dynamic> images;
+
+  StockOrderDetail({
+    required this.stockid,
+    required this.stockname,
+    required this.barcode,
+    required this.hrg1,
+    required this.disclist1,
+    required this.hrg2,
+    required this.disclist2,
+    required this.hrg3,
+    required this.disclist3,
+    required this.qty1,
+    required this.qty2,
+    required this.qty3,
+    required this.berat,
+    required this.discountinued,
+    required this.photourl,
+    required this.stockdescription,
+    required this.images,
+  });
+
+  factory StockOrderDetail.fromJson(Map<String, dynamic> json) =>
+      StockOrderDetail(
+        stockid: json["stockid"],
+        stockname: json["stockname"],
+        barcode: json["barcode"],
+        hrg1: json["hrg1"],
+        disclist1: json["disclist1"],
+        hrg2: json["hrg2"],
+        disclist2: json["disclist2"],
+        hrg3: json["hrg3"],
+        disclist3: json["disclist3"],
+        qty1: json["qty1"],
+        qty2: json["qty2"],
+        qty3: json["qty3"],
+        berat: json["berat"],
+        discountinued: json["discountinued"],
+        photourl: json["photourl"] ?? '',
+        stockdescription: json["stockdescription"],
+        images: List<dynamic>.from(json["images"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "stockid": stockid,
+        "stockname": stockname,
+        "barcode": barcode,
+        "hrg1": hrg1,
+        "disclist1": disclist1,
+        "hrg2": hrg2,
+        "disclist2": disclist2,
+        "hrg3": hrg3,
+        "disclist3": disclist3,
+        "qty1": qty1,
+        "qty2": qty2,
+        "qty3": qty3,
+        "berat": berat,
+        "discountinued": discountinued,
+        "photourl": photourl,
+        "stockdescription": stockdescription,
+        "images": List<dynamic>.from(images.map((x) => x)),
       };
 }

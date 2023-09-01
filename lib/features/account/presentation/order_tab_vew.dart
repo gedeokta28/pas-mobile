@@ -78,26 +78,31 @@ class OrderProfileTabState extends State<OrderProfileTab>
                     color: Colors.grey),
               ));
             } else {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 50),
+              return SingleChildScrollView(
+                controller: _scrollController,
                 child: RefreshIndicator(
                   onRefresh: provider.refreshData,
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(
-                                context, OrderDetailPage.routeName,
-                                arguments: OrderDetailPageArguments(
-                                    orderId:
-                                        provider.listOrder[index].salesorderno,
-                                    isFromCheckout: false));
-                          },
-                          child: OrderItemCard(
-                              orderData: provider.listOrder[index]));
-                    },
-                    itemCount: provider.listOrder.length,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                  context, OrderDetailPage.routeName,
+                                  arguments: OrderDetailPageArguments(
+                                      orderId: provider
+                                          .listOrder[index].salesorderno,
+                                      isFromCheckout: false));
+                            },
+                            child: OrderItemCard(
+                                orderData: provider.listOrder[index]));
+                      },
+                      itemCount: provider.listOrder.length,
+                    ),
                   ),
                 ),
               );

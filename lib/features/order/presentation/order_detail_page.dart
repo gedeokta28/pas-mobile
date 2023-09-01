@@ -249,7 +249,8 @@ class OrderDetailPage extends StatelessWidget {
                         ),
                         mediumVerticalSpacing(),
                         if (_data.status ==
-                            StatusOrder.paymentPending.getString())
+                                StatusOrder.paymentPending.getString() ||
+                            _data.status == 'payment_pending')
                           PaymentMethodDetailWidget(
                               paymentMethod: _data.paymentype)
                         else if (_data.paymentype ==

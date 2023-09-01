@@ -57,7 +57,7 @@ class CartItem extends StatelessWidget {
                   SizedBox(
                     width: App(context).appWidth(60),
                     child: Text(
-                      'Rp. ${convertPrice(provider.cart[index].productPrice!.value.toString())}',
+                      'Rp. ${convertPrice((provider.cart[index].productPrice!.value * provider.cart[index].quantity!.value).toString())}',
                       maxLines: 1,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),

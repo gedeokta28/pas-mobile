@@ -10,13 +10,14 @@ class StatusOrderContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (statusOrder == StatusOrder.paymentPending.getString()) {
+    if (statusOrder == StatusOrder.paymentPending.getString() ||
+        statusOrder == 'payment_pending') {
       return Container(
         color: pendingContainerColor,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            statusOrder,
+            StatusOrder.paymentPending.toValue(),
             style: const TextStyle(
                 color: pendingTextColor,
                 fontSize: 13,
@@ -30,7 +31,7 @@ class StatusOrderContainer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            statusOrder,
+            StatusOrder.processing.toValue(),
             style: const TextStyle(
                 color: processingTextColor,
                 fontSize: 13,
@@ -44,7 +45,7 @@ class StatusOrderContainer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            statusOrder,
+            StatusOrder.holdOn.toValue(),
             style: const TextStyle(
                 color: holdTextColor,
                 fontSize: 13,
@@ -58,7 +59,7 @@ class StatusOrderContainer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            statusOrder,
+            StatusOrder.cancelled.toValue(),
             style: const TextStyle(
                 color: cancelTextColor,
                 fontSize: 13,
@@ -72,7 +73,7 @@ class StatusOrderContainer extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            statusOrder,
+            StatusOrder.completed.toValue(),
             style: const TextStyle(
                 color: completedTextColor,
                 fontSize: 13,

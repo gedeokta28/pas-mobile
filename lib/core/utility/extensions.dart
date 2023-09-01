@@ -38,4 +38,19 @@ extension StatusOrderString on StatusOrder {
         return 'completed';
     }
   }
+
+  String toValue() {
+    switch (this) {
+      case StatusOrder.paymentPending:
+        return 'Payment Pending';
+      case StatusOrder.processing:
+        return 'Processing';
+      case StatusOrder.holdOn:
+        return 'Hold On';
+      case StatusOrder.cancelled:
+        return 'Cancelled';
+      case StatusOrder.completed:
+        return 'Completed';
+    }
+  }
 }

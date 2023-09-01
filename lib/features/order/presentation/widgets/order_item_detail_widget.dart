@@ -17,11 +17,11 @@ class OrderItemDetailWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 5.0),
         child: Row(
           children: [
-            productOrder.stockthumb != null
+            productOrder.stock.photourl.isNotEmpty
                 ? Image(
                     height: App(context).appWidth(17),
                     width: App(context).appWidth(17),
-                    image: NetworkImage(productOrder.stockthumb),
+                    image: NetworkImage(productOrder.stock.photourl),
                   )
                 : Image(
                     height: App(context).appWidth(17),
@@ -29,35 +29,37 @@ class OrderItemDetailWidget extends StatelessWidget {
                     image: const AssetImage(ASSETS_PLACEHOLDER),
                   ),
             smallHorizontalSpacing(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  productOrder.stockname,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
-                ),
-                const SizedBox(height: 3.0),
-                Text(
-                  '${productOrder.qtyorder}x  Rp. ${convertPrice(productOrder.price.toString())}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontSize: FONT_GENERAL, color: Colors.black54),
-                ),
-                const SizedBox(height: 3.0),
-                Text(
-                  'Total :  Rp. ${convertPrice(productOrder.nettotal.toString())}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: FONT_GENERAL,
-                      color: Colors.black54),
-                ),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    productOrder.stockname,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
+                  ),
+                  const SizedBox(height: 3.0),
+                  Text(
+                    '${productOrder.qtyorder}x  Rp. ${convertPrice(productOrder.price.toString())}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: FONT_GENERAL, color: Colors.black54),
+                  ),
+                  const SizedBox(height: 3.0),
+                  Text(
+                    'Total :  Rp. ${convertPrice(productOrder.nettotal.toString())}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: FONT_GENERAL,
+                        color: Colors.black54),
+                  ),
+                ],
+              ),
             ),
 
             // mediumHorizontalSpacing(),
