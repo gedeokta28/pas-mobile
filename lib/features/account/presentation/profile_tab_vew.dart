@@ -127,7 +127,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                     SizedBox(
                                       width: App(context).appWidth(15),
                                       child: const Text(
-                                        "Username",
+                                        "Nama",
                                         style: TextStyle(
                                             fontSize: 13,
                                             color: Colors.black87),
@@ -142,7 +142,7 @@ class ProfileAccountTabState extends State<ProfileAccountTab>
                                       child: SizedBox(
                                         width: App(context).appWidth(50),
                                         child: Text(
-                                          _data.username,
+                                          _data.customername,
                                           maxLines: 1,
                                           style: const TextStyle(
                                               fontSize: 13,

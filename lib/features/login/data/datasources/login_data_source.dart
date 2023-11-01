@@ -35,13 +35,13 @@ class LoginDataSourceImplementation implements LoginDataSource {
 
   @override
   Future<bool> updateDeviceToken(String token) async {
-    const path = 'api/fcm_token';
+    const path = 'api/fcm-token';
     final data = {
       'fcm_token': token,
     };
     try {
       dio.withToken();
-      final response = await dio.put(path, data: data);
+      final response = await dio.patch(path, data: data);
       return response.statusCode == HttpStatus.ok;
     } catch (e) {
       rethrow;

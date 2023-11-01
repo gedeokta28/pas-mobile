@@ -47,7 +47,7 @@ Future<void> sessionLogOut() async {
 
 Options options({Map<String, dynamic>? headers}) => Options(
       headers: headers,
-      validateStatus: (status) => (status ?? 0) == 200,
+      validateStatus: (status) => (status ?? 0) == 200 || (status ?? 0) == 201,
     );
 
 showLoading() {
@@ -86,7 +86,7 @@ void showShortToast({required String message, Color? color}) {
 
 String convertPrice(String price) {
   double d = double.parse(price);
-  final currencyFormatter = NumberFormat('#,##0', 'ID');
+  final currencyFormatter = NumberFormat('#,##0.0', 'ID');
   return currencyFormatter.format(d).toString();
 }
 
@@ -95,7 +95,7 @@ String convertPriceDisc(String price, String disc) {
   double discParse = double.parse(disc);
   double percent = (discParse / 100) * d;
   double result = d - percent;
-  final currencyFormatter = NumberFormat('#,##0', 'ID');
+  final currencyFormatter = NumberFormat('#,##0.0', 'ID');
   return currencyFormatter.format(result).toString();
 }
 
@@ -113,9 +113,13 @@ String convertWeight(String weight) {
   }
 }
 
-int removeToPrice(String price) {
+double removeToPrice(String price) {
+  logMe('priceeee $price');
   String weightTxt = price.replaceAll('.', '');
-  int result = int.parse(weightTxt);
+  String weightTxtResult = weightTxt.replaceAll(',', '.');
+  logMe('priceeee $weightTxtResult');
+
+  double result = double.parse(weightTxtResult);
   return result;
 }
 
@@ -326,7 +330,11 @@ String getQuantity(
   if (hrg == 1) {
     if (maxQty1Int < 0) {
       if (minQty2Int == 0) {
-        result = "$minQty1Int - $maxQty2Int $satuan1";
+        if (maxQty2Int < 0) {
+          result = "$minQty1Int $satuan1";
+        } else {
+          result = "$minQty1Int - $maxQty2Int $satuan1";
+        }
       } else {
         result = "$minQty1Int  $satuan1";
       }

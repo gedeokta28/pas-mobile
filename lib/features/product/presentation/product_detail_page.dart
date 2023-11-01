@@ -114,53 +114,57 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       );
                       checkUserSession().then((value) {
                         if (value) {
-                          showLoading();
-                          FormData formData = FormData.fromMap({
-                            'stockid': _providerProduct.productId,
-                            'qty': 1,
-                          });
-                          provider.addProductToCart(formData).listen((event) {
-                            if (event is AddToCartSuccess) {
-                              provider.fetchCart().listen((event) {
-                                if (event is CartItemSuccess) {
-                                  dismissLoading();
+                          if (_providerProduct.productDiscontinued == '0') {
+                            showLoading();
+                            FormData formData = FormData.fromMap({
+                              'stockid': _providerProduct.productId,
+                              'qty': 1,
+                            });
+                            provider.addProductToCart(formData).listen((event) {
+                              if (event is AddToCartSuccess) {
+                                provider.fetchCart().listen((event) {
+                                  if (event is CartItemSuccess) {
+                                    dismissLoading();
 
-                                  _appBarProvider.setTotalCartItem =
-                                      event.data.length;
-                                  showDialog(
+                                    _appBarProvider.setTotalCartItem =
+                                        event.data.length;
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        Future.delayed(
+                                          const Duration(seconds: 1),
+                                          () {
+                                            Navigator.of(context).pop(true);
+                                          },
+                                        );
+                                        return const CustomDialogCart(
+                                          text: 'Produk Dimasukkan Keranjang',
+                                        );
+                                      },
+                                    );
+                                  }
+                                });
+
+                                // Navigator.pushNamed(context, CartPage.routeName);
+                              } else if (event is AddToCartFailure) {
+                                dismissLoading();
+                                final msg = getErrorMessage(event.failure);
+                                showDialog(
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (context) {
-                                      Future.delayed(
-                                        const Duration(seconds: 1),
-                                        () {
-                                          Navigator.of(context).pop(true);
-                                        },
-                                      );
-                                      return const CustomDialogCart(
-                                        text: 'Produk Dimasukkan Keranjang',
-                                      );
-                                    },
-                                  );
-                                }
-                              });
-
-                              // Navigator.pushNamed(context, CartPage.routeName);
-                            } else if (event is AddToCartFailure) {
-                              dismissLoading();
-                              final msg = getErrorMessage(event.failure);
-                              showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return CustomSimpleDialog(
-                                        text: msg,
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        });
-                                  });
-                            }
-                          });
+                                      return CustomSimpleDialog(
+                                          text: msg,
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          });
+                                    });
+                              }
+                            });
+                          } else {
+                            showShortToast(message: 'Produk Tidak Tersedia');
+                          }
                         } else {
                           Navigator.pushNamed(context, LoginPage.routeName);
                         }

@@ -5,8 +5,8 @@ class Cart {
   late final String? id;
   final String? productId;
   final String? productName;
-  final int? initialPrice;
-  final ValueNotifier<int>? productPrice;
+  final double? initialPrice;
+  final ValueNotifier<double>? productPrice;
   final ValueNotifier<int>? quantity;
   final String? unitTag;
   final String? image;

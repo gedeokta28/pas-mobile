@@ -25,6 +25,7 @@ class ProductProvider extends ChangeNotifier {
   final int _variantTotal = 1;
   late String _productPrice = '';
   late String _productName = '';
+  late String _productDiscontinued = '';
   late String _productDescription = '';
   late String _productWeight = '';
   late String _productId = '';
@@ -39,6 +40,7 @@ class ProductProvider extends ChangeNotifier {
   int get variantTotal => _variantTotal;
   String get productPrice => _productPrice;
   String get productName => _productName;
+  String get productDiscontinued => _productDiscontinued;
   String get productDescription => _productDescription;
   String get productWeight => _productWeight;
   String get productId => _productId;
@@ -63,6 +65,7 @@ class ProductProvider extends ChangeNotifier {
     if (productDetail != null) {
       _productPrice = productDetail.hrg1;
       _productName = productDetail.stockname;
+      _productDiscontinued = productDetail.discountinued;
       _productDescription = productDetail.stockdescription;
       _productWeight = productDetail.berat;
       _isProductVariantSelected = false;
@@ -71,6 +74,7 @@ class ProductProvider extends ChangeNotifier {
     } else if (productVariantSelected != null) {
       _productPrice = productVariantSelected.hrg1;
       _productDescription = productVariantSelected.stockdescription;
+      _productDiscontinued = productVariantSelected.discountinued;
       _productName = productVariantSelected.stockname;
       _productWeight = productVariantSelected.berat;
       _isProductVariantSelected = true;

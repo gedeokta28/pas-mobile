@@ -1,0 +1,55 @@
+ // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
+    // logMe(cart[index].priceGrosirCart![0].price);
+    // logMe(cart[index].priceGrosirCart![1].price);
+    // logMe(cart[index].priceGrosirCart![2].price);
+    // logMe(cart[index].priceGrosirCart![3].price);
+
+    // if (cart[index].quantity!.value >= minUnit1 &&
+    //     cart[index].quantity!.value <= maxUnit1) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
+    // } else {}
+    // else if (cart[index].quantity!.value >= minUnit2 &&
+    //     cart[index].quantity!.value <= maxUnit2) {
+    //   logMe('elseeee 2');
+    //   logMe('elseeee 2 $maxUnit2');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
+    // } else if (cart[index].quantity!.value >= minUnit3) {
+    //   logMe('elseeee 3');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
+    // } else {
+    //   logMe('elseeee 4');
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
+    // }
+
+
+
+       // _setPrefsItems();
+    // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
+    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
+    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
+    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
+    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
+
+    // if (cart[index].quantity!.value >= minUnit1 &&
+    //     cart[index].quantity!.value <= maxUnit1) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
+    // } else if (cart[index].quantity!.value >= minUnit2 &&
+    //     cart[index].quantity!.value <= maxUnit2) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
+    // } else if (cart[index].quantity!.value >= minUnit3) {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
+    // } else {
+    //   cart[index].productPrice!.value =
+    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
+    // }

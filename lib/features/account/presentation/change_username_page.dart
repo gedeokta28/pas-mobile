@@ -34,7 +34,7 @@ class ChangeUsernamePage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: const CustomAppBar(
-          title: "Ubah Username",
+          title: "Ubah Nama",
           centerTitle: true,
           canBack: true,
           hideShadow: false,
@@ -50,7 +50,7 @@ class ChangeUsernamePage extends StatelessWidget {
                 children: [
                   largeVerticalSpacing(),
                   CustomClearTextField(
-                    title: "Username",
+                    title: "Nama",
                     controller: provider.usernameController,
                     inputType: TextInputType.text,
                     fieldValidator: ValidationHelper(
@@ -67,7 +67,7 @@ class ChangeUsernamePage extends StatelessWidget {
                     event: () {
                       if (provider.formKey.currentState!.validate()) {
                         Map<String, String> body = {
-                          'username': provider.usernameController.text,
+                          'customername': provider.usernameController.text,
                         };
                         provider.updateProfile(body).listen((event) {
                           if (event is UpdateProfileSuccess) {

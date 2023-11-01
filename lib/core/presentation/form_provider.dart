@@ -16,6 +16,10 @@ class FormProvider with ChangeNotifier {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _ktpController = TextEditingController();
+  final TextEditingController _contactPersonController =
+      TextEditingController();
+  final TextEditingController _npwpController = TextEditingController();
   final TextEditingController _companyNameController = TextEditingController();
   final TextEditingController _streetNameController = TextEditingController();
   final TextEditingController _detailAddressController =
@@ -61,6 +65,9 @@ class FormProvider with ChangeNotifier {
   TextEditingController get firstNameController => _firstNameController;
   TextEditingController get lastNameController => _lastNameController;
   TextEditingController get phoneNumberController => _phoneNumberController;
+  TextEditingController get contactPersonController => _contactPersonController;
+  TextEditingController get ktpController => _ktpController;
+  TextEditingController get npwpController => _npwpController;
   TextEditingController get companyNameController => _companyNameController;
   TextEditingController get streetNameController => _streetNameController;
   TextEditingController get detailAddressController => _detailAddressController;

@@ -64,7 +64,9 @@ class BestProductProvider extends ChangeNotifier {
       },
       (data) {
         setState = const QuickProductLoaded();
-        setProductList = data.data;
+        List<Product> dataFiltered =
+            data.data.where((element) => element.discountinued == "0").toList();
+        setProductList = dataFiltered;
         setNextUrl = data.links.next ?? '';
       },
     );
@@ -80,9 +82,11 @@ class BestProductProvider extends ChangeNotifier {
       (data) async* {
         setNextUrl = data.links.next ?? '';
         final temp = List<Product>.from(_productList);
-        temp.addAll(data.data);
+        List<Product> dataFiltered =
+            data.data.where((element) => element.discountinued == "0").toList();
+        temp.addAll(dataFiltered);
         setProductList = temp;
-        yield QuickProductRefreshLoaded(data: data.data);
+        yield QuickProductRefreshLoaded(data: dataFiltered);
       },
     );
   }

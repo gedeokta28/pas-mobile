@@ -59,20 +59,8 @@ class ChangePersonalInfoPage extends StatelessWidget {
                   children: [
                     mediumVerticalSpacing(),
                     CustomTextField(
-                      title: "*Nama Depan",
-                      controller: provider.firstNameController,
-                      inputType: TextInputType.text,
-                      fieldValidator: ValidationHelper(
-                        loc: appLoc,
-                        isError: (bool value) =>
-                            provider.setUsernameError = value,
-                        typeField: TypeField.username,
-                      ).validate(),
-                    ),
-                    mediumVerticalSpacing(),
-                    CustomTextField(
-                      title: "*Nama Belakang",
-                      controller: provider.lastNameController,
+                      title: "*Nama",
+                      controller: provider.usernameController,
                       inputType: TextInputType.text,
                       fieldValidator: ValidationHelper(
                         loc: appLoc,
@@ -140,8 +128,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                                     ),
                                     hint: const Text(
                                       "Pilih Provinsi",
-                                      style:
-                                          TextStyle(color: Colors.grey),
+                                      style: TextStyle(color: Colors.grey),
                                     ),
                                     value: provider.selectedProvince,
                                     onChanged: (Province? item) {
@@ -232,8 +219,7 @@ class ChangePersonalInfoPage extends StatelessWidget {
                             logMe("asdadasda");
                             logMe(provider.firstNameController.text);
                             Map<String, String> body = {
-                              'firstname': provider.firstNameController.text,
-                              'lastname': provider.lastNameController.text,
+                              'customername': provider.usernameController.text,
                               'email': provider.emailController.text,
                               'phone': provider.phoneNumberController.text,
                               'companyname':

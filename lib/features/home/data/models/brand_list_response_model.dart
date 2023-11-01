@@ -49,7 +49,7 @@ class BrandList {
 
   factory BrandList.fromJson(Map<String, dynamic> json) => BrandList(
         brandid: json["brandid"],
-        brandname: json["brandname"],
+        brandname: json["brandname"] ?? '-',
         photo: json["photo"] ?? '',
       );
 

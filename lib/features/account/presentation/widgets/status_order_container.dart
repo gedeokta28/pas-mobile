@@ -39,13 +39,13 @@ class StatusOrderContainer extends StatelessWidget {
           ),
         ),
       );
-    } else if (statusOrder == StatusOrder.holdOn.getString()) {
+    } else if (statusOrder == StatusOrder.onDelivery.getString()) {
       return Container(
         color: holdContainerColor,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            StatusOrder.holdOn.toValue(),
+            StatusOrder.onDelivery.toValue(),
             style: const TextStyle(
                 color: holdTextColor,
                 fontSize: 13,

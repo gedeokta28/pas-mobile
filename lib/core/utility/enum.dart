@@ -12,6 +12,8 @@ enum TypeField {
   shippingAddressDetail,
 }
 
+enum AccountType { personal, company }
+
 enum TypeFilter { onlyKeyword, onlyCategory, onlyBrand, customFilter }
 
 enum ProductPageParams { fromCategory, fromBrand, fromHome }
@@ -21,4 +23,10 @@ enum PaymentMethod {
   trasnfer,
 }
 
-enum StatusOrder { paymentPending, processing, holdOn, cancelled, completed }
+enum StatusOrder {
+  paymentPending,
+  processing,
+  onDelivery,
+  cancelled,
+  completed
+}

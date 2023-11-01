@@ -24,6 +24,9 @@ class SearchProvider with ChangeNotifier {
   late FilterParameter _filterParameterSelected = FilterParameter();
   final FocusNode _focusNode = FocusNode();
   late List<ProductSearch> _listProductSearch = [];
+  bool _isLoadingMoreData = false;
+  bool _isStopLoad = false;
+  int _limitData = 10;
   late List<ProductFilter> _listProductFilter = [];
   String _selectedValue = "terbaru";
   bool _isFocus = false;
@@ -31,19 +34,49 @@ class SearchProvider with ChangeNotifier {
   bool _isLoadingProduct = false;
   bool _isSearch = false;
   bool _isSearchResult = false;
-
+  late final ScrollController _scrollController =
+      ScrollController(initialScrollOffset: 5.0)..addListener(_scrollListener);
   // getter
   TextEditingController get controller => _controller;
   String get selectedValue => _selectedValue;
   FilterParameter get filterParameterSelected => _filterParameterSelected;
   FocusNode get focusNode => _focusNode;
   bool get isFocus => _isFocus;
+  bool get isStopLoad => _isStopLoad;
+  bool get isLoadingMoreData => _isLoadingMoreData;
   bool get isLoadingSearch => _isLoadingSearch;
   bool get isLoadingProduct => _isLoadingProduct;
   bool get isSearch => _isSearch;
+  ScrollController get scrollController => _scrollController;
   bool get isSearchResult => _isSearchResult;
   List<ProductSearch> get listProductSearch => _listProductSearch;
   List<ProductFilter> get listProductFilter => _listProductFilter;
+  _scrollListener() {
+    if (_scrollController.offset >=
+            _scrollController.position.maxScrollExtent &&
+        !_scrollController.position.outOfRange) {
+      if (_isStopLoad) {
+        logMe("stopp");
+      } else {
+        logMe('gett notifyListeners');
+        _isLoadingMoreData = true;
+        notifyListeners();
+        _limitData = _limitData + 10;
+        logMe('gett getttt');
+        FilterParameter filterParameter = FilterParameter(
+            limit: _limitData,
+            brandId: _filterParameterSelected.brandId,
+            categoryId: _filterParameterSelected.categoryId,
+            keyword: _controller.text,
+            priceEnd: _filterParameterSelected.priceEnd,
+            priceStart: _filterParameterSelected.priceStart,
+            priceBy: _filterParameterSelected.priceBy);
+        filterCustomProductLoadMore(filterParameter).listen((event) {});
+        // }
+      }
+      // }
+    }
+  }
 
   // setter
   set setSelectedVal(val) {
@@ -89,6 +122,48 @@ class SearchProvider with ChangeNotifier {
     return menuItems;
   }
 
+  Stream<SearchState> filterCustomProductLoadMore(
+      FilterParameter filterParameter) async* {
+    _isLoadingMoreData = true;
+    yield SearchLoading();
+    final result =
+        await doFilterProduct(TypeFilter.customFilter, filterParameter);
+    yield* result.fold(
+      (failure) async* {
+        _isLoadingMoreData = false;
+        notifyListeners();
+        yield SearchFailure(failure: failure);
+      },
+      (data) async* {
+        _isLoadingMoreData = false;
+        _listProductFilter.clear();
+        List<ProductFilter> dataFilteredDisc =
+            data.where((element) => element.discountinued == "0").toList();
+        List<ProductFilter> dataFilteredDiscFalse =
+            data.where((element) => element.discountinued == "1").toList();
+        _listProductFilter = dataFilteredDisc;
+        if ((dataFilteredDisc.length + dataFilteredDiscFalse.length) <
+            _limitData) {
+          logMe("stopppp filterCustomProductLoadMore");
+          logMe("stopppp ${dataFilteredDiscFalse.length}");
+          logMe("stopppp ${dataFilteredDisc.length}");
+          logMe("stopppp $_limitData");
+          logMe(dataFilteredDisc.length);
+          logMe(dataFilteredDiscFalse.length);
+          logMe(_limitData);
+          _isStopLoad = true;
+        } else {
+          logMe("nextt filterCustomProductLoadMore");
+          logMe(dataFilteredDisc.length);
+          logMe(dataFilteredDiscFalse.length);
+          logMe(_limitData);
+        }
+        notifyListeners();
+        yield FilterLoaded(data: data);
+      },
+    );
+  }
+
   Stream<SearchState> searchProductList(String keyword) async* {
     if (controller.text.isEmpty) {
       _isSearch = false;
@@ -125,7 +200,7 @@ class SearchProvider with ChangeNotifier {
     notifyListeners();
     yield SearchLoading();
     final result = await doFilterProduct(
-        TypeFilter.onlyKeyword, FilterParameter(keyword: keyword));
+        TypeFilter.customFilter, FilterParameter(keyword: keyword));
     yield* result.fold(
       (failure) async* {
         _isLoadingProduct = false;
@@ -134,7 +209,9 @@ class SearchProvider with ChangeNotifier {
       },
       (data) async* {
         _isLoadingProduct = false;
-        _listProductFilter = data;
+        List<ProductFilter> dataFiltered =
+            data.where((element) => element.discountinued == "0").toList();
+        _listProductFilter = dataFiltered;
         notifyListeners();
         yield FilterLoaded(data: data);
       },
@@ -160,7 +237,9 @@ class SearchProvider with ChangeNotifier {
       },
       (data) async* {
         _isLoadingProduct = false;
-        _listProductFilter = data;
+        List<ProductFilter> dataFiltered =
+            data.where((element) => element.discountinued == "0").toList();
+        _listProductFilter = dataFiltered;
         notifyListeners();
         yield FilterLoaded(data: data);
       },

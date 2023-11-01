@@ -189,7 +189,7 @@ class OrderDetailPage extends StatelessWidget {
                       );
                     } else {
                       return const Center(
-                        child: Text('Ada Kesalaha asdasdan'),
+                        child: Text('Ada Kesalahan'),
                       );
                     }
                   }),
@@ -366,7 +366,7 @@ class OrderDetailPage extends StatelessWidget {
                     );
                   } else {
                     return const Center(
-                      child: Text('Ada Kesalaha asdasdan'),
+                      child: Text('Ada Kesalahan'),
                     );
                   }
                 }),

@@ -65,7 +65,7 @@ class DetailOrder {
   final String customerid;
   final dynamic paymentype;
   final dynamic salespersonid;
-  final int salesordergrandtotal;
+  final dynamic salesordergrandtotal;
   final dynamic dpp;
   final dynamic ppn;
   final dynamic ppnpercent;
@@ -156,8 +156,8 @@ class ProductOrder {
   final int price;
   final dynamic discountpercent;
   final dynamic discountamount;
-  final int netprice;
-  final int nettotal;
+  final dynamic netprice;
+  final dynamic nettotal;
   final DateTime createdAt;
   final DateTime updatedAt;
   final dynamic deletedAt;

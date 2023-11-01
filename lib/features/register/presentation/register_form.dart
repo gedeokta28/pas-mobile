@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/presentation/update_fcm_token_provider.dart';
+import 'package:pas_mobile/core/utility/extensions.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
+import 'package:pas_mobile/features/register/presentation/custom_dropdown.dart';
 import 'package:pas_mobile/features/register/presentation/providers/register_provider.dart';
 import 'package:pas_mobile/features/register/presentation/providers/register_state.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +25,8 @@ class RegisterForm extends StatefulWidget {
 }
 
 class _RegisterFormState extends State<RegisterForm> {
+  final _deviceTokenProvider = locator<DeviceTokenProvider>();
+
   void submit() {
     final provider = context.read<RegisterProvider>();
     provider.doRegisterApi().listen((state) async {
@@ -31,6 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
           showShortToast(message: msg);
           break;
         case RegisterSuccess:
+          _deviceTokenProvider.checkDeviceToken();
           Navigator.pushReplacementNamed(
               locator<GlobalKey<NavigatorState>>().currentContext!,
               MainPage.routeName);
@@ -53,13 +59,95 @@ class _RegisterFormState extends State<RegisterForm> {
             children: [
               largeVerticalSpacing(),
               CustomTextField(
-                title: "Username",
+                title: "Nama",
                 controller: provider.usernameController,
                 inputType: TextInputType.text,
                 fieldValidator: ValidationHelper(
                   loc: appLoc,
                   isError: (bool value) => provider.setUsernameError = value,
-                  typeField: TypeField.username,
+                  typeField: TypeField.none,
+                ).validate(),
+              ),
+              mediumVerticalSpacing(),
+              CustomDropdownButtonWidget(
+                value: provider.dropdownValue,
+                items: <String>[
+                  AccountType.personal.getValue(),
+                  AccountType.company.getValue(),
+                ].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(value == AccountType.personal.getValue()
+                            ? AccountType.personal.toStrings()
+                            : AccountType.company.toStrings()),
+                        const Divider(),
+                      ],
+                    ),
+                  );
+                }).toList(),
+                onChange: (value) {
+                  provider.dropdownValue = value;
+                },
+                selectedItemWidget: (context) {
+                  return <String>[
+                    AccountType.personal.toStrings(),
+                    AccountType.company.toStrings()
+                  ].map((String value) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Text(
+                        provider.dropdownValue ==
+                                AccountType.personal.getValue()
+                            ? AccountType.personal.toStrings()
+                            : AccountType.company.toStrings(),
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                    );
+                  }).toList();
+                },
+              ),
+              mediumVerticalSpacing(),
+              CustomTextField(
+                title: "No. KTP",
+                controller: provider.ktpController,
+                inputType: TextInputType.number,
+                fieldValidator: ValidationHelper(
+                  loc: appLoc,
+                  isError: (bool value) => provider.setUsernameError = value,
+                  typeField: TypeField.none,
+                ).validate(),
+              ),
+              mediumVerticalSpacing(),
+              CustomTextField(
+                title: "NPWP",
+                controller: provider.npwpController,
+                inputType: TextInputType.number,
+                fieldValidator: null,
+              ),
+              mediumVerticalSpacing(),
+              CustomTextField(
+                title: "Kontak Person",
+                controller: provider.contactPersonController,
+                inputType: TextInputType.text,
+                fieldValidator: ValidationHelper(
+                  loc: appLoc,
+                  isError: (bool value) => provider.setEmailError = value,
+                  typeField: TypeField.none,
+                ).validate(),
+              ),
+              mediumVerticalSpacing(),
+              CustomTextField(
+                title: "No. Telpon",
+                controller: provider.phoneNumberController,
+                inputType: TextInputType.phone,
+                fieldValidator: ValidationHelper(
+                  loc: appLoc,
+                  isError: (bool value) => provider.setUsernameError = value,
+                  typeField: TypeField.none,
                 ).validate(),
               ),
               mediumVerticalSpacing(),
@@ -82,7 +170,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 fieldValidator: ValidationHelper(
                   loc: appLoc,
                   isError: (bool value) => provider.setPasswordError = value,
-                  typeField: TypeField.password,
+                  typeField: TypeField.none,
                 ).validate(),
               ),
               largeVerticalSpacing(),

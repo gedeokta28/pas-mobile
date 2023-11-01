@@ -12,6 +12,26 @@ extension DynamicHeader on Dio {
   }
 }
 
+extension AccountTypeString on AccountType {
+  String getValue() {
+    switch (this) {
+      case AccountType.personal:
+        return 'personal';
+      case AccountType.company:
+        return 'company';
+    }
+  }
+
+  String toStrings() {
+    switch (this) {
+      case AccountType.personal:
+        return 'Pribadi';
+      case AccountType.company:
+        return 'Perusahaan';
+    }
+  }
+}
+
 extension LocalizationString on PaymentMethod {
   String getString() {
     switch (this) {
@@ -30,8 +50,8 @@ extension StatusOrderString on StatusOrder {
         return 'payment pending';
       case StatusOrder.processing:
         return 'processing';
-      case StatusOrder.holdOn:
-        return 'hold_on';
+      case StatusOrder.onDelivery:
+        return 'on_delivery';
       case StatusOrder.cancelled:
         return 'cancelled';
       case StatusOrder.completed:
@@ -45,8 +65,8 @@ extension StatusOrderString on StatusOrder {
         return 'Payment Pending';
       case StatusOrder.processing:
         return 'Processing';
-      case StatusOrder.holdOn:
-        return 'Hold On';
+      case StatusOrder.onDelivery:
+        return 'On Delivery';
       case StatusOrder.cancelled:
         return 'Cancelled';
       case StatusOrder.completed:

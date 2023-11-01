@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:provider/provider.dart';
 
@@ -325,6 +326,7 @@ class _SearchPageState extends State<SearchPage> {
                               maxCrossAxisExtent: 200,
                               childAspectRatio: (itemWidth / itemHeight),
                             ),
+                            controller: provider.scrollController,
                             itemCount: provider.listProductFilter.length,
                             itemBuilder: (BuildContext ctx, index) {
                               return GestureDetector(
@@ -346,6 +348,15 @@ class _SearchPageState extends State<SearchPage> {
                                           provider.listProductFilter[index]));
                             }),
                       ),
+                      provider.isLoadingMoreData
+                          ? Center(
+                              child: Image.asset(
+                                ASSETS_LOADING,
+                                height: 30.0,
+                                width: 100.0,
+                              ),
+                            )
+                          : const SizedBox()
                     ],
                   ),
                 );

@@ -156,8 +156,8 @@ class BrandProduct {
   dynamic brandimage;
 
   factory BrandProduct.fromJson(Map<String, dynamic> json) => BrandProduct(
-        brandid: json["brandid"],
-        brandname: json["brandname"],
+        brandid: json["brandid"] ?? '',
+        brandname: json["brandname"] ?? '-',
         brandimage: json["brandimage"],
       );
 
@@ -182,7 +182,7 @@ class CategoryProduct {
   factory CategoryProduct.fromJson(Map<String, dynamic> json) =>
       CategoryProduct(
         categoryid: json["categoryid"],
-        categoryname: json["categoryname"],
+        categoryname: json["categoryname"] ?? '',
         categoryimage: json["categoryimage"],
       );
 

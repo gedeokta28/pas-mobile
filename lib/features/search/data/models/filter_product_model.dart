@@ -88,7 +88,7 @@ class ProductFilter {
   factory ProductFilter.fromJson(Map<String, dynamic> json) => ProductFilter(
         stockid: json["stockid"],
         stockname: json["stockname"],
-        barcode: json["barcode"],
+        barcode: json["barcode"] ?? '',
         hrg1: json["hrg1"],
         disclist1: json["disclist1"],
         hrg2: json["hrg2"],
@@ -151,7 +151,7 @@ class BrandFilterProduct {
   factory BrandFilterProduct.fromJson(Map<String, dynamic> json) =>
       BrandFilterProduct(
         brandid: json["brandid"],
-        brandname: json["brandname"],
+        brandname: json["brandname"] ?? '-',
         brandimage: json["brandimage"],
       );
 
@@ -176,7 +176,7 @@ class CategoryFilterProduct {
   factory CategoryFilterProduct.fromJson(Map<String, dynamic> json) =>
       CategoryFilterProduct(
         categoryid: json["categoryid"],
-        categoryname: json["categoryname"],
+        categoryname: json["categoryname"] ?? '',
         categoryimage: json["categoryimage"],
       );
 

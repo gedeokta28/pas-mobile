@@ -137,9 +137,7 @@ class ManagementAccountProvider extends FormProvider {
   }
 
   setProfileData(Profile profileData) async {
-    usernameController.text = profileData.username;
-    firstNameController.text = profileData.firstname ?? '';
-    lastNameController.text = profileData.lastname ?? '';
+    usernameController.text = profileData.customername;
     emailController.text = profileData.email;
     phoneNumberController.text = profileData.phone ?? '';
     companyNameController.text = profileData.companyname ?? '';

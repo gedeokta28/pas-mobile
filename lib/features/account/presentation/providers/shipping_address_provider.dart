@@ -132,9 +132,12 @@ class ShippingAddressProvider extends FormProvider {
       (data) async* {
         logMe("Provinceee");
         _provinceList = data;
+        _provinceList.sort((a, b) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
 
         notifyListeners();
-        yield RegionProvinceLoaded(data: data);
+        yield RegionProvinceLoaded(data: _provinceList);
       },
     );
   }

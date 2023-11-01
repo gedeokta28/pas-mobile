@@ -49,7 +49,7 @@ class Category {
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
         categoryid: json["categoryid"],
-        categoryname: json["categoryname"],
+        categoryname: json["categoryname"] ?? '',
         photo: json["photo"],
       );
 

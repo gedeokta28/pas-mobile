@@ -109,7 +109,7 @@ class CartPage extends StatelessWidget {
                   ),
                   Consumer<CartProvider>(
                     builder: (BuildContext context, value, Widget? child) {
-                      final ValueNotifier<int?> totalPrice =
+                      final ValueNotifier<double?> totalPrice =
                           ValueNotifier(null);
                       for (var element in value.cart) {
                         totalPrice.value = (element.productPrice!.value *
@@ -131,7 +131,7 @@ class CartPage extends StatelessWidget {
                         child: Column(
                           children: [
                             smallVerticalSpacing(),
-                            ValueListenableBuilder<int?>(
+                            ValueListenableBuilder<double?>(
                                 valueListenable: totalPrice,
                                 builder: (context, val, child) {
                                   return Column(

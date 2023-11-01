@@ -91,7 +91,7 @@ class _CheckoutPageState extends State<CheckoutPage>
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ));
               }
-              final ValueNotifier<int?> totalPrice = ValueNotifier(null);
+              final ValueNotifier<double?> totalPrice = ValueNotifier(null);
               for (var element in provider.cart) {
                 totalPrice.value =
                     (element.productPrice!.value * element.quantity!.value) +

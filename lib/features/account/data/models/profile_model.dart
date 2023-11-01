@@ -36,14 +36,12 @@ class ProfileModel {
 class Profile {
   Profile({
     required this.customerid,
-    required this.firstname,
-    required this.lastname,
+    required this.customername,
     required this.address,
     required this.province,
     required this.city,
     required this.postcode,
     required this.phone,
-    required this.username,
     required this.email,
     required this.password,
     required this.registerdate,
@@ -56,14 +54,12 @@ class Profile {
   });
 
   final String customerid;
-  final dynamic firstname;
-  final dynamic lastname;
+  final dynamic customername;
   final dynamic address;
   final dynamic province;
   final dynamic city;
   final dynamic postcode;
   final dynamic phone;
-  final String username;
   final String email;
   final String password;
   final DateTime registerdate;
@@ -76,20 +72,18 @@ class Profile {
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         customerid: json["customerid"],
-        firstname: json["firstname"],
-        lastname: json["lastname"],
-        address: json["address"],
+        customername: json["customername"],
+        address: json["address"] ?? '',
         province: json["province"],
-        city: json["city"],
-        postcode: json["postcode"],
+        city: json["city"] ?? '',
+        postcode: json["postcode"] ?? '',
         phone: json["phone"],
-        username: json["username"],
         email: json["email"],
         password: json["password"],
         registerdate: DateTime.parse(json["registerdate"]),
         contactperson: json["contactperson"],
-        npwp: json["npwp"],
-        companyname: json["companyname"],
+        npwp: json["npwp"] ?? '',
+        companyname: json["companyname"] ?? '',
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
@@ -97,14 +91,12 @@ class Profile {
 
   Map<String, dynamic> toJson() => {
         "customerid": customerid,
-        "firstname": firstname,
-        "lastname": lastname,
+        "customername": customername,
         "address": address,
         "province": province,
         "city": city,
         "postcode": postcode,
         "phone": phone,
-        "username": username,
         "email": email,
         "password": password,
         "registerdate": registerdate.toIso8601String(),

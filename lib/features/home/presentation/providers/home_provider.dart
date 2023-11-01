@@ -30,27 +30,29 @@ class HomeProvider extends ChangeNotifier {
       if (_isStopLoad) {
         logMe("stopp");
       } else {
+        logMe('gett notifyListeners');
         _isLoadingMoreData = true;
         notifyListeners();
 
-        if (_isLoadingMoreData) {
-          if (_isStopLoad) {
-            _isLoadingMoreData = false;
-            notifyListeners();
-          } else {
-            _limitData = _limitData + 10;
-            FilterParameter filterParameter = FilterParameter(
-                limit: _limitData,
-                brandId: _filterParameterSelected.brandId,
-                categoryId: _filterParameterSelected.categoryId,
-                keyword: _filterParameterSelected.keyword,
-                priceEnd: _filterParameterSelected.priceEnd,
-                priceStart: _filterParameterSelected.priceStart,
-                priceBy: _filterParameterSelected.priceBy);
-            filterCustomProductLoadMore(filterParameter).listen((event) {});
-          }
-        }
+        // if (_isLoadingMoreData) {
+        // if (_isStopLoad) {
+        //   _isLoadingMoreData = false;
+        //   notifyListeners();
+        // } else {
+        _limitData = _limitData + 10;
+        logMe('gett getttt');
+        FilterParameter filterParameter = FilterParameter(
+            limit: _limitData,
+            brandId: _filterParameterSelected.brandId,
+            categoryId: _filterParameterSelected.categoryId,
+            keyword: _filterParameterSelected.keyword,
+            priceEnd: _filterParameterSelected.priceEnd,
+            priceStart: _filterParameterSelected.priceStart,
+            priceBy: _filterParameterSelected.priceBy);
+        filterCustomProductLoadMore(filterParameter).listen((event) {});
+        // }
       }
+      // }
     }
   }
 
@@ -111,7 +113,9 @@ class HomeProvider extends ChangeNotifier {
         yield ProductFailure(failure: failure);
       },
       (data) async* {
-        _listProduct = data.data;
+        List<Product> dataFiltered =
+            data.data.where((element) => element.discountinued == "0").toList();
+        _listProduct = dataFiltered;
         yield ProductLoaded(data: _listProduct);
       },
     );
@@ -154,20 +158,29 @@ class HomeProvider extends ChangeNotifier {
       },
       (data) async* {
         _isLoadingProduct = false;
-        _listProductFilter = data;
-        if (_listProductFilter.length < _limitData) {
+        List<ProductFilter> dataFilteredDisc =
+            data.where((element) => element.discountinued == "0").toList();
+        List<ProductFilter> dataFilteredDiscFalse =
+            data.where((element) => element.discountinued == "1").toList();
+        _listProductFilter = dataFilteredDisc;
+
+        if ((dataFilteredDisc.length + dataFilteredDiscFalse.length) <
+            _limitData) {
           logMe("stopppp");
+          logMe(dataFilteredDisc.length);
+          logMe(dataFilteredDiscFalse.length);
           logMe(_limitData);
           _isStopLoad = true;
         }
         notifyListeners();
-        yield FilterLoaded(data: data);
+        yield FilterLoaded(data: dataFilteredDisc);
       },
     );
   }
 
   Stream<SearchState> filterCustomProductLoadMore(
       FilterParameter filterParameter) async* {
+    _isLoadingMoreData = true;
     yield SearchLoading();
     final result =
         await doFilterProduct(TypeFilter.customFilter, filterParameter);
@@ -180,9 +193,26 @@ class HomeProvider extends ChangeNotifier {
       (data) async* {
         _isLoadingMoreData = false;
         _listProductFilter.clear();
-        _listProductFilter = data;
-        if (_listProductFilter.length < _limitData) {
+        List<ProductFilter> dataFilteredDisc =
+            data.where((element) => element.discountinued == "0").toList();
+        List<ProductFilter> dataFilteredDiscFalse =
+            data.where((element) => element.discountinued == "1").toList();
+        _listProductFilter = dataFilteredDisc;
+        if ((dataFilteredDisc.length + dataFilteredDiscFalse.length) <
+            _limitData) {
+          logMe("stopppp filterCustomProductLoadMore");
+          logMe("stopppp ${dataFilteredDiscFalse.length}");
+          logMe("stopppp ${dataFilteredDisc.length}");
+          logMe("stopppp $_limitData");
+          logMe(dataFilteredDisc.length);
+          logMe(dataFilteredDiscFalse.length);
+          logMe(_limitData);
           _isStopLoad = true;
+        } else {
+          logMe("nextt filterCustomProductLoadMore");
+          logMe(dataFilteredDisc.length);
+          logMe(dataFilteredDiscFalse.length);
+          logMe(_limitData);
         }
         notifyListeners();
         yield FilterLoaded(data: data);

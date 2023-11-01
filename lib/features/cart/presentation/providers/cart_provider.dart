@@ -226,34 +226,7 @@ class CartProvider with ChangeNotifier {
                   event.data[i].stock.hrg1, event.data[i].stock.disclist3),
             ));
           }
-
-          // _priceGrosirCart.add(PriceGrosirCart(
-          //   minUnit: toIntQty(event.data[i].stock.qty1),
-          //   maxUnit: toIntQty(event.data[i].stock.qty2) - 1,
-          //   price: convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1),
-          // ));
-          // _priceGrosirCart.add(PriceGrosirCart(
-          //   minUnit: toIntQty(event.data[i].stock.qty2),
-          //   maxUnit: toIntQty(event.data[i].stock.qty3) - 1,
-          //   price: convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist2),
-          // ));
-          // _priceGrosirCart.add(PriceGrosirCart(
-          //   minUnit: toIntQty(event.data[i].stock.qty3),
-          //   maxUnit: 0,
-          //   price: convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist3),
-          // ));
-          // _priceGrosirCart.add(PriceGrosirCart(
-          //   minUnit: toIntQty(event.data[i].stock.qty3),
-          //   maxUnit: 0,
-          //   price: convertPriceDisc(event.data[i].stock.hrg1, '0'),
-          // ));
-          logMe("_priceGrosirCart_priceGrosirCart ${_priceGrosirCart.length}");
-
-          String initPrice = convertPriceDisc(
-              event.data[i].stock.hrg1, event.data[i].stock.disclist1);
+          String initPrice = convertPriceDisc(event.data[i].stock.hrg1, '0');
           for (int iGros = 0; iGros < _priceGrosirCart.length; iGros++) {
             if (event.data[i].qty >= _priceGrosirCart[iGros].minUnit! &&
                 event.data[i].qty <= _priceGrosirCart[iGros].maxUnit!) {
@@ -261,25 +234,6 @@ class CartProvider with ChangeNotifier {
               break;
             }
           }
-          // if (event.data[i].qty >= toIntQty(event.data[i].stock.qty1) &&
-          //     event.data[i].qty <= (toIntQty(event.data[i].stock.qty2) - 1)) {
-          //   initPrice = convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1);
-          // } else if (event.data[i].qty >= toIntQty(event.data[i].stock.qty2) &&
-          //     event.data[i].qty <= (toIntQty(event.data[i].stock.qty3) - 1)) {
-          //   // logMe('elseeee 2');
-          //   // logMe(event.data[i].stock.hrg1);
-          //   // logMe(event.data[i].stock.disclist2);
-          //   initPrice = convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist1);
-          // } else if (event.data[i].qty >= toIntQty(event.data[i].stock.qty3)) {
-          //   logMe('elseeee 3');
-          //   initPrice = convertPriceDisc(
-          //       event.data[i].stock.hrg1, event.data[i].stock.disclist3);
-          // } else {
-          //   initPrice = convertPriceDisc(event.data[i].stock.hrg1, '0');
-          //   logMe('elseeee');
-          // }
 
           cart.add(
             Cart(
@@ -343,36 +297,6 @@ class CartProvider with ChangeNotifier {
     cart[index].quantity!.value = cart[index].quantity!.value + 1;
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
-    // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
-    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
-    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
-    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
-    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
-    // logMe(cart[index].priceGrosirCart![0].price);
-    // logMe(cart[index].priceGrosirCart![1].price);
-    // logMe(cart[index].priceGrosirCart![2].price);
-    // logMe(cart[index].priceGrosirCart![3].price);
-
-    // if (cart[index].quantity!.value >= minUnit1 &&
-    //     cart[index].quantity!.value <= maxUnit1) {
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
-    // } else {}
-    // else if (cart[index].quantity!.value >= minUnit2 &&
-    //     cart[index].quantity!.value <= maxUnit2) {
-    //   logMe('elseeee 2');
-    //   logMe('elseeee 2 $maxUnit2');
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
-    // } else if (cart[index].quantity!.value >= minUnit3) {
-    //   logMe('elseeee 3');
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
-    // } else {
-    //   logMe('elseeee 4');
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
-    // }
 
     for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
       if (cart[index].quantity!.value >=
@@ -398,28 +322,7 @@ class CartProvider with ChangeNotifier {
     }
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
-    // _setPrefsItems();
-    // int maxUnit1 = cart[index].priceGrosirCart![0].maxUnit!;
-    // int minUnit1 = cart[index].priceGrosirCart![0].minUnit!;
-    // int maxUnit2 = cart[index].priceGrosirCart![1].maxUnit!;
-    // int minUnit2 = cart[index].priceGrosirCart![1].minUnit!;
-    // int minUnit3 = cart[index].priceGrosirCart![2].minUnit!;
-
-    // if (cart[index].quantity!.value >= minUnit1 &&
-    //     cart[index].quantity!.value <= maxUnit1) {
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![0].price!);
-    // } else if (cart[index].quantity!.value >= minUnit2 &&
-    //     cart[index].quantity!.value <= maxUnit2) {
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![1].price!);
-    // } else if (cart[index].quantity!.value >= minUnit3) {
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![2].price!);
-    // } else {
-    //   cart[index].productPrice!.value =
-    //       removeToPrice(cart[index].priceGrosirCart![3].price!);
-    // }
+ 
     for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
       logMe(cart[index].priceGrosirCart![i].minUnit);
       logMe(cart[index].priceGrosirCart![i].maxUnit);
