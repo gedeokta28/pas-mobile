@@ -87,7 +87,7 @@ class ProductDetail {
   factory ProductDetail.fromJson(Map<String, dynamic> json) => ProductDetail(
         stockid: json["stockid"],
         stockname: json["stockname"],
-        barcode: json["barcode"],
+        barcode: json["barcode"] ?? '',
         hrg1: json["hrg1"],
         disclist1: json["disclist1"],
         hrg2: json["hrg2"],

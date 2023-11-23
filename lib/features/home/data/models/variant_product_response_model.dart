@@ -123,7 +123,7 @@ class ProductVariant {
   factory ProductVariant.fromJson(Map<String, dynamic> json) => ProductVariant(
         stockid: json["stockid"],
         stockname: json["stockname"],
-        barcode: json["barcode"],
+        barcode: json["barcode"] ?? '',
         brandid: json["brandid"],
         categoryid: json["categoryid"],
         hrg1: json["hrg1"],
