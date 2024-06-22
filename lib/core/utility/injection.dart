@@ -41,6 +41,7 @@ import 'package:pas_mobile/features/home/data/repositories/product_repo_impl.dar
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_brand_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_customer_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_detail.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list_by_url.dart';
@@ -120,6 +121,8 @@ Future<void> init() async {
   locator.registerFactory<HomeProvider>(() => HomeProvider(
       getProductList: locator(),
       getCategoryList: locator(),
+      getCustomerList: locator(),
+      getProfile: locator(),
       doFilterProduct: locator()));
   locator.registerFactory<ProductProvider>(() => ProductProvider(
       getProductDetail: locator(),
@@ -285,4 +288,6 @@ Future<void> init() async {
       () => GetDetailOrder(repository: locator()));
   locator.registerLazySingleton<GetListOrder>(
       () => GetListOrder(repository: locator()));
+  locator.registerLazySingleton<GetCustomerList>(
+      () => GetCustomerList(repository: locator()));
 }

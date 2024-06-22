@@ -11,7 +11,9 @@ import 'package:pas_mobile/features/cart/presentation/cart_page.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/filter/presentation/filter_page.dart';
 import 'package:pas_mobile/features/forgot_password/presentation/forgot_password_page.dart.dart';
+import 'package:pas_mobile/features/home/data/models/customer_list_response_mode.dart';
 import 'package:pas_mobile/features/home/presentation/best_product_list_page.dart';
+import 'package:pas_mobile/features/home/presentation/customer_list_page.dart';
 import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
@@ -49,6 +51,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (_) => ChangePersonalInfoPage(
                 profile: args.profile,
+              ));
+    case CustomerListPage.routeName:
+      final args = settings.arguments as List<CustomerData>;
+      return MaterialPageRoute(
+          builder: (_) => CustomerListPage(
+                customerData: args,
               ));
     case CreateAddressPage.routeName:
       final args = settings.arguments as bool;

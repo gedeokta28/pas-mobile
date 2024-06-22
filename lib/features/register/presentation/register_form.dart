@@ -104,7 +104,7 @@ class _RegisterFormState extends State<RegisterForm> {
                                 AccountType.personal.getValue()
                             ? AccountType.personal.toStrings()
                             : AccountType.company.toStrings(),
-                        style: TextStyle(fontSize: 15, color: Colors.black),
+                        style: const TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     );
                   }).toList();

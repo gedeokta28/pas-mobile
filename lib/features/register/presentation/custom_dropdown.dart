@@ -21,7 +21,7 @@ class CustomDropdownButtonWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
+        const Text(
           'Jenis Akun',
           style: TextStyle(
               fontSize: FONT_GENERAL,

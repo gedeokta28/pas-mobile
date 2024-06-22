@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
-import 'package:pas_mobile/core/utility/injection.dart';
 import 'package:pas_mobile/firebase_options.dart';
 
 import 'notification_helper.dart';

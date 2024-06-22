@@ -133,9 +133,12 @@ class _AccountPageState extends State<AccountPage>
                   context: context,
                   builder: (_) => CustomLogoutDialog(
                     positiveAction: () async {
-                      await sessionLogOut().then((_) => Navigator.of(context)
-                          .pushNamedAndRemoveUntil(
-                              SplashPage.routeName, (route) => false));
+                      showLoading();
+                      await sessionLogOut().then((_) {
+                        dismissLoading();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            SplashPage.routeName, (route) => false);
+                      });
                     },
                   ),
                 );

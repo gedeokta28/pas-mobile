@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:pas_mobile/features/home/data/datasources/product_data_source.dart';
+import 'package:pas_mobile/features/home/data/models/customer_list_response_mode.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/domain/repositories/product_repository.dart';
 
@@ -79,6 +80,18 @@ class ProductRepoImpl implements ProductRepsitory {
       String productId) async {
     try {
       final data = await dataSource.getProductVariant(productId);
+      return Right(data);
+    } on DioError catch (e) {
+      logMe("Failure Login Repo ${e.error}");
+      return const Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CustomerData>>> getCustomerList(
+      String params) async {
+    try {
+      final data = await dataSource.getCustomerList(params);
       return Right(data);
     } on DioError catch (e) {
       logMe("Failure Login Repo ${e.error}");

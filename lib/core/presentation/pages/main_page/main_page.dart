@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/pages/main_page/main_provider.dart';
 import 'package:pas_mobile/core/utility/injection.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/login/presentation/login_page.dart';
 import 'package:provider/provider.dart';
 
@@ -40,6 +41,13 @@ class _MainPageState extends State<MainPage> {
             selectedItemColor: BOTTOM_NAVBAR_SELECTED,
             onTap: (value) {
               // check is logged in
+              if (value == 0 && sessionHelper.isLoggedIn == true) {
+                final providerCart = Provider.of<CartProvider>(
+                  context,
+                  listen: false,
+                );
+                providerCart.countTotalCartItem();
+              }
               if (value == 2 && sessionHelper.isLoggedIn == false) {
                 Navigator.pushNamed(context, LoginPage.routeName);
                 return;

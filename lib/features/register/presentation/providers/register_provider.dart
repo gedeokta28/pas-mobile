@@ -34,6 +34,7 @@ class RegisterProvider extends FormProvider {
         'phone': phoneNumberController.text,
         'email': emailController.text,
         'password': passwordController.text,
+        'salespersonid': 'W1',
       });
     } else {
       formData = FormData.fromMap({
@@ -45,6 +46,7 @@ class RegisterProvider extends FormProvider {
         'email': emailController.text,
         'password': passwordController.text,
         'npwp': npwpController.text,
+        'salespersonid': 'W1',
       });
     }
 

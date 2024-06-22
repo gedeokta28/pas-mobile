@@ -322,7 +322,7 @@ class CartProvider with ChangeNotifier {
     }
     setCartItemUpdated =
         CartListUpdated(id: id, quantity: cart[index].quantity!.value);
- 
+
     for (int i = 0; i < cart[index].priceGrosirCart!.length; i++) {
       logMe(cart[index].priceGrosirCart![i].minUnit);
       logMe(cart[index].priceGrosirCart![i].maxUnit);
@@ -339,6 +339,15 @@ class CartProvider with ChangeNotifier {
         break;
       }
     }
+    notifyListeners();
+  }
+
+  void changeQuantity(String id, String value) {
+    final index = cart.indexWhere((element) => element.id == id);
+    cart[index].quantity!.value = int.parse(value);
+    setCartItemUpdated =
+        CartListUpdated(id: id, quantity: cart[index].quantity!.value);
+
     notifyListeners();
   }
 

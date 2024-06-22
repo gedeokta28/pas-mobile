@@ -118,9 +118,9 @@ class CardWidget extends StatelessWidget {
                           child: Text(
                             product.stockname,
                             maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
+                            // overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                fontSize: 14.0,
+                                fontSize: 12.0,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.black),
                           ),

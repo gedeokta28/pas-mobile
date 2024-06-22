@@ -69,7 +69,7 @@ class BrandItem extends StatelessWidget {
                 brand.brandname,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black54,
                     fontWeight: FontWeight.bold),

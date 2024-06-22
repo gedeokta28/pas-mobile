@@ -86,7 +86,7 @@ class OrderProfileTabState extends State<OrderProfileTab>
                     padding: const EdgeInsets.only(bottom: 50),
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return InkWell(

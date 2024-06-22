@@ -14,105 +14,137 @@ class OrderItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: SizedBox(
-        width: double.infinity,
-        height: App(context).appHeight(21),
-        child: Card(
-          elevation: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      mergeOrderText(
-                          orderData.salesorderno, orderData.salesorderdate),
-                      style: const TextStyle(color: Colors.grey, fontSize: 13),
-                    ),
-                    StatusOrderContainer(statusOrder: orderData.status)
-                  ],
-                ),
-                smallVerticalSpacing(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    orderData.products[0].stock.photourl.isNotEmpty
-                        ? Image(
-                            height: App(context).appWidth(20),
-                            width: App(context).appWidth(20),
-                            image: NetworkImage(
-                                orderData.products[0].stock.photourl),
-                          )
-                        : Image(
-                            height: App(context).appWidth(20),
-                            width: App(context).appWidth(20),
-                            image: const AssetImage(ASSETS_PLACEHOLDER),
-                          ),
-                    smallHorizontalSpacing(),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            orderData.products[0].stockname,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            '${orderData.products.length} produk',
-                            style: const TextStyle(
+      child: Card(
+        elevation: 1,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    mergeOrderText(
+                        orderData.salesorderno, orderData.salesorderdate),
+                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                  StatusOrderContainer(statusOrder: orderData.status)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${orderData.customerOrder.customerid} (${orderData.customerOrder.customername})",
+                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                ],
+              ),
+              smallVerticalSpacing(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  // orderData.products[0].stock.photourl.isNotEmpty
+                  //     ? Image(
+                  //         height: App(context).appWidth(20),
+                  //         width: App(context).appWidth(20),
+                  //         image: NetworkImage(
+                  //             orderData.products[0].stock.photourl),
+                  //       )
+                  //     : Image(
+                  //         height: App(context).appWidth(20),
+                  //         width: App(context).appWidth(20),
+                  //         image: const AssetImage(ASSETS_PLACEHOLDER),
+                  //       ),
+                  orderData.products[0].stock.images.isEmpty &&
+                          orderData.products[0].stock.photourl.isEmpty
+                      ? Image(
+                          height: App(context).appWidth(20),
+                          width: App(context).appWidth(20),
+                          image: const AssetImage(ASSETS_PLACEHOLDER),
+                        )
+                      : orderData.products[0].stock.photourl.isNotEmpty
+                          ? Image(
+                              height: App(context).appWidth(20),
+                              width: App(context).appWidth(20),
+                              image: NetworkImage(
+                                  orderData.products[0].stock.photourl),
+                            )
+                          : orderData.products[0].stock.images.isNotEmpty &&
+                                  orderData.products[0].stock.photourl.isEmpty
+                              ? Image(
+                                  height: App(context).appWidth(20),
+                                  width: App(context).appWidth(20),
+                                  image: NetworkImage(orderData
+                                      .products[0].stock.images[0]['url']),
+                                )
+                              : Image(
+                                  height: App(context).appWidth(20),
+                                  width: App(context).appWidth(20),
+                                  image: const AssetImage(ASSETS_PLACEHOLDER),
+                                ),
+                  smallHorizontalSpacing(),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          orderData.products[0].stockname,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(
+                              color: Colors.black,
                               fontSize: 13,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          '${orderData.products.length} produk',
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          'Qty : ${orderData.products[0].qtyorder}',
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 13),
+                        ),
+                        const SizedBox(height: 5),
+                        Row(
+                          children: [
+                            const Text(
+                              'Total : ',
+                              style: TextStyle(fontSize: 13),
                             ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            'Qty : ${orderData.products[0].qtyorder}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 13),
-                          ),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Text(
-                                'Total : ',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Rp',
-                                    style: TextStyle(
-                                        fontSize: 11.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-                                  Text(
-                                    convertPrice(orderData.salesordergrandtotal
-                                        .toString()),
-                                    style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                            Row(
+                              children: [
+                                const Text(
+                                  'Rp',
+                                  style: TextStyle(
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                Text(
+                                  convertPrice(orderData.salesordergrandtotal
+                                      .toString()),
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

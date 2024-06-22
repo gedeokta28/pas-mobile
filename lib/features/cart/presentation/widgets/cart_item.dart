@@ -66,7 +66,7 @@ class CartItem extends StatelessWidget {
                   ValueListenableBuilder<int>(
                       valueListenable: provider.cart[index].quantity!,
                       builder: (context, val, child) {
-                        return PlusMinusButtons(
+                        return PlusMinusOrderButtons(
                           addQuantity: () {
                             provider.addQuantity(provider.cart[index].id!);
                             provider.addTotalPrice(double.parse(provider
@@ -78,6 +78,10 @@ class CartItem extends StatelessWidget {
                             provider.removeTotalPrice(double.parse(provider
                                 .cart[index].productPrice!.value
                                 .toString()));
+                          },
+                          changeQuantity: (val) {
+                            provider.changeQuantity(
+                                provider.cart[index].id!, val);
                           },
                           text: val.toString(),
                         );

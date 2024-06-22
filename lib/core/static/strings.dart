@@ -4,3 +4,7 @@ const String COUNT_CART = 'is_logged_in';
 const String INDEX_TAB = 'index_tab';
 const String COUNT_NOTIF = 'count_notif';
 const String COUNT_NOTIF_ORDER = 'count_notif_order';
+const String CUSTOMER_ID = 'customer_id';
+const String CUSTOMER_NAME = 'customer_name';
+const String SALES_ID = 'sales_id';
+const String IS_ALL = 'is_all';

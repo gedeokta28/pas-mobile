@@ -25,6 +25,9 @@ class _SplashPageState extends State<SplashPage> {
     Future.delayed(const Duration(seconds: 2), () async {
       final session = locator<Session>();
       session.setIndexTab = 0;
+      session.setCustomerId = '';
+      session.setCustomerName = '';
+      session.setSalesId = '';
       Navigator.pushReplacementNamed(context, MainPage.routeName);
     });
 

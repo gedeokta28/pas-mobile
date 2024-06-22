@@ -51,6 +51,8 @@ class Profile {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.listcustomer,
+    required this.salespersonid,
   });
 
   final String customerid;
@@ -69,6 +71,8 @@ class Profile {
   final DateTime createdAt;
   final DateTime updatedAt;
   final dynamic deletedAt;
+  final String listcustomer;
+  final String salespersonid;
 
   factory Profile.fromJson(Map<String, dynamic> json) => Profile(
         customerid: json["customerid"],
@@ -87,6 +91,8 @@ class Profile {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         deletedAt: json["deleted_at"],
+        listcustomer: json["listcustomer"] ?? '',
+        salespersonid: json["salespersonid"] ?? 'W1',
       );
 
   Map<String, dynamic> toJson() => {
@@ -106,5 +112,7 @@ class Profile {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
+        "listcustomer": listcustomer,
+        "salespersonid": salespersonid,
       };
 }

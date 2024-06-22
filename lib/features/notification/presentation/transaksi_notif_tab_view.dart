@@ -7,7 +7,6 @@ import 'package:pas_mobile/features/order/presentation/order_detail_page.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utility/injection.dart' as di;
 
-import '../../../core/static/app_config.dart';
 
 class TransaksiNotifTab extends StatefulWidget {
   const TransaksiNotifTab({Key? key, required this.parentController})

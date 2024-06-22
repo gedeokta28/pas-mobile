@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pas_mobile/core/presentation/widgets/custom_simple_dialog.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/category/presentation/category_page.dart';
 import 'package:pas_mobile/features/notification/presentation/notif_page.dart';
@@ -152,11 +154,27 @@ class HomeAppBar extends StatelessWidget {
                                           ),
                                         ),
                                         onTap: () {
-                                          Navigator.pushNamed(
-                                                  context, CartPage.routeName)
-                                              .then((_) {
-                                            provider.countTotalCartItem();
-                                          });
+                                          if (locator<Session>()
+                                                  .sessionCustomerId ==
+                                              '') {
+                                            showDialog(
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return CustomSimpleDialog(
+                                                      text:
+                                                          'Pilih Customer Terlebih Dahulu !',
+                                                      onTap: () {
+                                                        Navigator.pop(context);
+                                                      });
+                                                });
+                                          } else {
+                                            Navigator.pushNamed(
+                                                    context, CartPage.routeName)
+                                                .then((_) {
+                                              provider.countTotalCartItem();
+                                            });
+                                          }
                                         },
                                       ),
                                     ),
@@ -175,10 +193,26 @@ class HomeAppBar extends StatelessWidget {
                             }
                             return InkWell(
                               onTap: () {
-                                Navigator.pushNamed(context, CartPage.routeName)
-                                    .then((_) {
-                                  provider.countTotalCartItem();
-                                });
+                                if (locator<Session>().sessionCustomerId ==
+                                    '') {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return CustomSimpleDialog(
+                                            text:
+                                                'Pilih Customer Terlebih Dahulu !',
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                            });
+                                      });
+                                } else {
+                                  Navigator.pushNamed(
+                                          context, CartPage.routeName)
+                                      .then((_) {
+                                    provider.countTotalCartItem();
+                                  });
+                                }
                               },
                               child: Align(
                                 alignment: Alignment.topRight,

@@ -42,7 +42,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
                   child: Text(
                     provider.productName,
                     style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.normal),
+                        fontSize: 15.0, fontWeight: FontWeight.normal),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -73,9 +73,12 @@ class _ProductDescriptionState extends State<ProductDescription> {
                       ),
                     ],
                   ),
-                  provider.productDetail.qty1 == '0' &&
-                          provider.productDetail.qty2 == '0' &&
-                          provider.productDetail.qty3 == '0'
+                  (provider.productDetail.qty1 == '0' ||
+                              provider.productDetail.disclist1 == '0.00') &&
+                          (provider.productDetail.qty2 == '0' ||
+                              provider.productDetail.disclist2 == '0.00') &&
+                          (provider.productDetail.qty3 == '0' ||
+                              provider.productDetail.disclist3 == '0.00')
                       ? const SizedBox()
                       : GestureDetector(
                           onTap: () async {

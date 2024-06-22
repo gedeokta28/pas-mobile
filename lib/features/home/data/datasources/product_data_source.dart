@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:pas_mobile/core/utility/extensions.dart';
 import 'package:pas_mobile/features/home/data/models/brand_list_response_model.dart';
 import 'package:pas_mobile/features/home/data/models/category_list_response_model.dart';
+import 'package:pas_mobile/features/home/data/models/customer_list_response_mode.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
 import 'package:pas_mobile/features/home/data/models/variant_product_response_model.dart';
 
@@ -14,6 +16,7 @@ abstract class ProductDataSource {
   Future<CategoryListResponseModel> getCategoryList();
   Future<List<BrandList>> getBrandList();
   Future<VariantList> getProductVariant(String productId);
+  Future<List<CustomerData>> getCustomerList(String params);
 }
 
 class ProductDataSourceImplementation implements ProductDataSource {
@@ -126,6 +129,25 @@ class ProductDataSourceImplementation implements ProductDataSource {
         options: options(headers: null),
       );
       final model = VariantProductModel.fromJson(response.data);
+      return model.data;
+    } catch (e) {
+      logMe("errorr");
+      logMe(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<CustomerData>> getCustomerList(String params) async {
+    String url;
+    url = 'api/customers?listcustomer=$params';
+    dio.withToken();
+    try {
+      final response = await dio.get(
+        url,
+        options: options(headers: null),
+      );
+      final model = CustomerListResponseModel.fromJson(response.data);
       return model.data;
     } catch (e) {
       logMe("errorr");

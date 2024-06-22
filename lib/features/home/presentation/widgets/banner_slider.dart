@@ -1,12 +1,8 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../core/presentation/widgets/network_image.dart';
 import '../providers/home_provider.dart';
 
 class BannerSlider extends StatefulWidget {

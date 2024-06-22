@@ -23,7 +23,7 @@ const String ASSET_IKLAN_2 = 'assets/images/iklan_2.jpg';
 
 List<String> listIklan = [ASSET_IKLAN_1, ASSET_IKLAN_2];
 List<String> listBanner = [
-  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_1.jpg',
-  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_2.jpg',
-  'https://mediabalitech.com/mediabalitech.com/admin-pas/public/assets/images/banner_3.jpg'
+  'https://pasmobile-admin.com/assets/images/banner/banner1.jpeg',
+  'https://pasmobile-admin.com/assets/images/banner/banner2.jpeg',
+  'https://pasmobile-admin.com/assets/images/banner/banner3.jpeg'
 ];

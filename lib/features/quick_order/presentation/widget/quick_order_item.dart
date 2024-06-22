@@ -62,13 +62,13 @@ class QuickOrderItem extends StatelessWidget {
                   child: Text(
                     value.quickOrderProduct[index].productName,
                     maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                    // overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
+                        fontWeight: FontWeight.bold, fontSize: 12),
                   ),
                 ),
                 const SizedBox(
-                  height: 5.0,
+                  height: 3.0,
                 ),
                 value.quickOrderProduct[index].qty1! == '0.00' &&
                         value.quickOrderProduct[index].qty2 == '0.00' &&

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/presentation/pages/main_page/main_page.dart';
+import 'package:pas_mobile/core/presentation/widgets/custom_simple_dialog.dart';
 import 'package:pas_mobile/core/static/app_config.dart';
 import 'package:pas_mobile/core/static/assets.dart';
 import 'package:pas_mobile/core/static/colors.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/widgets/cart_item.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
@@ -81,18 +84,42 @@ class CartPage extends StatelessWidget {
 
               return Column(
                 children: [
-                  const Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.only(left: 15.0, top: 15.0, bottom: 5.0),
-                      child: Text(
-                        "Order Review",
-                        style: TextStyle(
-                            fontSize: FONT_GENERAL,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
-                      ),
+                  // const Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Padding(
+                  //     padding:
+                  //         EdgeInsets.only(left: 15.0, top: 15.0, bottom: 5.0),
+                  //     child: Text(
+                  //       "Order Review",
+                  //       style: TextStyle(
+                  //           fontSize: FONT_GENERAL,
+                  //           color: Colors.black,
+                  //           fontWeight: FontWeight.bold),
+                  //     ),
+                  //   ),
+                  // ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        top: 15.0, bottom: 10.0, left: 15.0, right: 15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Order Review",
+                          style: TextStyle(
+                              fontSize: FONT_GENERAL,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                            locator<Session>().sessionCustomerId == ''
+                                ? ''
+                                : "${locator<Session>().sessionCustomerId} (${locator<Session>().sessionCustomerName})",
+                            style: const TextStyle(
+                                fontSize: FONT_SMALL,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold)),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -174,49 +201,68 @@ class CartPage extends StatelessWidget {
             } else {
               return InkWell(
                 onTap: () async {
-                  if (provider.cartItemUpdated.isEmpty) {
-                    Navigator.pushNamed(context, CheckoutPage.routeName)
-                        .then((_) {
-                      provider.countTotalCartItem();
-                    });
+                  if (locator<Session>().sessionCustomerId == '') {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return CustomSimpleDialog(
+                              text: 'Pilih Customer Terlebih Dahulu !',
+                              onTap: () {
+                                Navigator.pushReplacementNamed(
+                                    locator<GlobalKey<NavigatorState>>()
+                                        .currentContext!,
+                                    MainPage.routeName);
+                              });
+                        });
                   } else {
-                    showLoading();
-                    for (var i = 0; i < provider.cartItemUpdated.length; i++) {
-                      provider
-                          .updateProductCart(
-                              itemId: provider.cartItemUpdated[i].id!,
-                              qty: provider.cartItemUpdated[i].quantity!
-                                  .toString())
-                          .listen((event) {
-                        if (event is AddToCartSuccess) {
-                          if (i == (provider.cartItemUpdated.length - 1)) {
-                            dismissLoading();
-                            Navigator.pushNamed(context, CheckoutPage.routeName)
-                                .then((_) {
-                              provider.countTotalCartItem();
-                            });
-                          }
-                        }
+                    if (provider.cartItemUpdated.isEmpty) {
+                      Navigator.pushNamed(context, CheckoutPage.routeName)
+                          .then((_) {
+                        provider.countTotalCartItem();
                       });
+                    } else {
+                      showLoading();
+                      for (var i = 0;
+                          i < provider.cartItemUpdated.length;
+                          i++) {
+                        provider
+                            .updateProductCart(
+                                itemId: provider.cartItemUpdated[i].id!,
+                                qty: provider.cartItemUpdated[i].quantity!
+                                    .toString())
+                            .listen((event) {
+                          if (event is AddToCartSuccess) {
+                            if (i == (provider.cartItemUpdated.length - 1)) {
+                              dismissLoading();
+                              Navigator.pushNamed(
+                                      context, CheckoutPage.routeName)
+                                  .then((_) {
+                                provider.countTotalCartItem();
+                              });
+                            }
+                          }
+                        });
+                      }
                     }
-                  }
 
-                  // logMe(provider.cartItemUpdated[0].quantity);
-                  // showLoading();
-                  // for (var i = 0; i < provider.cartItemUpdated.length; i++) {
-                  //   provider
-                  //       .updateProductCart(
-                  //           itemId: provider.cartItemUpdated[i].id!,
-                  //           qty: provider.cartItemUpdated[i].quantity!
-                  //               .toString())
-                  //       .listen((event) {
-                  //     if (event is AddToCartSuccess) {
-                  //       if (i == (provider.cartItemUpdated.length - 1)) {
-                  //         dismissLoading();
-                  //       }
-                  //     }
-                  //   });
-                  // }
+                    // logMe(provider.cartItemUpdated[0].quantity);
+                    // showLoading();
+                    // for (var i = 0; i < provider.cartItemUpdated.length; i++) {
+                    //   provider
+                    //       .updateProductCart(
+                    //           itemId: provider.cartItemUpdated[i].id!,
+                    //           qty: provider.cartItemUpdated[i].quantity!
+                    //               .toString())
+                    //       .listen((event) {
+                    //     if (event is AddToCartSuccess) {
+                    //       if (i == (provider.cartItemUpdated.length - 1)) {
+                    //         dismissLoading();
+                    //       }
+                    //     }
+                    //   });
+                    // }
+                  }
                 },
                 child: Container(
                   color: secondaryColor,

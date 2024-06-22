@@ -155,9 +155,12 @@ class QuickOrderProvider extends ChangeNotifier {
               productPrice: ValueNotifier(int.parse(arr[0])),
               quantity: ValueNotifier(1),
               unitTag: "unitTag",
-              image: dataFiltered[i].photourl == null
+              // image: dataFiltered[i].photourl == null
+              //     ? ''
+              //     : dataFiltered[i].photourl!,
+              image: dataFiltered[i].images.isEmpty
                   ? ''
-                  : dataFiltered[i].photourl!,
+                  : dataFiltered[i].images[0].url,
               priceGrosirProductQuick: _priceGrosirCart,
               hrg1: dataFiltered[i].hrg1,
               hrg2: dataFiltered[i].hrg2,
@@ -227,9 +230,13 @@ class QuickOrderProvider extends ChangeNotifier {
               productPrice: ValueNotifier(int.parse(arr[0])),
               quantity: ValueNotifier(1),
               unitTag: "unitTag",
-              image: dataFiltered[i].photourl == null
+              // image: dataFiltered[i].photourl == null
+              //     ? ''
+              //     : dataFiltered[i].photourl!,
+              image: dataFiltered[i].images.isEmpty
                   ? ''
-                  : dataFiltered[i].photourl!,
+                  : dataFiltered[i].images[0].url,
+
               priceGrosirProductQuick: _priceGrosirCart,
               hrg1: dataFiltered[i].hrg1,
               hrg2: dataFiltered[i].hrg2,
@@ -327,56 +334,63 @@ class QuickOrderProvider extends ChangeNotifier {
         setStateSearch = QuickProductFailure(failure: failure);
       },
       (data) {
-        for (var i = 0; i < data.length; i++) {
+        List<ProductFilter> _result = [];
+        _result = data;
+        _result.sort((a, b) {
+          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        });
+        for (var i = 0; i < _result.length; i++) {
           List<PriceGrosirCart> _priceGrosirCart = [];
           _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: toIntQty(data[i].qty1),
-            maxUnit: toIntQty(data[i].qty2) - 1,
-            price: convertPriceDisc(data[i].hrg1, data[i].disclist1),
+            minUnit: toIntQty(_result[i].qty1),
+            maxUnit: toIntQty(_result[i].qty2) - 1,
+            price: convertPriceDisc(_result[i].hrg1, _result[i].disclist1),
           ));
           _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: toIntQty(data[i].qty2),
-            maxUnit: toIntQty(data[i].qty3) - 1,
-            price: convertPriceDisc(data[i].hrg1, data[i].disclist2),
+            minUnit: toIntQty(_result[i].qty2),
+            maxUnit: toIntQty(_result[i].qty3) - 1,
+            price: convertPriceDisc(_result[i].hrg1, _result[i].disclist2),
           ));
           _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: toIntQty(data[i].qty3),
+            minUnit: toIntQty(_result[i].qty3),
             maxUnit: 0,
-            price: convertPriceDisc(data[i].hrg1, data[i].disclist3),
+            price: convertPriceDisc(_result[i].hrg1, _result[i].disclist3),
           ));
           _priceGrosirCart.add(PriceGrosirCart(
-            minUnit: toIntQty(data[i].qty3),
+            minUnit: toIntQty(_result[i].qty3),
             maxUnit: 0,
-            price: convertPriceDisc(data[i].hrg1, '0'),
+            price: convertPriceDisc(_result[i].hrg1, '0'),
           ));
-          var arr = data[i].hrg1.split('.');
+          var arr = _result[i].hrg1.split('.');
           _quickOrderProduct.add(
             ProductQuick(
-                hrg1: data[i].hrg1,
-                hrg2: data[i].hrg2,
-                hrg3: data[i].hrg3,
-                unit1: data[i].unit1,
-                unit2: data[i].unit2,
-                unit3: data[i].unit3,
-                disclist1: data[i].disclist1,
-                disclist2: data[i].disclist2,
-                disclist3: data[i].disclist3,
-                qty1: data[i].qty1,
-                qty2: data[i].qty2,
-                qty3: data[i].qty3,
-                id: data[i].stockid,
-                productId: data[i].stockid,
-                productName: data[i].stockname,
+                hrg1: _result[i].hrg1,
+                hrg2: _result[i].hrg2,
+                hrg3: _result[i].hrg3,
+                unit1: _result[i].unit1,
+                unit2: _result[i].unit2,
+                unit3: _result[i].unit3,
+                disclist1: _result[i].disclist1,
+                disclist2: _result[i].disclist2,
+                disclist3: _result[i].disclist3,
+                qty1: _result[i].qty1,
+                qty2: _result[i].qty2,
+                qty3: _result[i].qty3,
+                id: _result[i].stockid,
+                productId: _result[i].stockid,
+                productName: _result[i].stockname,
                 initialPrice: int.tryParse(arr[0]),
                 productPrice: ValueNotifier(int.parse(arr[0])),
                 quantity: ValueNotifier(1),
                 unitTag: "unitTag",
-                image: data[i].photourl == null ? '' : data[i].photourl!,
+                // image: _result[i].photourl == null ? '' : _result[i].photourl!,
+                image:
+                    _result[i].images.isEmpty ? '' : _result[i].images[0].url,
                 priceGrosirProductQuick: _priceGrosirCart),
           );
         }
         dismissLoading();
-        setStateSearch = QuickProductFilterLoaded(data: data);
+        setStateSearch = QuickProductFilterLoaded(data: _result);
       },
     );
   }

@@ -17,17 +17,32 @@ class OrderItemDetailWidget extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 5.0),
         child: Row(
           children: [
-            productOrder.stock.photourl.isNotEmpty
+            productOrder.stock.images.isEmpty &&
+                    productOrder.stock.photourl.isEmpty
                 ? Image(
-                    height: App(context).appWidth(17),
-                    width: App(context).appWidth(17),
-                    image: NetworkImage(productOrder.stock.photourl),
-                  )
-                : Image(
-                    height: App(context).appWidth(17),
-                    width: App(context).appWidth(17),
+                    height: App(context).appWidth(15),
+                    width: App(context).appWidth(15),
                     image: const AssetImage(ASSETS_PLACEHOLDER),
-                  ),
+                  )
+                : productOrder.stock.photourl.isNotEmpty
+                    ? Image(
+                        height: App(context).appWidth(15),
+                        width: App(context).appWidth(15),
+                        image: NetworkImage(productOrder.stock.photourl),
+                      )
+                    : productOrder.stock.images.isNotEmpty &&
+                            productOrder.stock.photourl.isEmpty
+                        ? Image(
+                            height: App(context).appWidth(15),
+                            width: App(context).appWidth(15),
+                            image: NetworkImage(
+                                productOrder.stock.images[0]['url']),
+                          )
+                        : Image(
+                            height: App(context).appWidth(15),
+                            width: App(context).appWidth(15),
+                            image: const AssetImage(ASSETS_PLACEHOLDER),
+                          ),
             smallHorizontalSpacing(),
             Expanded(
               child: Column(

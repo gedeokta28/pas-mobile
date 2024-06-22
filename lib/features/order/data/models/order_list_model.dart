@@ -55,6 +55,7 @@ class OrderDataList {
     required this.processtime,
     required this.processorderno,
     required this.shippingFee,
+    required this.customerOrder,
     required this.products,
   });
 
@@ -78,6 +79,7 @@ class OrderDataList {
   final dynamic processorderno;
   final dynamic shippingFee;
   final List<OrderProduct> products;
+  final CustomerOrder customerOrder;
 
   factory OrderDataList.fromJson(Map<String, dynamic> json) => OrderDataList(
         salesorderno: json["salesorderno"],
@@ -99,6 +101,7 @@ class OrderDataList {
         processtime: json["processtime"],
         processorderno: json["processorderno"],
         shippingFee: json["shipping_fee"],
+        customerOrder: CustomerOrder.fromJson(json["customer"]),
         products: List<OrderProduct>.from(
             json["products"].map((x) => OrderProduct.fromJson(x))),
       );
@@ -123,6 +126,7 @@ class OrderDataList {
         "processtime": processtime,
         "processorderno": processorderno,
         "shipping_fee": shippingFee,
+        "customer": customerOrder.toJson(),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
       };
 }
@@ -196,6 +200,31 @@ class OrderProduct {
         "updated_at": updatedAt.toIso8601String(),
         "deleted_at": deletedAt,
         "stock": stock.toJson(),
+      };
+}
+
+class CustomerOrder {
+  final String customerid;
+  final String customername;
+
+  CustomerOrder({
+    required this.customerid,
+    required this.customername,
+  });
+
+  factory CustomerOrder.fromRawJson(String str) =>
+      CustomerOrder.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory CustomerOrder.fromJson(Map<String, dynamic> json) => CustomerOrder(
+        customerid: json["customerid"],
+        customername: json["customername"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "customerid": customerid,
+        "customername": customername,
       };
 }
 

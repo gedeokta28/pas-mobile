@@ -135,29 +135,33 @@ class SearchProvider with ChangeNotifier {
         yield SearchFailure(failure: failure);
       },
       (data) async* {
+        print("mantapss");
         _isLoadingMoreData = false;
+        data.sort((a, b) {
+          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        });
         _listProductFilter.clear();
         List<ProductFilter> dataFilteredDisc =
             data.where((element) => element.discountinued == "0").toList();
         List<ProductFilter> dataFilteredDiscFalse =
             data.where((element) => element.discountinued == "1").toList();
         _listProductFilter = dataFilteredDisc;
-        if ((dataFilteredDisc.length + dataFilteredDiscFalse.length) <
-            _limitData) {
-          logMe("stopppp filterCustomProductLoadMore");
-          logMe("stopppp ${dataFilteredDiscFalse.length}");
-          logMe("stopppp ${dataFilteredDisc.length}");
-          logMe("stopppp $_limitData");
-          logMe(dataFilteredDisc.length);
-          logMe(dataFilteredDiscFalse.length);
-          logMe(_limitData);
-          _isStopLoad = true;
-        } else {
-          logMe("nextt filterCustomProductLoadMore");
-          logMe(dataFilteredDisc.length);
-          logMe(dataFilteredDiscFalse.length);
-          logMe(_limitData);
-        }
+        // if ((dataFilteredDisc.length + dataFilteredDiscFalse.length) <
+        //     _limitData) {
+        //   logMe("stopppp filterCustomProductLoadMore");
+        //   logMe("stopppp ${dataFilteredDiscFalse.length}");
+        //   logMe("stopppp ${dataFilteredDisc.length}");
+        //   logMe("stopppp $_limitData");
+        //   logMe(dataFilteredDisc.length);
+        //   logMe(dataFilteredDiscFalse.length);
+        //   logMe(_limitData);
+        //   _isStopLoad = true;
+        // } else {
+        // logMe("nextt filterCustomProductLoadMore");
+        // logMe(dataFilteredDisc.length);
+        // logMe(dataFilteredDiscFalse.length);
+        // logMe(_limitData);
+        // }
         notifyListeners();
         yield FilterLoaded(data: data);
       },
@@ -183,9 +187,16 @@ class SearchProvider with ChangeNotifier {
         yield SearchFailure(failure: failure);
       },
       (data) async* {
+        print("searchProductList");
+
         _isLoadingSearch = false;
         _listProductSearch = data;
         notifyListeners();
+        data.sort((a, b) {
+          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        });
+        print("dataa");
+        print(data);
         yield SearchLoaded(data: data);
       },
     );
@@ -208,11 +219,17 @@ class SearchProvider with ChangeNotifier {
         yield SearchFailure(failure: failure);
       },
       (data) async* {
+        print("filterProduct");
+
         _isLoadingProduct = false;
+        data.sort((a, b) {
+          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        });
         List<ProductFilter> dataFiltered =
             data.where((element) => element.discountinued == "0").toList();
         _listProductFilter = dataFiltered;
         notifyListeners();
+
         yield FilterLoaded(data: data);
       },
     );
@@ -236,6 +253,7 @@ class SearchProvider with ChangeNotifier {
         yield SearchFailure(failure: failure);
       },
       (data) async* {
+        print("mantapss");
         _isLoadingProduct = false;
         List<ProductFilter> dataFiltered =
             data.where((element) => element.discountinued == "0").toList();

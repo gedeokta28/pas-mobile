@@ -25,6 +25,9 @@ class OrderDetailTopWidget extends StatelessWidget {
           OrderDetailItemWidget(
               title: 'ID Order', detail: '#${detailOrder.salesorderno}'),
           OrderDetailItemWidget(
+              title: 'Customer',
+              detail: detailOrder.customerOrder.customername),
+          OrderDetailItemWidget(
               title: 'Tanggal Order',
               detail:
                   DateFormat('d MMMM yyyy').format(detailOrder.salesorderdate)),
@@ -37,6 +40,8 @@ class OrderDetailTopWidget extends StatelessWidget {
       children: [
         OrderDetailItemWidget(
             title: 'ID Order', detail: '#${detailOrder.salesorderno}'),
+        OrderDetailItemWidget(
+            title: 'Customer', detail: detailOrder.customerOrder.customername),
         OrderDetailItemWidget(
             title: 'Tanggal Order',
             detail:

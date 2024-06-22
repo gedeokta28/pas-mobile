@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/home/presentation/best_product_list_page.dart';
-import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';

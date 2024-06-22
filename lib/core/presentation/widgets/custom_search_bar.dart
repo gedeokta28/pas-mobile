@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/presentation/widgets/rounded_container.dart';
-import 'package:pas_mobile/core/utility/helper.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final bool isFromHome;

@@ -113,6 +113,7 @@ class _CheckoutPageState extends State<CheckoutPage>
                         builder: (BuildContext context, provider, widget) {
                           return ListView.builder(
                               shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: provider.cart.length,
                               itemBuilder: (context, index) {
                                 return CheckoutItem(index: index);

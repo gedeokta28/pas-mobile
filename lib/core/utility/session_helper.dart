@@ -10,12 +10,20 @@ abstract class Session {
   set setToken(String token);
   set setCountNotif(int countNotif);
   set setCountNotifOrder(int countNotifOrder);
+  set setCustomerId(String id);
+  set setCustomerName(String name);
+  set setAllCustomer(bool value);
+  set setSalesId(String value);
 
   bool get isLoggedIn;
   int get indexTab;
   int get countNotif;
   int get countNotifOrder;
   String get sessionToken;
+  String get sessionCustomerId;
+  String get sessionCustomerName;
+  String get salesId;
+  bool get isAllCustomer;
 
   Future<void> clearSession();
 }
@@ -31,8 +39,28 @@ class SessionHelper implements Session {
   }
 
   @override
+  set setAllCustomer(bool value) {
+    pref.setBool(IS_ALL, value);
+  }
+
+  @override
   set setToken(String token) {
     pref.setString(SESSION_TOKEN, token);
+  }
+
+  @override
+  set setSalesId(String value) {
+    pref.setString(SALES_ID, value);
+  }
+
+  @override
+  set setCustomerId(String id) {
+    pref.setString(CUSTOMER_ID, id);
+  }
+
+  @override
+  set setCustomerName(String name) {
+    pref.setString(CUSTOMER_NAME, name);
   }
 
   @override
@@ -54,6 +82,9 @@ class SessionHelper implements Session {
   bool get isLoggedIn => pref.getBool(IS_LOGGED_IN) ?? false;
 
   @override
+  bool get isAllCustomer => pref.getBool(IS_ALL) ?? false;
+
+  @override
   String get sessionToken => pref.getString(SESSION_TOKEN) ?? '';
 
   @override
@@ -64,6 +95,15 @@ class SessionHelper implements Session {
 
   @override
   int get countNotifOrder => pref.getInt(COUNT_NOTIF_ORDER) ?? 0;
+
+  @override
+  String get sessionCustomerId => pref.getString(CUSTOMER_ID) ?? '';
+
+  @override
+  String get sessionCustomerName => pref.getString(CUSTOMER_NAME) ?? '';
+
+  @override
+  String get salesId => pref.getString(SALES_ID) ?? '';
 
   @override
   Future<void> clearSession() async {

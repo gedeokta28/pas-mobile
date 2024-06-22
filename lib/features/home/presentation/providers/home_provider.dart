@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/core/utility/injection.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
+import 'package:pas_mobile/features/account/domain/usecases/get_profile.dart';
+import 'package:pas_mobile/features/account/presentation/providers/profile_state.dart';
 import 'package:pas_mobile/features/home/data/models/product_list_response_model.dart';
+import 'package:pas_mobile/features/home/domain/usecases/get_customer_list.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_product_list.dart';
+import 'package:pas_mobile/features/home/presentation/providers/customer_list_state.dart';
 import 'package:pas_mobile/features/search/domain/usecases/do_filter_product.dart';
 
 import '../../../../core/utility/enum.dart';
@@ -15,6 +21,8 @@ import 'product_state.dart';
 class HomeProvider extends ChangeNotifier {
   // initial
   final GetCategoryList getCategoryList;
+  final GetProfile getProfile;
+  final GetCustomerList getCustomerList;
   final GetProductList getProductList;
   final DoFilterProduct doFilterProduct;
   late FilterParameter _filterParameterSelected = FilterParameter();
@@ -102,6 +110,8 @@ class HomeProvider extends ChangeNotifier {
   HomeProvider(
       {required this.getProductList,
       required this.getCategoryList,
+      required this.getProfile,
+      required this.getCustomerList,
       required this.doFilterProduct});
 
   Stream<ProductState> fetchProductList(String? type) async* {
@@ -133,6 +143,36 @@ class HomeProvider extends ChangeNotifier {
         yield CategorySelectionLoaded(data: data.data);
       },
     );
+  }
+
+  Stream<CustomerListState> fetchCustomerList() async* {
+    yield CustomerListLoading();
+    final profileResult = await getProfile();
+    yield* profileResult.fold((failure) async* {
+      yield CustomerListFailure(failure: failure);
+    }, (data) async* {
+      locator<Session>().setSalesId = data.salespersonid;
+      if (data.listcustomer == 'all') {
+        locator<Session>().setAllCustomer = true;
+      } else {
+        locator<Session>().setCustomerId = data.customerid;
+        locator<Session>().setCustomerName = data.customername;
+        locator<Session>().setAllCustomer = false;
+      }
+      final result = await getCustomerList(data.listcustomer);
+      yield* result.fold(
+        (failure) async* {
+          yield CustomerListFailure(failure: failure);
+        },
+        (data) async* {
+          yield CustomerListLoaded(data: data);
+        },
+      );
+    });
+  }
+
+  Stream<ProfileState> fetchProfile() async* {
+    yield ProfileLoading();
   }
 
   Stream<SearchState> filterCustomProduct(

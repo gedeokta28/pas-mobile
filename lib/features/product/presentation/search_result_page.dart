@@ -16,9 +16,6 @@ class SearchResultPage extends StatefulWidget {
 class _SearchResultPageState extends State<SearchResultPage> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height) / 102;
-    final double itemWidth = size.width / 60;
     return ChangeNotifierProvider(
       create: (_) => locator<SearchResultProvider>(),
       builder: (context, child) => Scaffold(

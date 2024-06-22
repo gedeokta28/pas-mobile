@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
-import 'package:pas_mobile/core/static/dimens.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/features/cart/presentation/providers/cart_provider.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/banner_slider.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/best_product.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/category_selection.dart';
+import 'package:pas_mobile/features/home/presentation/widgets/customer_selected.dart';
 import 'package:pas_mobile/features/home/presentation/widgets/news_product.dart';
+import 'package:provider/provider.dart';
 
 import 'widgets/home_app_bar.dart';
 
@@ -15,7 +17,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
+        appBar: const PreferredSize(
           preferredSize: Size(double.infinity, kToolbarHeight),
           child: HomeAppBar(),
         ),
@@ -23,12 +25,10 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 5.0,
-              ),
-              BannerSlider(),
-              CategorySelectionList(),
-              BestProductList(),
+              const CustomerSelected(),
+              const BannerSlider(),
+              const CategorySelectionList(),
+              const BestProductList(),
               smallVerticalSpacing(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -63,8 +63,8 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               smallVerticalSpacing(),
-              NewsProductList(),
-              SizedBox(
+              const NewsProductList(),
+              const SizedBox(
                 height: 20.0,
               ),
             ],
