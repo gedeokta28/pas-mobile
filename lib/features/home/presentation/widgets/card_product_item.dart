@@ -13,6 +13,115 @@ class CardProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    topRight: Radius.circular(5.0)),
+                child: product.images.isEmpty && product.photourl == null
+                    ? Image.asset(
+                        ASSETS_PLACEHOLDER,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      )
+                    : product.photourl != null
+                        ? Image.network(
+                            product.photourl,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                ASSETS_PLACEHOLDER,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              );
+                            },
+                          )
+                        : product.images.isNotEmpty && product.photourl == null
+                            ? Image.network(product.images[0].url,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  ASSETS_PLACEHOLDER,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                );
+                              }, height: 130, width: double.infinity)
+                            : Image.asset(
+                                ASSETS_PLACEHOLDER,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              )),
+          ),
+          const SizedBox(
+            height: 3.0,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
+            child: Text(
+              product.brand.brandname,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
+            child: Text(
+              product.stockname,
+              style: TextStyle(
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text(
+                    'Rp',
+                    maxLines: 1,
+                    style: TextStyle(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  Text(
+                    convertPrice(product.hrg1),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 3.0,
+          )
+        ],
+      ),
+    );
     return Padding(
       padding: const EdgeInsets.only(top: 10),
       child: Card(

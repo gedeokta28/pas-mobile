@@ -137,9 +137,9 @@ class SearchProvider with ChangeNotifier {
       (data) async* {
         print("mantapss");
         _isLoadingMoreData = false;
-        data.sort((a, b) {
-          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
-        });
+        // data.sort((a, b) {
+        //   return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        // });
         _listProductFilter.clear();
         List<ProductFilter> dataFilteredDisc =
             data.where((element) => element.discountinued == "0").toList();

@@ -64,6 +64,135 @@ class CardWidget extends StatelessWidget {
         });
       },
       child: Container(
+        width: 200,
+        margin: const EdgeInsets.only(right: 5.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(5.0),
+                      topRight: Radius.circular(5.0)),
+                  child: product.images.isEmpty && product.photourl == null
+                      ? Image.asset(
+                          ASSETS_PLACEHOLDER,
+                          height: 130,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        )
+                      : product.photourl != null
+                          ? Image.network(product.photourl,
+                              fit: BoxFit.cover,
+                              height: 130,
+                              width: double.infinity,
+                              errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                ASSETS_PLACEHOLDER,
+                                height: 130,
+                                width: double.infinity,
+                                fit: BoxFit.cover,
+                              );
+                            })
+                          : product.images.isNotEmpty &&
+                                  product.photourl == null
+                              ? Image.network(product.images[0].url,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    ASSETS_PLACEHOLDER,
+                                    height: 130,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  );
+                                }, height: 130, width: double.infinity)
+                              : Image.asset(
+                                  ASSETS_PLACEHOLDER,
+                                  height: 130,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                )),
+              // SizedBox(height: 8),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.brand.brandname,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        product.stockname,
+                        style: TextStyle(
+                            fontSize: 13.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Spacer(),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            const Text(
+                              'Rp',
+                              maxLines: 1,
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                            Text(
+                              convertPrice(product.hrg1),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, ProductDetailPage.routeName,
+                arguments: ProductDetailArguments(
+                    productId: product.stockid,
+                    categoryId: product.category.categoryid))
+            .then((_) {
+          final provider = Provider.of<CartProvider>(
+            context,
+            listen: false,
+          );
+          provider.countTotalCartItem();
+        });
+      },
+      child: Container(
         width: App(context).appWidth(45),
         margin: const EdgeInsets.only(
             left: 12,

@@ -64,20 +64,33 @@ class OrderItemCard extends StatelessWidget {
                           image: const AssetImage(ASSETS_PLACEHOLDER),
                         )
                       : orderData.products[0].stock.photourl.isNotEmpty
-                          ? Image(
+                          ? Image.network(orderData.products[0].stock.photourl,
+                              fit: BoxFit.cover,
                               height: App(context).appWidth(20),
                               width: App(context).appWidth(20),
-                              image: NetworkImage(
-                                  orderData.products[0].stock.photourl),
-                            )
+                              errorBuilder: (context, error, stackTrace) {
+                              return Image.asset(
+                                ASSETS_PLACEHOLDER,
+                                height: App(context).appWidth(20),
+                                width: App(context).appWidth(20),
+                                fit: BoxFit.cover,
+                              );
+                            })
                           : orderData.products[0].stock.images.isNotEmpty &&
                                   orderData.products[0].stock.photourl.isEmpty
-                              ? Image(
+                              ? Image.network(
+                                  orderData.products[0].stock.images[0]['url'],
+                                  fit: BoxFit.cover,
                                   height: App(context).appWidth(20),
                                   width: App(context).appWidth(20),
-                                  image: NetworkImage(orderData
-                                      .products[0].stock.images[0]['url']),
-                                )
+                                  errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    ASSETS_PLACEHOLDER,
+                                    height: App(context).appWidth(20),
+                                    width: App(context).appWidth(20),
+                                    fit: BoxFit.cover,
+                                  );
+                                })
                               : Image(
                                   height: App(context).appWidth(20),
                                   width: App(context).appWidth(20),
@@ -92,7 +105,7 @@ class OrderItemCard extends StatelessWidget {
                         Text(
                           orderData.products[0].stockname,
                           overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                          maxLines: 2,
                           style: const TextStyle(
                               color: Colors.black,
                               fontSize: 13,

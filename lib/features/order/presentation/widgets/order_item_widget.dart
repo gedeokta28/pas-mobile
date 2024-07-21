@@ -36,8 +36,8 @@ class OrderItemWidget extends StatelessWidget {
                         ? Image(
                             height: App(context).appWidth(15),
                             width: App(context).appWidth(15),
-                            image:
-                                NetworkImage(productOrder.stock.images[0]['url']),
+                            image: NetworkImage(
+                                productOrder.stock.images[0]['url']),
                           )
                         : Image(
                             height: App(context).appWidth(15),
@@ -61,7 +61,7 @@ class OrderItemWidget extends StatelessWidget {
               flex: 2,
               child: Text(
                 productOrder.stockname,
-                maxLines: 1,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),

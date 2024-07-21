@@ -115,6 +115,7 @@ class CartProvider with ChangeNotifier {
       logMe("failure.message ${failure.message}");
       yield CartItemFailure(failure: failure);
     }, (result) async* {
+      _cartList = result;
       yield CartItemSuccess(data: result);
     });
   }

@@ -27,10 +27,18 @@ class CartItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               provider.cart[index].image!.isNotEmpty
-                  ? Image(
+                  ? Image.network(
+                      provider.cart[index].image!,
+                      fit: BoxFit.cover,
                       height: 80,
                       width: 80,
-                      image: NetworkImage(provider.cart[index].image!),
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          ASSETS_PLACEHOLDER,
+                          height: 80,
+                          width: 80,
+                        );
+                      },
                     )
                   : const Image(
                       height: 80,
@@ -45,10 +53,10 @@ class CartItem extends StatelessWidget {
                     width: App(context).appWidth(60),
                     child: Text(
                       provider.cart[index].productName!,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
+                          fontWeight: FontWeight.bold, fontSize: FONT_SMALL),
                     ),
                   ),
                   const SizedBox(
@@ -60,7 +68,7 @@ class CartItem extends StatelessWidget {
                       'Rp. ${convertPrice((provider.cart[index].productPrice!.value * provider.cart[index].quantity!.value).toString())}',
                       maxLines: 1,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),
+                          fontWeight: FontWeight.bold, fontSize: FONT_SMALL),
                     ),
                   ),
                   ValueListenableBuilder<int>(

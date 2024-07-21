@@ -50,7 +50,7 @@ class OrderItemDetailWidget extends StatelessWidget {
                 children: [
                   Text(
                     productOrder.stockname,
-                    maxLines: 1,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: FONT_GENERAL),

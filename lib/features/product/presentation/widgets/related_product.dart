@@ -38,21 +38,18 @@ class RelatedProductList extends StatelessWidget {
               ),
             ));
       } else {
-        return SizedBox(
-          height: App(context).appHeight(31),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: ListView.builder(
-                physics: const ClampingScrollPhysics(),
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: provider.productRelated.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CardRelatedProductWidget(
-                    product: provider.productRelated[index],
-                  );
-                }),
-          ),
+        return Container(
+          height: 225,
+          child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: provider.productRelated.length,
+              itemBuilder: (BuildContext context, int index) {
+                return CardRelatedProductWidget(
+                  product: provider.productRelated[index],
+                );
+              }),
         );
       }
     });

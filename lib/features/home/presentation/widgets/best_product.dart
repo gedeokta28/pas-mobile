@@ -37,6 +37,9 @@ class BestProductList extends StatelessWidget {
           },
           title: 'Product Terbaik',
         ),
+        SizedBox(
+          height: 8.0,
+        ),
         StreamBuilder<ProductState>(
             stream:
                 context.read<HomeProvider>().fetchProductList('best-product'),
@@ -44,18 +47,18 @@ class BestProductList extends StatelessWidget {
               if (snap.hasData) {
                 if (snap.data is ProductLoaded) {
                   final _product = (snap.data as ProductLoaded).data;
-                  return SizedBox(
-                    height: App(context).appHeight(31),
+                  return Container(
+                    height: 225,
+                    padding: const EdgeInsets.only(left: 12.0),
                     child: ListView.builder(
-                        physics: const ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: _product.length > 6 ? 5 : _product.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return CardWidget(
-                            product: _product[index],
-                          );
-                        }),
+                      physics: const ClampingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: _product.length > 6 ? 5 : _product.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return CardWidget(product: _product[index]);
+                      },
+                    ),
                   );
                 } else if (snap.data is ProductLoading) {
                   return SizedBox(
@@ -109,6 +112,9 @@ class BestProductList extends StatelessWidget {
                     ),
                   ));
             }),
+        SizedBox(
+          height: 5.0,
+        ),
       ],
     );
   }

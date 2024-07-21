@@ -357,6 +357,9 @@ class _ProductDescriptionState extends State<ProductDescription> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
+            SizedBox(
+              height: 8.0,
+            ),
             const RelatedProductList(),
             const SizedBox(height: 100),
           ],

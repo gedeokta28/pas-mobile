@@ -40,10 +40,18 @@ class QuickOrderItem extends StatelessWidget {
               width: 10.0,
             ),
             value.quickOrderProduct[index].image!.isNotEmpty
-                ? Image(
+                ? Image.network(
+                    value.quickOrderProduct[index].image!,
+                    fit: BoxFit.cover,
                     height: 80,
                     width: 80,
-                    image: NetworkImage(value.quickOrderProduct[index].image!),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Image.asset(
+                        ASSETS_PLACEHOLDER,
+                        height: 80,
+                        width: 80,
+                      );
+                    },
                   )
                 : const Image(
                     height: 80,

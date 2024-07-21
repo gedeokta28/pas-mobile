@@ -333,11 +333,17 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                     Expanded(
                       child: GridView.builder(
+                          // gridDelegate:
+                          //     SliverGridDelegateWithMaxCrossAxisExtent(
+                          //   maxCrossAxisExtent: 200,
+                          //   crossAxisSpacing: 8,
+                          //   childAspectRatio: (itemWidth / itemHeight),
+                          // ),
                           gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 200,
-                            crossAxisSpacing: 8,
-                            childAspectRatio: (itemWidth / itemHeight),
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 8.0,
+                            mainAxisSpacing: 8.0,
                           ),
                           controller: provider.scrollController,
                           itemCount: provider.listProductFilter.length,

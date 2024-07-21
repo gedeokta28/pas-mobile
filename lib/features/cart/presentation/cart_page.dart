@@ -8,6 +8,7 @@ import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/cart/presentation/providers/add_cart_state.dart';
 import 'package:pas_mobile/features/cart/presentation/widgets/cart_item.dart';
 import 'package:pas_mobile/features/order/presentation/checkout_page.dart';
+import 'package:pas_mobile/features/product/presentation/product_detail_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/presentation/widgets/custom_app_bar.dart';
@@ -129,7 +130,28 @@ class CartPage extends StatelessWidget {
                             shrinkWrap: true,
                             itemCount: provider.cart.length,
                             itemBuilder: (context, index) {
-                              return CartItem(index: index);
+                              return InkWell(
+                                  onTap: () {
+                                    Navigator.pushNamed(context,
+                                            ProductDetailPage.routeName,
+                                            arguments: ProductDetailArguments(
+                                                productId: provider
+                                                    .cart[index].productId!,
+                                                categoryId: provider
+                                                    .cartList[index]
+                                                    .stock
+                                                    .category
+                                                    .categoryid))
+                                        .then((_) {
+                                      final provider =
+                                          Provider.of<CartProvider>(
+                                        context,
+                                        listen: false,
+                                      );
+                                      provider.countTotalCartItem();
+                                    });
+                                  },
+                                  child: CartItem(index: index));
                             });
                       },
                     ),

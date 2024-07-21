@@ -225,11 +225,17 @@ class _BestProductListPageState extends State<BestProductListPage> {
                             onLoading: _onLoading,
                             child: GridView.builder(
                                 key: _scaffoldKey,
+                                // gridDelegate:
+                                //     SliverGridDelegateWithMaxCrossAxisExtent(
+                                //   maxCrossAxisExtent: 200,
+                                //   crossAxisSpacing: 8,
+                                //   childAspectRatio: (itemWidth / itemHeight),
+                                // ),
                                 gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200,
-                                  crossAxisSpacing: 8,
-                                  childAspectRatio: (itemWidth / itemHeight),
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 8.0,
+                                  mainAxisSpacing: 8.0,
                                 ),
                                 itemCount: provider.productList.length,
                                 itemBuilder: (BuildContext ctx, index) {
