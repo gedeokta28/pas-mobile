@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:provider/provider.dart';
@@ -40,18 +41,30 @@ class QuickOrderItem extends StatelessWidget {
               width: 10.0,
             ),
             value.quickOrderProduct[index].image!.isNotEmpty
-                ? Image.network(
-                    value.quickOrderProduct[index].image!,
-                    fit: BoxFit.cover,
-                    height: 80,
-                    width: 80,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Image.asset(
-                        ASSETS_PLACEHOLDER,
-                        height: 80,
-                        width: 80,
+                ? InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FullScreenImage(
+                            imageUrl: value.quickOrderProduct[index].image!,
+                          ),
+                        ),
                       );
                     },
+                    child: Image.network(
+                      value.quickOrderProduct[index].image!,
+                      fit: BoxFit.cover,
+                      height: 80,
+                      width: 80,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          ASSETS_PLACEHOLDER,
+                          height: 80,
+                          width: 80,
+                        );
+                      },
+                    ),
                   )
                 : const Image(
                     height: 80,
@@ -386,5 +399,41 @@ class QuickOrderItem extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class FullScreenImage extends StatelessWidget {
+  final String imageUrl;
+
+  FullScreenImage({required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: false, // Hides the default back button
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.close,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop(); // Closes the current screen
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) => CircularProgressIndicator(),
+          errorWidget: (context, url, error) => Icon(Icons.error),
+        ),
+      ),
+    );
   }
 }

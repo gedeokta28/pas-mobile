@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/assets.dart';
+import 'package:pas_mobile/core/utility/enum.dart';
+import 'package:pas_mobile/features/home/presentation/product_page.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/home_provider.dart';
@@ -30,16 +32,42 @@ class _BannerSliderState extends State<BannerSlider> {
         const SizedBox(
           height: 10.0,
         ),
-        CarouselSlider(
-          items: imageSliders,
-          carouselController: _controller,
-          options: CarouselOptions(
-              autoPlay: true,
-              enlargeCenterPage: true,
-              aspectRatio: 2.5,
-              onPageChanged: (index, reason) {
-                provider.setCurrent = index;
-              }),
+        InkWell(
+          onTap: () {
+            if (provider.current == 0) {
+              Navigator.pushNamed(context, ProductPage.routeName,
+                  arguments: ProductPageArguments(
+                    productPageParams: ProductPageParams.fromBrand,
+                    brandName: 'BOSCH',
+                    brandId: 'BOSCH',
+                  ));
+            } else if (provider.current == 1) {
+              Navigator.pushNamed(context, ProductPage.routeName,
+                  arguments: ProductPageArguments(
+                    productPageParams: ProductPageParams.fromBrand,
+                    brandName: 'TENSA',
+                    brandId: 'TENSA',
+                  ));
+            } else {
+              Navigator.pushNamed(context, ProductPage.routeName,
+                  arguments: ProductPageArguments(
+                    productPageParams: ProductPageParams.fromBrand,
+                    brandName: 'WIPRO',
+                    brandId: 'WIPRO',
+                  ));
+            }
+          },
+          child: CarouselSlider(
+            items: imageSliders,
+            carouselController: _controller,
+            options: CarouselOptions(
+                autoPlay: true,
+                enlargeCenterPage: true,
+                aspectRatio: 2.5,
+                onPageChanged: (index, reason) {
+                  provider.setCurrent = index;
+                }),
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

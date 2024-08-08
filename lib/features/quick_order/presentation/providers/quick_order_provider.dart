@@ -336,9 +336,9 @@ class QuickOrderProvider extends ChangeNotifier {
       (data) {
         List<ProductFilter> _result = [];
         _result = data;
-        _result.sort((a, b) {
-          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
-        });
+        // _result.sort((a, b) {
+        //   return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        // });
         for (var i = 0; i < _result.length; i++) {
           List<PriceGrosirCart> _priceGrosirCart = [];
           _priceGrosirCart.add(PriceGrosirCart(

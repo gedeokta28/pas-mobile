@@ -222,9 +222,9 @@ class SearchProvider with ChangeNotifier {
         print("filterProduct");
 
         _isLoadingProduct = false;
-        data.sort((a, b) {
-          return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
-        });
+        // data.sort((a, b) {
+        //   return a.stockname.toLowerCase().compareTo(b.stockname.toLowerCase());
+        // });
         List<ProductFilter> dataFiltered =
             data.where((element) => element.discountinued == "0").toList();
         _listProductFilter = dataFiltered;
