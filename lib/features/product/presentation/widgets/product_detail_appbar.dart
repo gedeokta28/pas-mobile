@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/core/static/colors.dart';
 import 'package:pas_mobile/features/product/presentation/providers/app_bar_provider.dart';
+import 'package:pas_mobile/features/quick_order/presentation/widget/quick_order_item.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/static/assets.dart';
@@ -47,13 +48,25 @@ class ProductAppBar extends StatelessWidget {
                                 ASSETS_PLACEHOLDER,
                                 fit: BoxFit.cover,
                               ))
-                          : SizedBox(
-                              height: double.infinity,
-                              width: double.infinity,
-                              child: Image.network(
-                                provider.getIndex(),
-                                fit: BoxFit.cover,
-                              )),
+                          : InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FullScreenImage(
+                                      imageUrl: provider.getIndex(),
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: SizedBox(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  child: Image.network(
+                                    provider.getIndex(),
+                                    fit: BoxFit.cover,
+                                  )),
+                            ),
                       provider.listImage.length < 2
                           ? const SizedBox()
                           : Positioned(

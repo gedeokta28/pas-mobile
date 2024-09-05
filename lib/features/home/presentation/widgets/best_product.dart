@@ -35,7 +35,7 @@ class BestProductList extends StatelessWidget {
               provider.countTotalCartItem();
             });
           },
-          title: 'Product Terbaik',
+          title: 'Produk Terlaris',
         ),
         SizedBox(
           height: 8.0,

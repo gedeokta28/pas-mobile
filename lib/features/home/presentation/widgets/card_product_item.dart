@@ -34,7 +34,7 @@ class CardProductItem extends StatelessWidget {
                     : product.photourl != null
                         ? Image.network(
                             product.photourl,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             width: double.infinity,
                             errorBuilder: (context, error, stackTrace) {
                               return Image.asset(
@@ -46,7 +46,7 @@ class CardProductItem extends StatelessWidget {
                           )
                         : product.images.isNotEmpty && product.photourl == null
                             ? Image.network(product.images[0].url,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                                 errorBuilder: (context, error, stackTrace) {
                                 return Image.asset(
                                   ASSETS_PLACEHOLDER,

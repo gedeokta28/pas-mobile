@@ -139,7 +139,7 @@ class CartPage extends StatelessWidget {
                                                     .cart[index].productId!,
                                                 categoryId: provider
                                                     .cartList[index]
-                                                    .stock
+                                                    .stock!
                                                     .category
                                                     .categoryid))
                                         .then((_) {

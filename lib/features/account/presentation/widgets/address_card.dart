@@ -41,49 +41,59 @@ class AddressCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            shippingAddress.fullname,
-                            style: const TextStyle(
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              shippingAddress.fullname,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            shippingAddress.phone,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            shippingAddress.streetAddress,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.black),
-                          )
-                        ],
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0),
+                            Text(
+                              shippingAddress.phone,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0),
+                            Text(
+                              shippingAddress.streetAddress,
+                              maxLines: 2, // Limit to 2 lines
+                              overflow: TextOverflow
+                                  .ellipsis, // Adds "..." if overflow
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       IconButton(
-                          iconSize: 15,
-                          onPressed: () {
-                            if (isFromList) {
-                              onTapBack!();
-                            } else {
-                              Navigator.pushNamed(
-                                  context, UpdateAddressPage.routeName,
-                                  arguments: UpdateAddressPageArguments(
-                                      shippingAddress: shippingAddress,
-                                      isFromList: false));
-                            }
-                          },
-                          icon: Image.asset(EDIT_ICON))
+                        iconSize: 15,
+                        onPressed: () {
+                          if (isFromList) {
+                            onTapBack!();
+                          } else {
+                            Navigator.pushNamed(
+                              context,
+                              UpdateAddressPage.routeName,
+                              arguments: UpdateAddressPageArguments(
+                                shippingAddress: shippingAddress,
+                                isFromList: false,
+                              ),
+                            );
+                          }
+                        },
+                        icon: Image.asset(EDIT_ICON),
+                      ),
                     ],
                   ),
                 ],

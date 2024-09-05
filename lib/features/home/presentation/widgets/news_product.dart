@@ -27,7 +27,7 @@ class NewsProductList extends StatelessWidget {
               provider.countTotalCartItem();
             });
           },
-          title: 'Product Terbaru',
+          title: 'Produk Terbaru',
         ),
         SizedBox(
           height: 8.0,

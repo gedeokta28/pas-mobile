@@ -86,7 +86,7 @@ void showShortToast({required String message, Color? color}) {
 
 String convertPrice(String price) {
   double d = double.parse(price);
-  final currencyFormatter = NumberFormat('#,##0.0', 'ID');
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
   return currencyFormatter.format(d).toString();
 }
 
@@ -95,7 +95,7 @@ String convertPriceDisc(String price, String disc) {
   double discParse = double.parse(disc);
   double percent = (discParse / 100) * d;
   double result = d - percent;
-  final currencyFormatter = NumberFormat('#,##0.0', 'ID');
+  final currencyFormatter = NumberFormat('#,##0', 'ID');
   return currencyFormatter.format(result).toString();
 }
 

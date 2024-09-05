@@ -155,105 +155,107 @@ class CartProvider with ChangeNotifier {
     fetchCart().listen((event) {
       if (event is CartItemSuccess) {
         for (var i = 0; i < event.data.length; i++) {
-          double qty1Final = double.parse(event.data[i].stock.qty1);
-          double qty2Final = double.parse(event.data[i].stock.qty2);
-          double qty3Final = double.parse(event.data[i].stock.qty3);
-          int minQty1Int = 0, maxQty1Int = 0;
-          int minQty2Int = 0, maxQty2Int = 0;
-          //1
-          minQty1Int = qty1Final.toInt();
-          maxQty1Int = (qty2Final.toInt() - 1);
-          //2
-          minQty2Int = qty2Final.toInt();
-          maxQty2Int = (qty3Final.toInt() - 1);
-          List<PriceGrosirCart> _priceGrosirCart = [];
-          if (maxQty1Int < 0) {
-            if (minQty2Int == 0) {
-              _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty1Int,
-                maxUnit: maxQty2Int,
-                price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
-              ));
+          if (event.data[i].stock != null) {
+            double qty1Final = double.parse(event.data[i].stock!.qty1);
+            double qty2Final = double.parse(event.data[i].stock!.qty2);
+            double qty3Final = double.parse(event.data[i].stock!.qty3);
+            int minQty1Int = 0, maxQty1Int = 0;
+            int minQty2Int = 0, maxQty2Int = 0;
+            //1
+            minQty1Int = qty1Final.toInt();
+            maxQty1Int = (qty2Final.toInt() - 1);
+            //2
+            minQty2Int = qty2Final.toInt();
+            maxQty2Int = (qty3Final.toInt() - 1);
+            List<PriceGrosirCart> _priceGrosirCart = [];
+            if (maxQty1Int < 0) {
+              if (minQty2Int == 0) {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty1Int,
+                  maxUnit: maxQty2Int,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist1),
+                ));
+              } else {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty1Int,
+                  maxUnit: minQty1Int,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist1),
+                ));
+              }
             } else {
-              _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty1Int,
-                maxUnit: minQty1Int,
-                price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
-              ));
+              if (maxQty1Int == minQty1Int) {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty1Int,
+                  maxUnit: minQty1Int,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist1),
+                ));
+              } else {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty1Int,
+                  maxUnit: maxQty1Int,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist1),
+                ));
+              }
             }
-          } else {
-            if (maxQty1Int == minQty1Int) {
-              _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty1Int,
-                maxUnit: minQty1Int,
-                price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
-              ));
-            } else {
-              _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty1Int,
-                maxUnit: maxQty1Int,
-                price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist1),
-              ));
-            }
-          }
 
-          if (event.data[i].stock.qty2 != '0') {
-            if (maxQty2Int < 0) {
+            if (event.data[i].stock!.qty2 != '0') {
+              if (maxQty2Int < 0) {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty2Int,
+                  maxUnit: 100000,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist2),
+                ));
+              } else {
+                _priceGrosirCart.add(PriceGrosirCart(
+                  minUnit: minQty2Int,
+                  maxUnit: maxQty2Int,
+                  price: convertPriceDisc(event.data[i].stock!.hrg1,
+                      event.data[i].stock!.disclist2),
+                ));
+              }
+            }
+
+            if (event.data[i].stock!.qty3 != '0') {
               _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty2Int,
+                minUnit: qty3Final.toInt(),
                 maxUnit: 100000,
                 price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist2),
-              ));
-            } else {
-              _priceGrosirCart.add(PriceGrosirCart(
-                minUnit: minQty2Int,
-                maxUnit: maxQty2Int,
-                price: convertPriceDisc(
-                    event.data[i].stock.hrg1, event.data[i].stock.disclist2),
+                    event.data[i].stock!.hrg1, event.data[i].stock!.disclist3),
               ));
             }
-          }
-
-          if (event.data[i].stock.qty3 != '0') {
-            _priceGrosirCart.add(PriceGrosirCart(
-              minUnit: qty3Final.toInt(),
-              maxUnit: 100000,
-              price: convertPriceDisc(
-                  event.data[i].stock.hrg1, event.data[i].stock.disclist3),
-            ));
-          }
-          String initPrice = convertPriceDisc(event.data[i].stock.hrg1, '0');
-          for (int iGros = 0; iGros < _priceGrosirCart.length; iGros++) {
-            if (event.data[i].qty >= _priceGrosirCart[iGros].minUnit! &&
-                event.data[i].qty <= _priceGrosirCart[iGros].maxUnit!) {
-              initPrice = _priceGrosirCart[iGros].price!;
-              break;
+            String initPrice = convertPriceDisc(event.data[i].stock!.hrg1, '0');
+            for (int iGros = 0; iGros < _priceGrosirCart.length; iGros++) {
+              if (event.data[i].qty >= _priceGrosirCart[iGros].minUnit! &&
+                  event.data[i].qty <= _priceGrosirCart[iGros].maxUnit!) {
+                initPrice = _priceGrosirCart[iGros].price!;
+                break;
+              }
             }
-          }
 
-          cart.add(
-            Cart(
-                id: event.data[i].id,
-                productId: event.data[i].stock.stockid,
-                productName: event.data[i].stock.stockname,
-                initialPrice: removeToPrice(initPrice),
-                productPrice: ValueNotifier(removeToPrice(initPrice)),
-                quantity: ValueNotifier(event.data[i].qty),
-                unitTag: "unitTag",
-                image: event.data[i].stock.photourl.isNotEmpty
-                    ? event.data[i].stock.photourl
-                    : event.data[i].stock.images.isEmpty
-                        ? ''
-                        : event.data[i].stock.images[0]['url'],
-                priceGrosirCart: _priceGrosirCart),
-          );
-          addTotalPrice(double.parse(event.data[i].stock.hrg1));
-          addCounter();
+            cart.add(
+              Cart(
+                  id: event.data[i].id,
+                  productId: event.data[i].stock!.stockid,
+                  productName: event.data[i].stock!.stockname,
+                  initialPrice: removeToPrice(initPrice),
+                  productPrice: ValueNotifier(removeToPrice(initPrice)),
+                  quantity: ValueNotifier(event.data[i].qty),
+                  unitTag: "unitTag",
+                  image: event.data[i].stock!.photourl.isNotEmpty
+                      ? event.data[i].stock!.photourl
+                      : event.data[i].stock!.images.isEmpty
+                          ? ''
+                          : event.data[i].stock!.images[0]['url'],
+                  priceGrosirCart: _priceGrosirCart),
+            );
+            addTotalPrice(double.parse(event.data[i].stock!.hrg1));
+            addCounter();
+          }
         }
         _isLoadCart = false;
         notifyListeners();

@@ -54,7 +54,7 @@ class QuickOrderItem extends StatelessWidget {
                     },
                     child: Image.network(
                       value.quickOrderProduct[index].image!,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       height: 80,
                       width: 80,
                       errorBuilder: (context, error, stackTrace) {
@@ -82,7 +82,7 @@ class QuickOrderItem extends StatelessWidget {
                   width: App(context).appWidth(55),
                   child: Text(
                     value.quickOrderProduct[index].productName,
-                    maxLines: 2,
+                    maxLines: 3,
                     // overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 12),

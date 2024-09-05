@@ -50,17 +50,20 @@ class BrandItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                    image: brand.photo.isEmpty
-                        ? const DecorationImage(
-                            image: AssetImage(ASSETS_PLACEHOLDER),
-                            fit: BoxFit.fill)
-                        : DecorationImage(
-                            image: NetworkImage(
-                              brand.photo,
-                            ),
-                            fit: BoxFit.fill)),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: brand.photo.isEmpty
+                          ? const DecorationImage(
+                              image: AssetImage(ASSETS_PLACEHOLDER),
+                              fit: BoxFit.fill)
+                          : DecorationImage(
+                              image: NetworkImage(
+                                "https://pasmobile-admin.com/app/${brand.photo}",
+                              ),
+                              fit: BoxFit.contain)),
+                ),
               ),
             ),
             Container(

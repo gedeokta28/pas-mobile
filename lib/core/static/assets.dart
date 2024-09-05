@@ -1,4 +1,6 @@
 const String APP_LOGO = 'assets/images/app-icon.png';
+const String splashBackground = 'assets/images/spash-bg.png';
+const String newAppLogo = 'assets/images/new-logo.png';
 const String HOME_ICON = 'assets/icons/home-icon.png';
 const String ACCOUNT_ICON = 'assets/icons/account-icon.png';
 const String CATEGORY_ICON = 'assets/icons/category-icon.png';
@@ -18,8 +20,10 @@ const String ASSET_FILTER_ICON = 'assets/icons/filter-icon.png';
 const String ASSET_TRASNFER_ICON = 'assets/icons/transfer-icon.png';
 const String ASSET_COD_ICON = 'assets/icons/cod-icon.png';
 const String ASSES_BCA_ICON = 'assets/icons/bca-icon.png';
-const String ASSET_IKLAN_1 = 'assets/images/iklan_1.jpg';
-const String ASSET_IKLAN_2 = 'assets/images/iklan_2.jpg';
+const String ASSET_IKLAN_1 =
+    'https://pasmobile-admin.com/assets/images/iklan/iklan1.png';
+const String ASSET_IKLAN_2 =
+    'https://pasmobile-admin.com/assets/images/iklan/iklan2.png';
 
 List<String> listIklan = [ASSET_IKLAN_1, ASSET_IKLAN_2];
 List<String> listBanner = [

@@ -89,8 +89,9 @@ class _AddressCheckoutPageState extends State<AddressCheckoutPage> {
                                   textInputAction: TextInputAction.search,
                                   onEditingComplete: () {},
                                   style: const TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   textAlignVertical: TextAlignVertical.center,
                                   onChanged: (value) {
                                     _provider.setResultEmpty = false;
@@ -118,46 +119,46 @@ class _AddressCheckoutPageState extends State<AddressCheckoutPage> {
                                         .searchAddressController.text.isNotEmpty
                                 ? Expanded(
                                     child: _provider.resultIsEmpty
-                                        ? const Text('Alamat tidak ditemukan')
+                                        ? const Center(
+                                            child:
+                                                Text('Alamat tidak ditemukan'))
                                         : ListView.builder(
                                             padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
                                             itemCount:
                                                 _provider.searchResult.length,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index) {
                                               return GestureDetector(
-                                                  onTap: () {
-                                                    Navigator.pop(
-                                                        context,
-                                                        _provider.searchResult[
-                                                            index]);
-                                                  },
-                                                  child: AddressCardCheckout(
-                                                    shippingAddress: _provider
-                                                        .searchResult[index],
-                                                  ));
-                                            }),
+                                                onTap: () {
+                                                  Navigator.pop(
+                                                      context,
+                                                      _provider
+                                                          .searchResult[index]);
+                                                },
+                                                child: AddressCardCheckout(
+                                                  shippingAddress: _provider
+                                                      .searchResult[index],
+                                                ),
+                                              );
+                                            },
+                                          ),
                                   )
                                 : Expanded(
                                     child: ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        shrinkWrap: true,
-                                        itemCount: _shipingAddressList.length,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemBuilder: (context, index) {
-                                          return GestureDetector(
-                                              onTap: () {
-                                                Navigator.pop(context,
-                                                    _shipingAddressList[index]);
-                                              },
-                                              child: AddressCardCheckout(
-                                                shippingAddress:
-                                                    _shipingAddressList[index],
-                                              ));
-                                        }),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: _shipingAddressList.length,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.pop(context,
+                                                _shipingAddressList[index]);
+                                          },
+                                          child: AddressCardCheckout(
+                                            shippingAddress:
+                                                _shipingAddressList[index],
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   ),
                           ],
                         );

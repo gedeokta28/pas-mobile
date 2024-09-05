@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                               width: 190,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage(listIklan[index]),
+                                  image: NetworkImage(listIklan[index]),
                                   fit: BoxFit.cover,
                                 ),
                                 borderRadius: BorderRadius.circular(0),

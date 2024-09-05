@@ -22,8 +22,7 @@ class AddressCardCheckout extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(10.0)),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, top: 0, bottom: 0, right: 10.0),
+              padding: const EdgeInsets.only(left: 12.0, right: 10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,34 +30,40 @@ class AddressCardCheckout extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            shippingAddress.fullname,
-                            style: const TextStyle(
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              shippingAddress.fullname,
+                              style: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            shippingAddress.phone,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          Text(
-                            shippingAddress.streetAddress,
-                            style: const TextStyle(
-                                fontSize: 13, color: Colors.black),
-                          )
-                        ],
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0),
+                            Text(
+                              shippingAddress.phone,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(height: 5.0),
+                            Text(
+                              shippingAddress.streetAddress,
+                              maxLines: 2, // Limit to 2 lines
+                              overflow: TextOverflow
+                                  .ellipsis, // Adds "..." if overflow
+                              style: const TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -67,19 +72,19 @@ class AddressCardCheckout extends StatelessWidget {
             ),
           ),
           Positioned(
-              left: 0,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: secondaryColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10.0),
-                      topRight: Radius.circular(0.0),
-                      bottomLeft: Radius.circular(10.0),
-                      bottomRight: Radius.circular(0.0)),
+            left: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                color: secondaryColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  bottomLeft: Radius.circular(10.0),
                 ),
-                width: 6,
-                height: App(context).appHeight(11),
-              )),
+              ),
+              width: 6,
+              height: App(context).appHeight(11),
+            ),
+          ),
         ],
       ),
     );

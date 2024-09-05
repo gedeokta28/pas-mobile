@@ -45,18 +45,17 @@ class ItemCart {
 
   String id;
   int qty;
-  Stock stock;
+  Stock? stock;
 
   factory ItemCart.fromJson(Map<String, dynamic> json) => ItemCart(
         id: json["id"],
         qty: json["qty"],
-        stock: Stock.fromJson(json["stock"]),
+        stock: json["stock"] == null ? null : Stock.fromJson(json["stock"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "qty": qty,
-        "stock": stock.toJson(),
       };
 }
 

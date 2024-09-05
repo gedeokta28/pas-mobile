@@ -30,13 +30,13 @@ class CardRelatedProductWidget extends StatelessWidget {
                 : product.photourl != null
                     ? Image.network(
                         product.photourl,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                         height: App(context).appHeight(15),
                         width: double.infinity,
                       )
                     : product.images.isNotEmpty && product.photourl == null
                         ? Image.network(product.images[0].url,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             height: App(context).appHeight(15),
                             width: double.infinity)
                         : Image.asset(

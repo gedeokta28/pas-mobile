@@ -10,7 +10,7 @@ class FilterParameter {
     this.priceStart = 0,
     this.limit = 10,
     this.priceEnd = 0,
-    this.orderBy = 'desc',
+    this.orderBy = 'asc',
     this.priceBy = '',
   });
 }

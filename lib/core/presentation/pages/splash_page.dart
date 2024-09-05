@@ -46,59 +46,19 @@ class _SplashPageState extends State<SplashPage> {
     sessionHelper = locator<Session>();
 
     return Scaffold(
-      backgroundColor: primaryColor,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text(
-                    APP_DESCRIPTON_TITLE,
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    APP_DESCRIPTON_SUBTITLE,
-                    style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey[200],
-                    ),
-                  )
-                ],
-              ),
-            ],
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image:
+                AssetImage(splashBackground), // Path to your background image
+            fit: BoxFit.fill, // Ensures the image covers the entire screen
           ),
         ),
-        elevation: 0,
-      ),
-      body: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                APP_LOGO,
-                width: 120,
-              ),
-              const Text(
-                APP_NAME,
-                style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              )
-            ],
+          child: Image.asset(
+            newAppLogo, // Path to your logo image
+            width: 150.0, // Adjust the size of the logo as needed
+            height: 150.0,
           ),
         ),
       ),

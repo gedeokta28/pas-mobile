@@ -35,7 +35,7 @@ class CustomCardFilter extends StatelessWidget {
                     : product.photourl != null
                         ? Image.network(
                             product.photourl,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             width: double.infinity,
                           )
                         : product.images.isNotEmpty && product.photourl == null

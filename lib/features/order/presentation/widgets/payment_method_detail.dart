@@ -57,7 +57,7 @@ class PaymentMethodDetailWidget extends StatelessWidget {
                             ),
                             smallHorizontalSpacing(),
                             const Text(
-                              '1231231211111',
+                              '0409178989',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: FONT_MEDIUM,
@@ -69,7 +69,7 @@ class PaymentMethodDetailWidget extends StatelessWidget {
                     ),
                     smallVerticalSpacing(),
                     const Text(
-                      'PT. Parama Asia Sejahtera',
+                      'PT. PARAMA ASIA SEJAHTERA',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: FONT_GENERAL,
