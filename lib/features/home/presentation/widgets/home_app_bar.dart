@@ -34,7 +34,7 @@ class HomeAppBar extends StatelessWidget {
             Navigator.pushNamed(context, SearchPage.routeName);
           },
           child: CustomSearchBar(
-            hint: "Search",
+            hint: "Cari produk",
             isFromHome: true,
             height: kToolbarHeight - SIZE_MEDIUM,
             onSubmitted: (value) {},

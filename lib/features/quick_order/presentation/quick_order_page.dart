@@ -47,7 +47,7 @@ class _QuickOrderPageState extends State<QuickOrderPage> {
               wTitle: Consumer<QuickOrderProvider>(
                   builder: (BuildContext context, provider, widget) {
                 return CustomSearchBar(
-                  hint: "Search",
+                  hint: "Cari produk",
                   controller: provider.controller,
                   height: kToolbarHeight - SIZE_MEDIUM,
                   onSubmitted: (value) {

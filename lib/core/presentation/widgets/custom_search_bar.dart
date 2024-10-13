@@ -66,7 +66,7 @@ class CustomSearchBar extends StatelessWidget {
                   )
                 : null,
             suffixIconColor: onClear != null ? Colors.grey : null,
-            hintText: hint ?? "Search",
+            hintText: hint ?? "Cari produk",
             hintStyle: const TextStyle(fontSize: 14.0),
           ),
         ),

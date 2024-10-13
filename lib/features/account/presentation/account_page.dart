@@ -99,7 +99,7 @@ class _AccountPageState extends State<AccountPage>
                                   tabs: [
                                     Tab(
                                       child: Text(
-                                        'Profile',
+                                        'Profil',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -176,7 +176,7 @@ class _AccountPageState extends State<AccountPage>
                         },
                         icon: Image.asset(LOGOUT_ICON)),
                     const Text(
-                      "Logout",
+                      "Keluar",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,

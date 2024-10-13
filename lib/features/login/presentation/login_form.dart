@@ -97,7 +97,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               largeVerticalSpacing(),
               RoundedButton(
-                title: "Login",
+                title: "Masuk",
                 color: secondaryColor,
                 event: () {
                   if (provider.formKey.currentState!.validate()) submit();

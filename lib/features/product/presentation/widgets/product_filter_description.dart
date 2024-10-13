@@ -138,7 +138,7 @@ class ProductFilterDescription extends StatelessWidget {
           const Divider(),
           smallVerticalSpacing(),
           const Text(
-            'Related Produk',
+            'Produk Terkait',
             style: TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.bold,

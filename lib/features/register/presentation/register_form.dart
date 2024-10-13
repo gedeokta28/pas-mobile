@@ -104,7 +104,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                 AccountType.personal.getValue()
                             ? AccountType.personal.toStrings()
                             : AccountType.company.toStrings(),
-                        style: const TextStyle(fontSize: 15, color: Colors.black),
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.black),
                       ),
                     );
                   }).toList();
@@ -197,7 +198,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       Navigator.pushReplacementNamed(
                           context, LoginPage.routeName);
                     },
-                    child: const Text("Login",
+                    child: const Text("Masuk",
                         style: TextStyle(
                             fontSize: FONT_MEDIUM,
                             color: secondaryColor,

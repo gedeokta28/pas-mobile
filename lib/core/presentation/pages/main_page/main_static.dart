@@ -26,13 +26,13 @@ extension M_BTBExtension on M_BTB {
   String get title {
     switch (this) {
       case M_BTB.home:
-        return "Home";
+        return "Beranda";
       case M_BTB.brand:
         return "Brand";
       case M_BTB.order:
         return "Q.Order";
       case M_BTB.account:
-        return "Account";
+        return "Akun";
       case M_BTB.info:
         return "Info";
     }

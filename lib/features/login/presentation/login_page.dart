@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: const CustomAppBar(
-          title: "Login",
+          title: "Masuk",
           centerTitle: true,
           canBack: true,
           hideShadow: false,

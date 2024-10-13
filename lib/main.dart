@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
           navigatorKey: locator<GlobalKey<NavigatorState>>(),
-          title: 'Flutter Demo',
+          title: 'PAS',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: primaryColor,

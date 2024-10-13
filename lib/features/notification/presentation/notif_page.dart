@@ -36,7 +36,7 @@ class _NotificationPageState extends State<NotificationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: "Notification",
+        title: "Notifikasi",
         centerTitle: true,
         canBack: true,
         hideShadow: false,
