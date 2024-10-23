@@ -60,6 +60,7 @@ class _ProductPageState extends State<ProductPage> {
     final double itemWidth = size.width / 61;
     return ChangeNotifierProvider(
       create: (_) => locator<HomeProvider>()
+        ..setupInitFilter(widget.filterParameter)
         ..filterCustomProduct(widget.filterParameter == null
                 ? FilterParameter(
                     brandId: widget.brandId, categoryId: widget.categoryId)
@@ -303,21 +304,42 @@ class _ProductPageState extends State<ProductPage> {
                                   items: provider.dropdownItems,
                                   onChanged: (newValue) {
                                     provider.setSelectedVal = newValue;
-                                    FilterParameter filterParameter = FilterParameter(
-                                        keyword: '',
-                                        priceEnd: provider
-                                            .filterParameterSelected.priceEnd,
-                                        priceStart: provider
-                                            .filterParameterSelected.priceStart,
-                                        categoryId: provider
-                                            .filterParameterSelected.categoryId,
-                                        brandId: provider
-                                            .filterParameterSelected.brandId,
-                                        priceBy: newValue == 'terbaru'
-                                            ? ''
-                                            : newValue ?? 'asc');
+                                    FilterParameter _filterParameter;
+                                    if (newValue == "terlaris") {
+                                      _filterParameter = FilterParameter(
+                                          keyword: '',
+                                          priceEnd: provider
+                                              .filterParameterSelected.priceEnd,
+                                          priceStart: provider
+                                              .filterParameterSelected
+                                              .priceStart,
+                                          categoryId: provider
+                                              .filterParameterSelected
+                                              .categoryId,
+                                          brandId: provider
+                                              .filterParameterSelected.brandId,
+                                          sortBy: "best-seller-asc",
+                                          priceBy: '');
+                                    } else {
+                                      _filterParameter = FilterParameter(
+                                          keyword: '',
+                                          priceEnd: provider
+                                              .filterParameterSelected.priceEnd,
+                                          priceStart: provider
+                                              .filterParameterSelected
+                                              .priceStart,
+                                          categoryId: provider
+                                              .filterParameterSelected
+                                              .categoryId,
+                                          brandId: provider
+                                              .filterParameterSelected.brandId,
+                                          priceBy: newValue == 'terbaru'
+                                              ? ''
+                                              : newValue ?? 'asc');
+                                    }
+
                                     provider
-                                        .filterCustomProduct(filterParameter)
+                                        .filterCustomProduct(_filterParameter)
                                         .listen((event) {});
                                   },
                                   style: const TextStyle(

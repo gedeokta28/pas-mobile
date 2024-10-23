@@ -35,7 +35,8 @@ class OrderItemCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "${orderData.customerOrder.customerid} (${orderData.customerOrder.customername})",
+                    orderData.deliveryto,
+                    // "${orderData.customerOrder.customerid} (${orderData.deliveryto})",
                     style: const TextStyle(color: Colors.grey, fontSize: 13),
                   ),
                 ],
@@ -44,18 +45,6 @@ class OrderItemCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // orderData.products[0].stock.photourl.isNotEmpty
-                  //     ? Image(
-                  //         height: App(context).appWidth(20),
-                  //         width: App(context).appWidth(20),
-                  //         image: NetworkImage(
-                  //             orderData.products[0].stock.photourl),
-                  //       )
-                  //     : Image(
-                  //         height: App(context).appWidth(20),
-                  //         width: App(context).appWidth(20),
-                  //         image: const AssetImage(ASSETS_PLACEHOLDER),
-                  //       ),
                   orderData.products[0].stock.images.isEmpty &&
                           orderData.products[0].stock.photourl.isEmpty
                       ? Image(

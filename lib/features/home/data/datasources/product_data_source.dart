@@ -85,7 +85,8 @@ class ProductDataSourceImplementation implements ProductDataSource {
 
   @override
   Future<List<BrandList>> getBrandList() async {
-    String url = 'api/brands';
+    String url = 'api/brands/favorites';
+    // String url = 'api/brands';
 
     try {
       final response = await dio.get(

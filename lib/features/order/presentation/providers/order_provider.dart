@@ -39,14 +39,50 @@ class OrderProvider extends FormProvider {
   String _notes = '';
   List<OrderDataList> _listOrder = [];
   bool _isLoadOrder = true;
+  String _searchDeliveryTo = '';
+  DateTime? _searchSalesOrderDate;
 
   PaymentMethod? get paymentMethod => _paymentMethod;
   ShippingAddress? get shippingAddressSelected => _shippingAddressSelected;
   OrderParameter? get orderParameter => _orderParameter;
   List<String>? get cartIds => _cartIds;
   String? get notes => _notes;
-  List<OrderDataList> get listOrder => _listOrder;
+  String get searchDeliveryTo => _searchDeliveryTo;
+  DateTime? get searchSalesOrderDate => _searchSalesOrderDate;
+  // List<OrderDataList> get listOrder => _listOrder;
+
+  List<OrderDataList> get listOrder {
+    // Jika ada pencarian, filter berdasarkan kondisi
+    if (_searchDeliveryTo.isNotEmpty || _searchSalesOrderDate != null) {
+      return _listOrder.where((order) {
+        // Cek apakah 'deliveryTo' cocok
+        final deliveryMatch = _searchDeliveryTo.isEmpty ||
+            order.deliveryto
+                .toLowerCase()
+                .contains(_searchDeliveryTo.toLowerCase());
+
+        // Cek apakah 'salesorderdate' cocok hanya berdasarkan tanggal (abaikan waktu)
+        final dateMatch = _searchSalesOrderDate == null ||
+            (order.salesorderdate.year == _searchSalesOrderDate!.year &&
+                order.salesorderdate.month == _searchSalesOrderDate!.month &&
+                order.salesorderdate.day == _searchSalesOrderDate!.day);
+
+        // Hanya kembalikan order yang cocok dengan kedua kriteria
+        return deliveryMatch && dateMatch;
+      }).toList();
+    }
+
+    // Jika tidak ada pencarian, kembalikan listOrder asli
+    return _listOrder;
+  }
+
   bool get isLoadOrder => _isLoadOrder;
+// Fungsi untuk memperbarui filter pencarian
+  void updateSearch(String deliveryTo, DateTime? salesOrderDate) {
+    _searchDeliveryTo = deliveryTo;
+    _searchSalesOrderDate = salesOrderDate;
+    notifyListeners(); // Notifikasi agar UI diperbarui
+  }
 
   set setPaymentMethod(val) {
     _paymentMethod = val;

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pas_mobile/features/home/presentation/best_product_list_page.dart';
+import 'package:pas_mobile/features/home/presentation/product_page.dart';
+import 'package:pas_mobile/features/search/data/models/filter_parameter.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../../../core/static/app_config.dart';
@@ -19,14 +21,14 @@ class BestProductList extends StatelessWidget {
       children: [
         ListTitleWidget(
           onTap: () {
-            // Navigator.pushNamed(context, ProductPage.routeName).then((_) {
-            //   final provider = Provider.of<CartProvider>(
-            //     context,
-            //     listen: false,
-            //   );
-            //   provider.countTotalCartItem();
-            // });
-            Navigator.pushNamed(context, BestProductListPage.routeName)
+            FilterParameter _filterParameter;
+            _filterParameter = FilterParameter(
+              keyword: '',
+              sortBy: "best-seller-asc",
+            );
+            Navigator.pushNamed(context, ProductPage.routeName,
+                    arguments:
+                        ProductPageArguments(filterParameter: _filterParameter))
                 .then((_) {
               final provider = Provider.of<CartProvider>(
                 context,
@@ -34,6 +36,14 @@ class BestProductList extends StatelessWidget {
               );
               provider.countTotalCartItem();
             });
+            // Navigator.pushNamed(context, BestProductListPage.routeName)
+            //     .then((_) {
+            //   final provider = Provider.of<CartProvider>(
+            //     context,
+            //     listen: false,
+            //   );
+            //   provider.countTotalCartItem();
+            // });
           },
           title: 'Produk Terlaris',
         ),

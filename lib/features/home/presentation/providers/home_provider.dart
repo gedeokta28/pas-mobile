@@ -49,15 +49,30 @@ class HomeProvider extends ChangeNotifier {
         // } else {
         _limitData = _limitData + 10;
         logMe('gett getttt');
-        FilterParameter filterParameter = FilterParameter(
+        FilterParameter _filterParameter;
+        if (_filterParameterSelected.sortBy.isEmpty) {
+          _filterParameter = FilterParameter(
+              limit: _limitData,
+              brandId: _filterParameterSelected.brandId,
+              categoryId: _filterParameterSelected.categoryId,
+              keyword: _filterParameterSelected.keyword,
+              priceEnd: _filterParameterSelected.priceEnd,
+              priceStart: _filterParameterSelected.priceStart,
+              priceBy: _filterParameterSelected.priceBy);
+        } else {
+          _filterParameter = FilterParameter(
             limit: _limitData,
             brandId: _filterParameterSelected.brandId,
             categoryId: _filterParameterSelected.categoryId,
             keyword: _filterParameterSelected.keyword,
             priceEnd: _filterParameterSelected.priceEnd,
             priceStart: _filterParameterSelected.priceStart,
-            priceBy: _filterParameterSelected.priceBy);
-        filterCustomProductLoadMore(filterParameter).listen((event) {});
+            priceBy: '',
+            sortBy: _filterParameterSelected.sortBy,
+          );
+        }
+
+        filterCustomProductLoadMore(_filterParameter).listen((event) {});
         // }
       }
       // }
@@ -70,6 +85,7 @@ class HomeProvider extends ChangeNotifier {
       const DropdownMenuItem(child: Text("Produk Termahal"), value: "desc"),
       const DropdownMenuItem(child: Text("Produk Termurah"), value: "asc"),
       const DropdownMenuItem(child: Text("Produk Terbaru"), value: "terbaru"),
+      const DropdownMenuItem(child: Text("Produk Terlaris"), value: "terlaris"),
     ];
     return menuItems;
   }
@@ -169,6 +185,16 @@ class HomeProvider extends ChangeNotifier {
         },
       );
     });
+  }
+
+  void setupInitFilter(FilterParameter? filterParameter) {
+    if (filterParameter != null) {
+      if (filterParameter.sortBy.isEmpty) {
+        setSelectedVal = "terbaru";
+      } else {
+        setSelectedVal = "terlaris";
+      }
+    }
   }
 
   Stream<ProfileState> fetchProfile() async* {

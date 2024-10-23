@@ -41,8 +41,13 @@ class SearchProductDataSourceImplementation implements SearchProductDataSource {
       url =
           'api/search/item/products?order=${filterParameter.orderBy}&q=${filterParameter.keyword}';
     } else if (typeFilter == TypeFilter.customFilter) {
-      url =
-          'api/search/item/products?limit=${filterParameter.limit}&order=${filterParameter.orderBy}&q=${filterParameter.keyword}&pricestart=${filterParameter.priceStart}&priceend=${filterParameter.priceEnd}&categoryid=${filterParameter.categoryId}&brandid=${filterParameter.brandId}&hrg1=${filterParameter.priceBy}';
+      if (filterParameter.sortBy.isEmpty) {
+        url =
+            'api/search/item/products?limit=${filterParameter.limit}&order=${filterParameter.orderBy}&q=${filterParameter.keyword}&pricestart=${filterParameter.priceStart}&priceend=${filterParameter.priceEnd}&categoryid=${filterParameter.categoryId}&brandid=${filterParameter.brandId}&hrg1=${filterParameter.priceBy}';
+      } else {
+        url =
+            'api/search/item/products?limit=${filterParameter.limit}&q=${filterParameter.keyword}&pricestart=${filterParameter.priceStart}&priceend=${filterParameter.priceEnd}&categoryid=${filterParameter.categoryId}&brandid=${filterParameter.brandId}&hrg1=${filterParameter.priceBy}&sortby=${filterParameter.sortBy}';
+      }
     } else {
       url =
           'api/search/item/products?order=${filterParameter.orderBy}&q=${filterParameter.keyword}';
@@ -59,5 +64,4 @@ class SearchProductDataSourceImplementation implements SearchProductDataSource {
       rethrow;
     }
   }
-  
 }

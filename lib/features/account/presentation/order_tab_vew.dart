@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/helper.dart';
 
 import 'package:pas_mobile/features/account/presentation/widgets/order_item_card.dart';
 import 'package:pas_mobile/features/order/presentation/providers/order_provider.dart';
@@ -68,45 +69,150 @@ class OrderProfileTabState extends State<OrderProfileTab>
               ),
             );
           } else {
-            if (provider.listOrder.isEmpty) {
-              return const Center(
-                  child: Text(
-                'Belum Memiliki Pesanan',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15.0,
-                    color: Colors.grey),
-              ));
-            } else {
-              return SingleChildScrollView(
-                controller: _scrollController,
-                child: RefreshIndicator(
-                  onRefresh: provider.refreshData,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 50),
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, OrderDetailPage.routeName,
-                                  arguments: OrderDetailPageArguments(
-                                      orderId: provider
-                                          .listOrder[index].salesorderno,
-                                      isFromCheckout: false));
-                            },
-                            child: OrderItemCard(
-                                orderData: provider.listOrder[index]));
-                      },
-                      itemCount: provider.listOrder.length,
-                    ),
+            return Column(
+              children: [
+                // Input pencarian untuk DeliveryTo
+                TextField(
+                  onChanged: (value) {
+                    provider.updateSearch(value, provider.searchSalesOrderDate);
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Cari Nama Pengiriman',
                   ),
                 ),
-              );
-            }
+
+// DatePicker untuk salesorderdate
+                TextButton(
+                  onPressed: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2101),
+                    );
+                    provider.updateSearch(
+                        provider.searchDeliveryTo, selectedDate);
+                  },
+                  child: Text(provider.searchSalesOrderDate != null
+                      ? 'Tanggal Dipilih: ${convertDate(provider.searchSalesOrderDate!)}'
+                      : 'Pilih Tanggal Pesanan'),
+                ),
+
+                // Kondisi jika tidak ada hasil pencarian
+                Expanded(
+                  child: provider.listOrder.isEmpty
+                      ? Center(
+                          child: Text(
+                            'No data found',
+                            style: TextStyle(fontSize: 16, color: Colors.grey),
+                          ),
+                        )
+                      : SingleChildScrollView(
+                          controller: _scrollController,
+                          child: RefreshIndicator(
+                            onRefresh: provider.refreshData,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 50),
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        OrderDetailPage.routeName,
+                                        arguments: OrderDetailPageArguments(
+                                          orderId: provider
+                                              .listOrder[index].salesorderno,
+                                          isFromCheckout: false,
+                                        ),
+                                      );
+                                    },
+                                    child: OrderItemCard(
+                                      orderData: provider.listOrder[index],
+                                    ),
+                                  );
+                                },
+                                itemCount: provider.listOrder.length,
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
+              ],
+            );
+            // if (provider.listOrder.isEmpty) {
+            //   return const Center(
+            //       child: Text(
+            //     'Belum Memiliki Pesanan',
+            //     style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         fontSize: 15.0,
+            //         color: Colors.grey),
+            //   ));
+            // } else {
+            //   return Column(
+            //     children: [
+            //       TextField(
+            //         onChanged: (value) {
+            //           provider.updateSearch(
+            //               value, provider.searchSalesOrderDate);
+            //         },
+            //         decoration: InputDecoration(
+            //           labelText: 'Search by Delivery To',
+            //         ),
+            //       ),
+            //       // DatePicker untuk salesorderdate
+            //       TextButton(
+            //         onPressed: () async {
+            //           final selectedDate = await showDatePicker(
+            //             context: context,
+            //             initialDate: DateTime.now(),
+            //             firstDate: DateTime(2000),
+            //             lastDate: DateTime(2101),
+            //           );
+            //           provider.updateSearch(
+            //               provider.searchDeliveryTo, selectedDate);
+            //         },
+            //         child: Text(provider.searchSalesOrderDate != null
+            //             ? 'Selected Date: ${provider.searchSalesOrderDate}'
+            //             : 'Pick a Sales Order Date'),
+            //       ),
+            //       Expanded(
+            //         child: SingleChildScrollView(
+            //           controller: _scrollController,
+            //           child: RefreshIndicator(
+            //             onRefresh: provider.refreshData,
+            //             child: Padding(
+            //               padding: const EdgeInsets.only(bottom: 50),
+            //               child: ListView.builder(
+            //                 padding: EdgeInsets.zero,
+            //                 physics: const NeverScrollableScrollPhysics(),
+            //                 shrinkWrap: true,
+            //                 itemBuilder: (context, index) {
+            //                   return InkWell(
+            //                       onTap: () {
+            //                         Navigator.pushNamed(
+            //                             context, OrderDetailPage.routeName,
+            //                             arguments: OrderDetailPageArguments(
+            //                                 orderId: provider
+            //                                     .listOrder[index].salesorderno,
+            //                                 isFromCheckout: false));
+            //                       },
+            //                       child: OrderItemCard(
+            //                           orderData: provider.listOrder[index]));
+            //                 },
+            //                 itemCount: provider.listOrder.length,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   );
+            // }
           }
         }));
   }
