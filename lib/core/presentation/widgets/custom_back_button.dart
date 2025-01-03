@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pas_mobile/core/utility/injection.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 
 class CustomBackButton extends StatelessWidget {
   final Function? onTapBack;
@@ -16,6 +18,9 @@ class CustomBackButton extends StatelessWidget {
         if (onTapBack != null) {
           onTapBack!();
         } else {
+          final session = locator<Session>();
+          session.setMinPrice = "";
+          session.setMaxPrice = "";
           Navigator.pop(context);
         }
       },

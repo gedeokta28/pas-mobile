@@ -8,3 +8,5 @@ const String CUSTOMER_ID = 'customer_id';
 const String CUSTOMER_NAME = 'customer_name';
 const String SALES_ID = 'sales_id';
 const String IS_ALL = 'is_all';
+const String MIN_PRICE = 'min_price';
+const String MAX_PRICE = 'max_price';

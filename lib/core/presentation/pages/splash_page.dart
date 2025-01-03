@@ -24,6 +24,8 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(const Duration(seconds: 2), () async {
       final session = locator<Session>();
+      session.setMinPrice = "";
+      session.setMaxPrice = "";
       session.setIndexTab = 0;
       session.setCustomerId = '';
       session.setCustomerName = '';

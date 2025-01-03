@@ -1,5 +1,7 @@
 import 'package:pas_mobile/core/presentation/form_provider.dart';
 import 'package:pas_mobile/core/utility/helper.dart';
+import 'package:pas_mobile/core/utility/injection.dart';
+import 'package:pas_mobile/core/utility/session_helper.dart';
 import 'package:pas_mobile/features/home/domain/usecases/get_category_list.dart';
 import 'package:pas_mobile/features/category/presentation/providers/category_state.dart';
 
@@ -23,6 +25,25 @@ class FilterProvider extends FormProvider {
   setSelectedFilter(value) {
     _selectedFilter = value;
     notifyListeners();
+  }
+
+  checkSessionPrice() {
+    final session = locator<Session>();
+    priceMaxController.text = session.sessionMaxPrice;
+    priceMinController.text = session.sessionMinPrice;
+    notifyListeners();
+  }
+
+  setSessionPrice(priceMin, priceMax) {
+    final session = locator<Session>();
+    session.setMinPrice = priceMin;
+    session.setMaxPrice = priceMax;
+  }
+
+  setClearSessionPrice() {
+    final session = locator<Session>();
+    session.setMinPrice = "";
+    session.setMaxPrice = "";
   }
 
   addSelected(val) {
@@ -69,6 +90,7 @@ class FilterProvider extends FormProvider {
   }
 
   clearFilter() {
+    setClearSessionPrice();
     priceMaxController.text = '';
     priceMinController.text = '';
     _selectedFilter = [];

@@ -22,7 +22,7 @@ class FilterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => locator<FilterProvider>(),
+      create: (_) => locator<FilterProvider>()..checkSessionPrice(),
       builder: (context, child) => Scaffold(
         appBar: const CustomAppBar(
           title: "Filter",
@@ -173,6 +173,9 @@ class FilterPage extends StatelessWidget {
                     title: "Terapkan",
                     color: secondaryColor,
                     event: () async {
+                      await provider.setSessionPrice(
+                          provider.priceMinController.text,
+                          provider.priceMaxController.text);
                       await provider.convertListCategory();
                       await provider.checkPrice(
                           provider.priceMaxController.text,

@@ -14,6 +14,8 @@ abstract class Session {
   set setCustomerName(String name);
   set setAllCustomer(bool value);
   set setSalesId(String value);
+  set setMinPrice(String value);
+  set setMaxPrice(String value);
 
   bool get isLoggedIn;
   int get indexTab;
@@ -24,6 +26,8 @@ abstract class Session {
   String get sessionCustomerName;
   String get salesId;
   bool get isAllCustomer;
+  String get sessionMinPrice;
+  String get sessionMaxPrice;
 
   Future<void> clearSession();
 }
@@ -46,6 +50,16 @@ class SessionHelper implements Session {
   @override
   set setToken(String token) {
     pref.setString(SESSION_TOKEN, token);
+  }
+
+  @override
+  set setMinPrice(String minprice) {
+    pref.setString(MIN_PRICE, minprice);
+  }
+
+  @override
+  set setMaxPrice(String maxprice) {
+    pref.setString(MAX_PRICE, maxprice);
   }
 
   @override
@@ -86,6 +100,12 @@ class SessionHelper implements Session {
 
   @override
   String get sessionToken => pref.getString(SESSION_TOKEN) ?? '';
+
+  @override
+  String get sessionMinPrice => pref.getString(MIN_PRICE) ?? '';
+
+  @override
+  String get sessionMaxPrice => pref.getString(MAX_PRICE) ?? '';
 
   @override
   int get indexTab => pref.getInt(INDEX_TAB) ?? 0;
