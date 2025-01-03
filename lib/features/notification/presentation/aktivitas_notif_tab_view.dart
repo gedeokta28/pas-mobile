@@ -89,17 +89,35 @@ class AktivitasNotifTabState extends State<AktivitasNotifTab>
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                    width: double.infinity,
-                                    height: App(context).appHeight(15),
+                                // Container(
+                                //     width: double.infinity,
+                                //     height: App(context).appHeight(15),
+                                //     decoration: BoxDecoration(
+                                //       image: DecorationImage(
+                                //         image: NetworkImage(
+                                //           data[index].image,
+                                //         ),
+                                //         fit: BoxFit.fill,
+                                //       ),
+                                //     )),
+                                AspectRatio(
+                                  aspectRatio: 1080 /
+                                      288, // Menjaga rasio 1080:288 (3.75)
+                                  child: Container(
+                                    width: double.infinity, // Lebar penuh
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         image: NetworkImage(
                                           data[index].image,
                                         ),
-                                        fit: BoxFit.fill,
+                                        fit: BoxFit
+                                            .cover, // Sesuaikan gambar agar memenuhi kontainer
                                       ),
-                                    )),
+                                      borderRadius: BorderRadius.circular(
+                                          10.0), // Opsional: sudut melengkung
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(
                                   height: 5.0,
                                 ),
